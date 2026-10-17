@@ -236,7 +236,7 @@ p{margin:0}
 .fig{font-family:var(--font-serif);font-style:italic;font-weight:var(--serif-weight);letter-spacing:var(--serif-track);font-stretch:100%;line-height:1}
 /* chiffres « données » (preuves, durées, note) : en sans, léger, chiffres alignés — Playfair italique se lit mal en chiffres.
    Les numéros décoratifs (01–06, piliers 01–03) restent en Playfair italique. */
-.proofs .fig:not(.word), .step .fig, .rating .fig{font-family:var(--font-display);font-style:normal;font-weight:300;font-stretch:var(--display-stretch);
+.proofs .fig, .step .fig, .rating .fig{font-family:var(--font-display);font-style:normal;font-weight:300;font-stretch:var(--display-stretch);
   letter-spacing:-.03em;font-variant-numeric:lining-nums proportional-nums}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -323,7 +323,7 @@ html[data-photos="0"] .ph > img{display:none}
 .proofs li{padding:20px 14px 20px 0;display:flex;flex-direction:column;gap:13px;border-bottom:1px solid var(--line)}
 .proofs li:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
 .proofs .fig{white-space:nowrap;font-size:1.5rem;line-height:1;color:var(--ink)}
-.proofs .fig.word{font-size:calc(1.6rem * var(--serif-scale));white-space:normal;line-height:1.05}
+.proofs .fig.word{white-space:normal;line-height:1.1}
 .proofs .lbl{font-size:.9375rem;line-height:1.3;color:var(--ink-soft)}
 .proofs .star{color:var(--bronze);font-size:.6em;margin-right:5px;vertical-align:.32em;font-style:normal}
 
@@ -726,7 +726,6 @@ html.static .marquee-track{animation:none}
 @media (max-width:639px){
   .on-navy .orbits{display:none}
   .proofs .fig{font-size:1.35rem}
-  .proofs .fig.word{font-size:calc(1.4rem * var(--serif-scale))}
   .stat{flex-direction:column;align-items:flex-start;gap:4px}
   .stat .dot{display:none}
   .pillar{padding:22px 20px}
