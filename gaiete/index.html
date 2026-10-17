@@ -1,106 +1,53 @@
 <!DOCTYPE html>
-<!--
-  Template « Gaieté » (direction E, ex-Canopée)
-  Intention : la structure de B (arche, preuves, bandes, cartes, planche, carte d'accès) en version calme et rassurante :
-  fonds unis et pâles, texte noir, et quelques formes joyeuses posées comme une ponctuation.
-
-  Règle de couleur : une couleur vive ne remplit jamais une grande surface.
-    Grandes surfaces (hero, bandes, CTA final, cartes tarifs, piliers, planche du parcours, pied de page) : teintes pâles
-    ou blanc, toujours en texte noir (>= 12:1 partout). Couleurs vives (indigo, corail, orange, vert, rose, violet, citron) :
-    seulement en petits accents (quelques stickers, pilules, pastilles numérotées, icônes, puces, points).
-    Plus de texture ni d'effet de lumière : le fond est une couleur unie.
-
-  Typo (auto-hébergée, OFL) : Fixel variable, ../fonts/fixel/FixelVariable-latin.woff2 (wdth 87.5–100, wght 100–900),
-    déclarée sous les noms "Fixel Display" (titres, font-stretch 100 %) et "Fixel Text" (texte courant, 87.5 %).
-    Graisse des titres (axe wght) : 1. 600 · 2. 800 · 3. 500 (défaut, choix de Corentin). Tout le reste en Fixel Display descend aussi d'un cran
-    (boutons et labels 500, pilules 600, prix 800). Approche : voir le bloc « Approche optique » dans le CSS.
-    Alternates (a à un étage, g, Q, Z, y, j…, police « Fixel Gaiete » où elles sont intégrées) : 1. partout · 2. titres, pilules, gros chiffres (défaut) · 3. off
-
-  Palette « Ciel », fond de page #FFFFFF
-    Hero et CTA final : bleu #7EB9F2 éclairci sur blanc, 35 % #D2E6FA · 50 % #BEDCF8 (défaut) · 70 % #A5CEF6
-    Pour qui #E6F3E4 · Approche #ECEBFB (piliers blancs) · Tarifs #FDEACE / #E0EFDF / #FCE6F0 · Parcours #FFEDE6
-    Avis #FFF8D4 · Carte = teinte du hero · Arche du portrait #FFF6C8 (+ ombre #F9DCEA)
-    Scène finale (CTA + pied de page, plein écran) : ciel de la dominante → pêche #FFE2D2 / jaune pâle #FFF4CF au défilement,
-      collines #F9DCEA / #ECEBFB / dominante, soleil en aplat #FFCF57 (ni dégradé, ni halo, ni liseré), auréole festonnée #FFE6A1
-  Photos (Unsplash, liens directs, visage jamais visible) : portrait G8pMDFlHhwk (Maria Kovalets) ; polaroïds du parcours
-    95baBTvQ5gI (Sreeraj S) et XfOAfV8vl8I (Joyful). Si une photo ne charge pas, son cadre garde une teinte pâle.
-    Accents vifs (petites surfaces) : orange #F59E1F · rose #E994BE · indigo #575BE6 (texte blanc 5,2:1) · citron #E8F07A
-      · corail #FF5F5F · violet #B07CEE · bleu #2F80ED · vert #52A550 · jaune pâle #FFF6A5
-    Dominante (--accent = teinte pâle du hero, bouton secondaire et CTA final ; --dv = version vive, pour les petits accents) :
-      1 Bleu ciel #BEDCF8 / #2F80ED · 2 Vert #D5EBD3 / #52A550 · 3 Orange #FDE6C8 / #F59E1F · 4 Corail #FFDCDC / #FF5F5F
-  Bouton principal : noir, texte blanc ou crème.
-
-  Paramètres d'URL : ?dominante=1|2|3|4 ?bleu=35|50|70 ?typo=1|2|3 ?alt=1|2|3
-                     ?clean=1 ?ribbon=0 ?static=1 (aucune animation)
--->
 <html lang="fr" data-pal="2" data-dom="2" data-sky="70" data-typo="3" data-alt="2">
 <head>
 <meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claire Martin · Sophrologue à Paris 11e et en visio</title>
-<meta name="description" content="Claire Martin, sophrologue à Paris 11e (métro Voltaire) et en visio. Séance de 60 min, 70 €. Premier appel de 15 min offert.">
+<meta name="description" content="Claire Martin, sophrologue à Paris 11e (métro Voltaire) et en visio. Séance de 60 min, 70 €. Premier appel de 15 min offert.">
+<meta name="robots" content="noindex, nofollow">
 <script>/* bandeau maquette fermé par le visiteur : on le masque avant le premier rendu (pas de flash) */
 try{if(localStorage.getItem('vf-ribbon-closed:'+location.pathname))document.documentElement.classList.add('ribbon-closed');}catch(e){}</script>
 <style>
-/* Même fichier variable sous les deux noms installés chez Corentin (Fixel Display / Fixel Text) : les captures Figma
-   reprennent le nom CSS, qui retombe ainsi sur ses polices locales au lieu d'une police manquante. */
 @font-face{font-family:"Fixel Display";src:url("../fonts/fixel/FixelVariable-latin.woff2") format("woff2");font-weight:100 900;font-stretch:87.5% 100%;font-style:normal;font-display:swap}
 @font-face{font-family:"Fixel Text";src:url("../fonts/fixel/FixelVariable-latin.woff2") format("woff2");font-weight:100 900;font-stretch:87.5% 100%;font-style:normal;font-display:swap}
-/* « Fixel Gaiete » : la même Fixel avec ses alternates (salt : a à un étage, g, Q, Z, y, j…) intégrées par défaut.
-   Plus besoin de font-feature-settings, et les captures Figma les gardent (police installée chez Corentin, ../fonts/fixel-gaiete/). */
 @font-face{font-family:"Fixel Gaiete";src:url("../fonts/fixel-gaiete/FixelGaiete-latin.woff2") format("woff2");font-weight:100 900;font-stretch:87.5% 100%;font-style:normal;font-display:swap}
-
-/* ================= TOKENS ================= */
-/* Règle : les grandes surfaces sont pâles (texte noir), les couleurs vives (--s1…--s9, --dv) restent des petits accents. */
-/* Base (la palette Ciel ci-dessous écrase les couleurs) */
 html{
   --bg:#F7EFE2; --surface:#FFFAF3; --ink:#000; --ink-soft:rgba(0,0,0,.72);
   --line:rgba(0,0,0,.14); --line-strong:rgba(0,0,0,.32);
-  --edge:#F7EFE2;                                   /* liseré « découpe » des stickers */
-  /* accents vifs (petites surfaces seulement) */
-  --s1:#E4C336; --s1i:#000;   /* jaune  */
-  --s2:#E55A99; --s2i:#000;   /* rose   */
-  --s3:#EF5223; --s3i:#000;   /* orange */
-  --s4:#2E3192; --s4i:#FFF;   /* indigo */
-  --s5:#B2D7D8; --s5i:#000;   /* aqua   */
-  --s6:#00492B; --s6i:#F7EFE2;/* vert   */
-  --s7:#F7EFE2; --s7i:#000;   /* crème  */
+  --edge:#F7EFE2;                                   
+  --s1:#E4C336; --s1i:#000;   
+  --s2:#E55A99; --s2i:#000;   
+  --s3:#EF5223; --s3i:#000;   
+  --s4:#2E3192; --s4i:#FFF;   
+  --s5:#B2D7D8; --s5i:#000;   
+  --s6:#00492B; --s6i:#F7EFE2;
+  --s7:#F7EFE2; --s7i:#000;   
   --s8:#EF5223; --s9:#2E3192;
-  /* grandes surfaces : teintes pâles, texte noir */
-  --who:#F2E4B7;                                     /* pour qui */
-  --band:#E0E0F0;                                    /* approche */
-  --pil-bg:var(--surface);                           /* piliers */
-  --pr1:#FADCCD; --pa1:var(--s3); --pr2:#D9ECEC; --pa2:var(--s6); --pr3:#F3E6BC; --pa3:var(--s1);   /* tarifs : fond pâle + point vif */
-  --band2:#F9DCE9;                                   /* parcours */
-  --band3:#DCEDED;                                   /* avis */
+  --who:#F2E4B7;                                     
+  --band:#E0E0F0;                                    
+  --pil-bg:var(--surface);                           
+  --pr1:#FADCCD; --pa1:var(--s3); --pr2:#D9ECEC; --pa2:var(--s6); --pr3:#F3E6BC; --pa3:var(--s1);   
+  --band2:#F9DCE9;                                   
+  --band3:#DCEDED;                                   
   --arch-a:#FBF1CF; --arch-b:#F6D3E2; --arch-ink:#00492B;
   --map-bg:#D3E8E8; --map-road:#FFFAF3; --map-big:#FFFFFF; --map-park:#E4C336;
   --foot-bg:#EFE5D3;
-
-  /* dominante (le seul réglage par client) : --accent = teinte pâle (hero, CTA final), --dv = version vive (petits accents) */
   --accent:#D6E4DB; --accent-ink:#000; --dv:#00492B;
-  --hbtn:#000; --hbtn-ink:#FFFAF3;                   /* bouton principal */
+  --hbtn:#000; --hbtn-ink:#FFFAF3;                   
   --btn-line:#000;
-  --hstar:var(--s1); --hpill:var(--s2); --hpilli:#000;   /* les 2 stickers du hero */
-  --hf:var(--s3);                                    /* fleur du CTA final (évite la couleur de la dominante) */
-
+  --hstar:var(--s1); --hpill:var(--s2); --hpilli:#000;   
+  --hf:var(--s3);                                    
   --font-display:"Fixel Display", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body:"Fixel Text", system-ui, -apple-system, "Segoe UI", sans-serif;
   --dw:600; --bpk:690; --dtrack:-.035em; --dlh:1.02;
   --radius:28px; --radius-sm:18px; --block:clamp(28px, 4vw, 52px);
   --wrap:1280px; --gutter:clamp(20px, 5vw, 56px); --hh:68px;
-  /* échelle des hauteurs UI : étiquettes 24 · puces 32 · petits boutons 44 · boutons 52 · pastilles 48.
-     Marge horizontale : côté texte = hauteur / 2 depuis le bord extérieur, côté icône = (hauteur - icône) / 2. */
   --ui-xs:24px; --ui-s:32px; --ui-m:44px; --ui-l:52px; --ui-dot:48px;
-  /* centrage optique (voir « Centrage optique ») : vides au-dessus des capitales et sous la ligne de base à line-height 1.
-     0 quand le navigateur sait rogner la boîte de texte (text-box), sinon les valeurs mesurées de la police, plus bas. */
   --ct:0em; --cb:0em;
 }
-
-/* Palette 2 « Ciel » (défaut). Bleu de référence #7EB9F2, posé éclairci sur blanc (--sky) */
 html[data-pal="2"]{
-  --sky:#BEDCF8;                                    /* 50 % de #7EB9F2 sur blanc */
+  --sky:#BEDCF8;                                    
   --bg:#FFFFFF; --surface:#FFFFFF; --edge:#FFFFFF; --ink-soft:rgba(0,0,0,.72);
   --s1:#E8F07A; --s1i:#000; --s2:#E994BE; --s2i:#000; --s3:#F59E1F; --s3i:#000; --s4:#575BE6; --s4i:#FFF;
   --s5:#B07CEE; --s5i:#000; --s6:#52A550; --s6i:#000; --s7:#FFF6A5; --s7i:#000; --s8:#FF5F5F; --s9:#2F80ED;
@@ -117,24 +64,10 @@ html[data-pal="2"][data-sky="70"]{ --sky:#A5CEF6 }
 html[data-pal="2"][data-dom="2"]{ --accent:#D5EBD3; --dv:#52A550; --who:#FFF8D4 }
 html[data-pal="2"][data-dom="3"]{ --accent:#FDE6C8; --dv:#F59E1F; --hstar:var(--s6); --hpill:var(--s5); --hf:var(--s2); --band2:#FCE6F0 }
 html[data-pal="2"][data-dom="4"]{ --accent:#FFDCDC; --dv:#FF5F5F; --hpill:var(--s6); --band2:#E3F0FC }
-
-/* Graisse des titres (axe wght de la variable) */
 html[data-typo="2"]{ --dw:800; --bpk:700; --dtrack:-.045em; --dlh:.96 }
 html[data-typo="3"]{ --dw:500; --bpk:590; --dtrack:-.03em; --dlh:1.06 }
-
-/* Alternates : 1. partout · 2. titres, pilules, gros chiffres (défaut) · 3. aucune. Elles viennent de la police « Fixel Gaiete ». */
 html[data-alt="1"]{ --font-display:"Fixel Gaiete", system-ui, sans-serif; --font-body:"Fixel Gaiete", system-ui, sans-serif }
 html[data-alt="2"] :is(h1,h2,h3,.pill,.amount,.brand-name,.num,.since,.count strong){ font-family:"Fixel Gaiete", system-ui, sans-serif }
-
-/* ================= CENTRAGE OPTIQUE =================
-   Fixel pose ses capitales hors du centre de sa boîte de ligne (Fixel Display/Text : ascendante .75 / descendante .25,
-   les capitales flottent 0,10 em trop haut ; Fixel Gaiete : .90 / .19, quasi centrée). Aucun line-height ne corrige ça.
-   On rogne donc la boîte au ras des capitales et de la ligne de base (text-box), puis on centre ce bloc :
-   - une étiquette seule dans sa boîte (pilule, tag, bandeau) : padding = (hauteur - capitale) / 2 de chaque côté ;
-   - un texte dans une rangée flex/grid (boutons, pastilles, puces, icône + texte) : le texte est dans un .tx rogné,
-     centré par align-items:center. Chrome ne rogne pas le texte anonyme d'un flex, d'où le .tx.
-   Sans text-box (Firefox à ce jour) : --ct / --cb reprennent les vides mesurés, le padding les retire et le .tx glisse
-   de (--cb - --ct) / 2 : même rendu à 0,1 px près. Capitale Fixel = 0,703 em. */
 .tx{text-box:trim-both cap alphabetic;position:relative;top:calc((var(--cb) - var(--ct)) / 2)}
 @supports not (text-box: trim-both cap alphabetic){
   html{--ct:.047em;--cb:.25em}
@@ -142,8 +75,6 @@ html[data-alt="2"] :is(h1,h2,h3,.pill,.amount,.brand-name,.num,.since,.count str
   html:not([data-alt="1"]) .step .dur{--ct:.047em;--cb:.25em}
   html .sig{--ct:.152em;--cb:.145em}
 }
-
-/* ================= BASE ================= */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:24px}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-stretch:87.5%;font-size:1.0625rem;line-height:1.6;
@@ -159,17 +90,12 @@ em{font-style:normal}
 :focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
 .skip{position:absolute;left:12px;top:-60px;z-index:100;background:#000;color:#fff;padding:12px 16px;border-radius:10px;text-decoration:none}
 .skip:focus{top:12px}
-
-/* ================= BOUTONS ================= */
-/* hauteur --h (52 ou 44) ; bordure 2 px comprise : côté texte h/2, côté icône (h - 18)/2 depuis le bord extérieur */
 .btn{--h:var(--ui-l);display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--h);padding:0 calc(var(--h) / 2 - 2px);border-radius:999px;
   font-family:var(--font-display);font-stretch:100%;font-size:1.0625rem;font-weight:500;letter-spacing:-.005em;text-decoration:none;line-height:1.15;white-space:nowrap;
   border:2px solid transparent;transition:transform .25s cubic-bezier(.3,1.6,.5,1), background-color .2s, color .2s}
 .btn-ic{padding-left:calc((var(--h) - 18px) / 2 - 2px)}
 .btn svg{width:18px;height:18px;flex:none}
-.btn:hover{transform:translateY(-2px) rotate(-1deg)}   /* survol : le bouton se soulève, le texte ne change jamais de graisse */
-/* survol : le libellé s'épaissit par un contour de la couleur du texte (peinture seule). La graisse variable changeait
-   la chasse : le bouton s'élargissait et poussait ses voisins. Ici rien ne bouge. */
+.btn:hover{transform:translateY(-2px) rotate(-1deg)}   
 .btn:active{transform:translateY(0) scale(.98)}
 .btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--btn-line)}
 .btn-hero{background:var(--hbtn);color:var(--hbtn-ink);border-color:var(--hbtn)}
@@ -177,18 +103,14 @@ em{font-style:normal}
 .btn-ghost{border-color:#000;color:#000;background:transparent}
 .btn-black{background:#000;color:var(--bg);border-color:#000}
 .btn-sm{--h:var(--ui-m);font-size:.9375rem}
-
-/* ================= STICKERS ================= */
 .stk{position:absolute;fill:var(--c);color:var(--c);stroke:var(--edge);stroke-width:7;stroke-linejoin:round;paint-order:stroke;overflow:visible;pointer-events:none;
   width:var(--w);aspect-ratio:1;transform:rotate(var(--r,0deg))}
 .stk.cloud{aspect-ratio:1.53}
 .stk.flat{stroke:none}
-/* pilule : boîte rognée au ras des capitales, hauteur 2 em (0,703 + 2 × 0,65), marge horizontale = hauteur / 2 */
 .pill{display:inline-block;font-family:var(--font-display);font-stretch:100%;font-weight:600;letter-spacing:-.01em;line-height:1;white-space:nowrap;
   text-box:trim-both cap alphabetic;padding:calc(.65em - var(--ct)) 1em calc(.65em - var(--cb));
   border-radius:999px;background:var(--pb);color:var(--pi);box-shadow:0 0 0 .2em var(--edge);cursor:default;user-select:none;-webkit-user-select:none;pointer-events:auto;}
 .tag{position:absolute;transform:rotate(var(--r,0deg));pointer-events:none}
-/* stickers manipulables (hero + scène finale) : le geste ne bloque le scroll que sur eux */
 .drag{pointer-events:auto;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none;transition:scale .25s cubic-bezier(.3,1.6,.5,1)}
 .drag.is-held{cursor:grabbing;scale:1.08;animation-play-state:paused;z-index:4}
 .drag.is-held:not(.tag){filter:drop-shadow(0 10px 8px rgba(0,0,0,.18))}
@@ -200,9 +122,6 @@ em{font-style:normal}
 .fl{animation:bob var(--d,7s) ease-in-out var(--dl,0s) infinite}
 .pill.wig{animation:wig .6s ease}
 @media (hover:hover){.pill:hover{animation:wig .6s ease}}
-
-/* ================= BANDEAU MAQUETTE ================= */
-/* texte rogné (capitales → ligne de base), 13 px de chaque côté ; à droite, la place de la croix de fermeture */
 .ribbon{position:relative;z-index:5;background:#000;color:#F2EDE4;font-size:.8125rem;line-height:1.45;text-align:center;
   --xr:max(4px, calc(var(--gutter) - 15px));
   text-box:trim-both cap alphabetic;padding:calc(13px - var(--ct)) calc(var(--xr) + 48px) calc(13px - var(--cb))}
@@ -213,9 +132,7 @@ em{font-style:normal}
 .ribbon-x:hover{background:rgba(255,255,255,.14);color:#fff}
 .ribbon-x:focus-visible{outline:2px solid #E4C336;outline-offset:-4px;border-radius:50%}
 body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
-@media (max-width:639px){ .ribbon{padding-left:16px} }   /* la croix garde sa réserve à droite, le texte récupère la gauche */
-
-/* ================= HEADER (posé sur le hero) ================= */
+@media (max-width:639px){ .ribbon{padding-left:16px} }   
 .site-header{position:relative;z-index:3;color:var(--accent-ink)}
 .site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--hh)}
 .site-header :focus-visible{outline-color:var(--accent-ink)}
@@ -228,8 +145,6 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .nav a:hover{background:color-mix(in srgb, var(--accent-ink) 12%, transparent)}
 .header-cta{display:flex;align-items:center;gap:8px}
 .header-tel{display:none}
-
-/* ================= HERO ================= */
 .hero{position:relative;overflow:hidden;background:var(--accent);color:var(--accent-ink);
   margin-top:calc(-1 * var(--hh));padding:calc(var(--hh) + 18px) 0 52px;border-radius:0 0 var(--block) var(--block)}
 .hero :focus-visible{outline-color:var(--accent-ink)}
@@ -246,18 +161,13 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .proofs li{display:flex;align-items:center;gap:10px}
 .proofs .ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#000;font-size:.9375rem;background:var(--b);box-shadow:0 0 0 2px var(--edge)}
 .proofs .ic svg{width:18px;height:18px}
-
-/* portrait en arche */
 .portrait{position:relative;margin:0 auto;width:min(84%, 340px);container-type:inline-size}
 .arch-b{position:absolute;inset:0;transform:translate(5.5%, 4%);border-radius:999px 999px var(--radius) var(--radius);background:var(--arch-b)}
 .portrait-arch{position:relative;aspect-ratio:4/5;border-radius:999px 999px var(--radius) var(--radius);background:var(--arch-a);overflow:hidden}
-/* photo de la praticienne (visage hors champ) ; si elle ne charge pas, l'arche reste en teinte pâle (--arch-a) */
 .portrait-arch img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 .portrait-arch::after{content:"";position:absolute;inset:4.2%;z-index:1;border-radius:999px 999px calc(var(--radius) - 8px) calc(var(--radius) - 8px);border:2px solid rgba(255,255,255,.62);pointer-events:none}
 .portrait .stk,.portrait .tag{z-index:1}
 .portrait .tag .pill{font-size:max(.875rem, 4.6cqw)}
-
-/* ================= SECTIONS ================= */
 .section{position:relative;padding:clamp(68px, 9vw, 124px) 0;overflow-x:clip}
 .block{margin:0 clamp(8px, 1.2vw, 18px);border-radius:var(--block);overflow:hidden}
 .block + .block{margin-top:clamp(8px, 1.2vw, 18px)}
@@ -266,48 +176,35 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .lead{margin-top:18px;color:var(--ink-soft);font-size:1.0938rem;max-width:36em}
 .num{display:inline-grid;place-items:center;width:var(--ui-dot);height:var(--ui-dot);border-radius:50%;margin-bottom:18px;
   background:var(--n, var(--s1));color:var(--ni, #000);font-family:var(--font-display);font-stretch:100%;font-weight:600;font-size:1rem;letter-spacing:0;transform:rotate(-4deg)}
-
-/* pour qui */
 .who-wrap{position:relative}
 .who-list{list-style:none;margin:0;padding:10px 24px;display:grid;background:var(--who);color:#000;border-radius:var(--radius)}
 .who-list li{display:flex;gap:14px;align-items:flex-start;padding:17px 0;border-bottom:2px solid rgba(0,0,0,.1);font-size:1.0625rem;line-height:1.45}
 .who-list li:last-child{border-bottom:0}
 .who-list .b{flex:none;width:22px;height:22px;margin-top:0;fill:var(--c)}
 .who-wrap .stk{z-index:1}
-
-/* approche (bande) */
 .band{background:var(--band);color:#000}
 .pillars{list-style:none;margin:0;padding:0;display:grid;gap:14px;position:relative;z-index:1}
 .pillar{border-radius:var(--radius);padding:26px 24px 28px;background:var(--pil-bg);color:#000}
-.pillar svg{width:48px;height:48px;margin-bottom:20px;overflow:visible}   /* même boîte pour tous les pictos : les titres s'alignent */
+.pillar svg{width:48px;height:48px;margin-bottom:20px;overflow:visible}   
 .pillar svg.cloud{width:60px}
 .pillar h3{font-size:1.75rem;margin-bottom:8px}
 .pillar p{font-size:1rem}
 .band .deco{position:absolute;z-index:0;right:clamp(28px, 7vw, 120px);top:clamp(44px, 6vw, 96px)}
-
-/* première séance (17/10 : plus d'air). Rythme de chaque étape : durée → titre → texte, sous un filet fin pleine largeur
-   et un court trait de couleur. Pas de numéros (la liste reste un <ol>). La durée est une petite étiquette teintée de la
-   couleur de l'étape (plus de pilule noire). Puis un récapitulatif pâle avec le bouton RDV. */
 #premiere-seance .section-head{margin-bottom:clamp(48px, 6.5vw, 92px)}
 .steps{list-style:none;margin:0;padding:0;position:relative;display:grid;gap:40px}
 .step{position:relative;padding-top:26px;border-top:1px solid var(--line)}
 .step::before{content:"";position:absolute;left:0;top:-2px;width:44px;height:4px;border-radius:2px;background:var(--n)}
 .step h3{font-size:1.5rem;line-height:1.12}
-/* étiquettes XS (durée des étapes, durée des tarifs) : 24 px, rognées au ras des capitales, marge = hauteur / 2 */
 .step .dur,.price .meta{font-family:var(--font-display);font-stretch:100%;font-size:.8125rem;font-weight:500;letter-spacing:0;background:#000;color:var(--bg);border-radius:999px;white-space:nowrap;
   line-height:1;text-box:trim-both cap alphabetic;padding:calc((var(--ui-xs) - .703em) / 2 - var(--ct)) calc(var(--ui-xs) / 2) calc((var(--ui-xs) - .703em) / 2 - var(--cb))}
 .step .dur{display:inline-block;margin:0 0 18px;background:color-mix(in srgb, var(--n) 36%, #fff);color:#000}
 .step p:not(.dur){margin-top:12px;color:var(--ink-soft);line-height:1.55}
 .step p:not(.dur)::first-letter{text-transform:uppercase}
-/* Bandeau récap : padding égal sur les 4 côtés en mobile ; en bureau, le bouton est inséré à égale distance du haut,
-   du bas et de la droite (rayon concentrique : rayon du bouton + marge), le texte rogné au ras des capitales est centré. */
 .recap{--rp:22px;margin-top:clamp(52px, 6.5vw, 88px);display:grid;gap:20px;justify-items:start;align-items:center;
   background:var(--pr1);border-radius:var(--radius);padding:var(--rp)}
 .recap p{display:flex;align-items:flex-start;gap:14px;font-family:var(--font-display);font-stretch:100%;font-weight:500;font-size:1.25rem;line-height:1.35;letter-spacing:var(--tr-xs)}
-.recap p svg{width:28px;height:28px;flex:none;fill:var(--s3);margin-top:calc(.3515em - 14px)}   /* centré sur les capitales de la 1re ligne */
+.recap p svg{width:28px;height:28px;flex:none;fill:var(--s3);margin-top:calc(.3515em - 14px)}   
 .recap strong{font-weight:600}
-
-/* tarifs */
 .prices{display:grid;gap:14px;list-style:none;margin:0;padding:0}
 .price{padding:28px 26px 24px;display:flex;flex-direction:column;position:relative;border-radius:var(--radius);background:var(--pb);color:#000}
 .price h3{display:flex;align-items:center;gap:12px}
@@ -315,29 +212,24 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .price h3{font-size:1.6rem}
 .price .meta{margin-top:12px;align-self:flex-start}
 .price .amount{font-family:var(--font-display);font-stretch:100%;font-weight:800;font-size:clamp(3.4rem, 2.6rem + 2.4vw, 4.6rem);letter-spacing:-.045em;line-height:.95;margin:26px 0 18px}
-/* gros chiffres : graisse et chasse qui montent quand la carte apparaît, à chaque fois (jamais si mouvement réduit) */
 .js-wght .price .amount{font-weight:440;font-stretch:92.5%}
 .js-wght .price.is-in .amount{font-weight:800;font-stretch:100%;
-  transition:font-weight 1.2s cubic-bezier(.2,.9,.25,1) calc(var(--rv-d) + .2s), font-stretch 1.2s cubic-bezier(.2,.9,.25,1) calc(var(--rv-d) + .2s)}
+  transition:font-weight 1.7s cubic-bezier(.2,.9,.25,1) calc(var(--rv-d) + .28s), font-stretch 1.7s cubic-bezier(.2,.9,.25,1) calc(var(--rv-d) + .28s)}
 .price .where{font-size:1rem;font-weight:500;padding-top:14px;border-top:2px solid rgba(0,0,0,.16);margin-top:auto}
 .legal-note{margin-top:22px;font-size:.875rem;color:var(--ink-soft);max-width:48rem}
 .prices-foot{margin-top:22px;display:grid;gap:24px;justify-items:start}
 .prices-foot .legal-note{margin-top:0}
-
-/* parcours (bande 2) */
 .band2{background:var(--band2);color:#000}
 .band2 .lead{color:inherit}
 .bio-grid{display:grid;gap:44px;align-items:center}
 .bio-list{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px;font-weight:500}
 .bio-list li{display:flex;gap:12px;align-items:flex-start;line-height:1.45}
-.bio-list svg{flex:none;width:20px;height:20px;margin-top:.04em;fill:var(--s8)}   /* centre de la puce = centre des capitales de la 1re ligne */
+.bio-list svg{flex:none;width:20px;height:20px;margin-top:.04em;fill:var(--s8)}   
 .sheet{position:relative;background:var(--surface);color:#000;border-radius:var(--radius);padding:22px;max-width:440px;width:100%;margin:0 auto;
   box-shadow:0 1px 0 rgba(0,0,0,.06), 0 24px 40px -28px rgba(0,0,0,.35);transform:rotate(1deg)}
 .sheet-board{position:relative;aspect-ratio:1.6;border-radius:var(--radius-sm);
   background-image:radial-gradient(circle, rgba(0,0,0,.13) 1.2px, transparent 1.6px);background-size:18px 18px;container-type:inline-size}
 .sheet-board .stk{stroke:none;filter:drop-shadow(0 2px 0 rgba(0,0,0,.14));z-index:3}
-/* polaroïds épinglés : cadre blanc, marge du bas plus large, ombre qui suit le cadre, un bout de ruban adhésif.
-   Si la photo ne charge pas, le cadre garde une teinte pâle à la place (--ph). */
 .polaroid{position:absolute;margin:0;width:43cqw;padding:3.4cqw 3.4cqw 10cqw;background:#fff;transform:rotate(var(--r,0deg));
   box-shadow:0 0 0 1px rgba(0,0,0,.05), 0 2px 3px rgba(0,0,0,.08), 0 14px 22px -12px rgba(0,0,0,.32)}
 .polaroid .ph{display:block;aspect-ratio:1;background:var(--ph, #E6F3E4);overflow:hidden}
@@ -348,8 +240,6 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .sheet-label .since{font-family:var(--font-display);font-stretch:100%;font-weight:var(--dw);letter-spacing:var(--dtrack);font-size:2rem;line-height:1}
 .sheet-label .count{font-size:1rem;font-weight:500}
 .sheet-label .count strong{font-family:var(--font-display);font-stretch:100%;font-weight:600}
-
-/* avis (bande 3) */
 .band3{background:var(--band3);color:#000}
 .band3 .lead,.band3 .legal-note{color:#000}
 .rating{display:inline-flex;align-items:center;gap:8px;margin-top:18px;height:var(--ui-m);padding:0 calc(var(--ui-m) / 2) 0 calc((var(--ui-m) - 18px) / 2);font-family:var(--font-display);font-stretch:100%;font-weight:500;font-size:1.125rem;background:#000;color:var(--bg);border-radius:999px}
@@ -361,8 +251,6 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .review figcaption{margin-top:auto;padding-top:20px;font-size:.9375rem;color:var(--ink-soft)}
 .review figcaption strong{color:#000}
 .review .q{width:44px;height:44px;margin-bottom:16px;fill:var(--c);stroke:none}
-
-/* FAQ */
 .faq-grid{display:grid;grid-template-areas:"head" "faq" "call"}
 .faq-grid .section-head{grid-area:head}
 .faq{grid-area:faq}
@@ -382,8 +270,6 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .faq details[open] .pm::after{transform:translate(-50%,-50%) rotate(0)}
 .faq summary:hover .pm{transform:rotate(-12deg)}
 .faq details p{padding:0 56px 24px 0;color:var(--ink-soft)}
-
-/* accès */
 .access-grid{display:grid;gap:30px}
 .info{margin:0;display:grid}
 .info div{padding:16px 0;border-bottom:2px solid var(--line);display:grid;gap:4px}
@@ -399,20 +285,10 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .map-link{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;min-height:var(--ui-m);padding:0 calc((var(--ui-m) - 16px) / 2) 0 calc(var(--ui-m) / 2);font-family:var(--font-display);font-stretch:100%;font-weight:500;background:#000;color:var(--bg);border-radius:999px;text-decoration:none}
 .map-link svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .map-link:hover{background:var(--dv);color:#000}
-
-/* ================= SCÈNE FINALE « lever de soleil » (CTA final + pied de page) =================
-   Un plein écran : le ciel part de la dominante et se réchauffe (pêche, jaune pâle), le soleil se lève derrière les
-   collines et « Claire Martin » sort de l'horizon avec lui, au défilement (animation-timeline: view(), repli JS :
-   même animation en pause, avancée par currentTime). Les stickers tombent quand la colline arrive à l'écran, rebondissent,
-   s'empilent dans les creux, et se lancent à la main. Grandes surfaces pâles ; le vif reste au soleil et aux stickers.
-   Plans (z) : ciel 0 · soleil 0 · colline du fond 1 · nom 2 · collines du milieu et de devant 3 · textes 4 · stickers 6.
-   Les collines, le soleil et le nom sont calés sur le haut du pied de page (F) : rien ne dépend de la hauteur d'écran. */
 .scene{--m:clamp(8px, 1.2vw, 18px);position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;container-type:inline-size;
   min-height:calc(100svh - 88px);margin:0 var(--m) var(--m);border-radius:var(--block);color:#000;background:var(--accent);
-  /* mobile d'abord : hauteurs des crêtes au-dessus de F, soleil, nom */
   --hb:240px;--hm:170px;--hf:80px;--sun:min(62vw, 250px);--sun-y:232px;--sig:13.6vw;--sig-b:152px;--gap:350px;--fpad:22px;
   --c-back:#F9DCEA;--c-mid:#ECEBFB;--c-front:var(--accent);
-  /* stickers : jamais la couleur vive de la dominante */
   --k1:var(--s3);--k2:var(--s2);--k3:var(--s4);--k4:var(--s5);--k5:var(--s6);--k6:var(--s1)}
 html[data-dom="2"] .scene{--k5:var(--s9)}
 html[data-dom="3"] .scene{--k1:var(--s8)}
@@ -422,13 +298,9 @@ html[data-dom="3"] .scene{--k1:var(--s8)}
 .sky .cloud{position:absolute;fill:#fff;stroke:none;width:var(--w);aspect-ratio:1.53;opacity:.95}
 .sky .c1{--w:clamp(96px, 13vw, 200px);left:5%;top:16%}
 .sky .c2{--w:clamp(72px, 9vw, 140px);right:7%;top:30%}
-
-/* textes du haut : le CTA final */
 .final{position:relative;z-index:4;text-align:center;padding:clamp(56px, 9vh, 108px) 0 var(--gap)}
 .final h2{font-size:clamp(2.2rem, 1.3rem + 3.2vw, 4.4rem);max-width:13em;margin:0 auto;letter-spacing:var(--tr-xl)}
 .final .btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:clamp(22px, 3vh, 34px)}
-
-/* paysage, calé sur le haut du pied de page */
 .site-footer{position:relative;margin-top:auto;padding:var(--fpad) 0 26px;color:#000}
 .land{position:absolute;inset:0}
 .land .m{display:block}.land .d{display:none}
@@ -438,24 +310,15 @@ html[data-dom="3"] .scene{--k1:var(--s8)}
 .front{position:absolute;z-index:3;left:0;right:0;top:calc(-1 * var(--hf));bottom:0;
   background:linear-gradient(var(--c-front), var(--c-front)) 0 calc(var(--hf) - 1px) / 100% 100% no-repeat}
 .front svg{width:100%;height:var(--hf);fill:var(--c-front)}
-/* soleil : en aplats, comme les stickers. Un disque jaune chaud plein + une auréole festonnée plus pâle qui tourne
-   lentement. Ni dégradé, ni halo flou, ni liseré. */
 .sun{position:absolute;z-index:0;left:50%;top:calc(-1 * var(--sun-y));width:var(--sun);aspect-ratio:1;translate:-50% -50%}
 .sun-rise{position:absolute;inset:0}
 .sun-halo{position:absolute;inset:-21%;width:142%;height:142%;max-width:none;fill:#FFE6A1;animation:spin 120s linear infinite}
 .sun-disc{position:absolute;inset:0;border-radius:50%;background:#FFCF57}
 @keyframes spin{to{rotate:360deg}}
 .scene.is-off .sun-halo{animation-play-state:paused}
-/* le nom : posé au-dessus de la colline du milieu (ligne de base ~15 px au-dessus de la crête), il sort de l'horizon
-   avec le soleil pendant le défilement et finit entièrement visible. Une seule ligne, mobile compris.
-   Texte rogné au ras des capitales : le bas de la boîte est la ligne de base. Position absolue : rien ne pousse rien.
-   Taille : jamais plus de 13,4 % de la largeur de la scène (cqw, la scène est le conteneur), soit ~76 % de sa largeur
-   pour le nom entier ; le JS vérifie en plus qu'il tient (autre police, autre moteur) et le réduit au besoin. */
 .sig{position:absolute;z-index:2;left:50%;top:calc(-1 * var(--sig-b) + var(--cb));translate:-50% -100%;margin:0;
   font-family:"Fixel Gaiete", system-ui, sans-serif;font-stretch:100%;font-weight:var(--dw);font-size:min(var(--sig), 13.4cqw);line-height:.84;
   letter-spacing:-.05em;text-align:center;white-space:nowrap;text-box:trim-both cap alphabetic}
-
-/* défilement : chaque plan a son animation ; l'état de base est l'état final (mouvement réduit, ?static=1) */
 @keyframes sc-warm{0%{opacity:0}15%{opacity:0}}
 @keyframes sc-sun{from{transform:translate3d(0, 64%, 0) scale(.86)}}
 @keyframes sc-back{from{transform:translate3d(0, 36px, 0)}}
@@ -470,18 +333,13 @@ html[data-dom="3"] .scene{--k1:var(--s8)}
   .scene{view-timeline:--sunrise block}
   .sv{animation-duration:auto;animation-timeline:--sunrise;animation-range:cover 8% cover 50%}
 }
-html.scrub .sv{animation-duration:1s;animation-play-state:paused}   /* repli : avancées par le JS (currentTime) */
-
-/* stickers qui tombent (positionnés par le JS en transform ; rien n'apparaît avant leur chute).
-   Plats comme le reste de la scène : pas d'ombre posée (seulement celle du sticker tenu en main, comme dans le hero). */
+html.scrub .sv{animation-duration:1s;animation-play-state:paused}   
 .drops{position:absolute;inset:0;z-index:6;pointer-events:none}
 .drops > *{position:absolute;left:0;top:0;visibility:hidden;will-change:transform}
 .drops > .on{visibility:visible}
 .drops .stk{width:var(--w);transform:none}
 .drops .pill{font-size:clamp(.9375rem, .78rem + .6vw, 1.3rem)}
-@media (max-width:979px){ .drops > :not([data-m]){display:none} }   /* 7 stickers sous 980 px, 12 au-delà */
-
-/* pied de page : « Cadre & limites », petit et rangé, posé sur la colline de devant */
+@media (max-width:979px){ .drops > :not([data-m]){display:none} }   
 .foot{position:relative;z-index:4;display:grid;gap:14px;font-size:.8125rem;line-height:1.55}
 .foot h2{font-family:var(--font-display);font-stretch:100%;font-size:.9375rem;font-weight:600;letter-spacing:var(--tr-ui);line-height:1.3;margin-bottom:6px}
 .cadre{max-width:46rem;color:rgba(0,0,0,.76)}
@@ -492,8 +350,6 @@ html.scrub .sv{animation-duration:1s;animation-play-state:paused}   /* repli : a
 .foot-links a{display:inline-flex;align-items:center;min-height:44px}
 .foot-final{color:rgba(0,0,0,.76)}
 .foot-final a{display:inline-block;padding:12px 0;margin:-12px 0}
-
-/* barre mobile */
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));
   background:color-mix(in srgb, var(--bg) 94%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:2px solid #000;
   transform:translateY(110%);transition:transform .35s cubic-bezier(.3,1.3,.5,1);visibility:hidden}
@@ -501,43 +357,24 @@ html.scrub .sv{animation-duration:1s;animation-play-state:paused}   /* repli : a
 .mbar .btn-primary{flex:1}
 .mbar .tel{flex:none;width:52px;min-height:52px;padding:0}
 body{padding-bottom:80px}
-
-/* ================= APPARITIONS =================
-   Rejouées à chaque entrée dans l'écran (classe .is-in posée et retirée par le JS, jamais si mouvement réduit ou
-   ?static=1). Découpage fin : data-stagger sur un parent fait apparaître ses enfants un par un (numéro, titre, chapeau,
-   puis chaque carte, ligne, étape, avis, question, polaroïd). Retard = min(--i × 80 ms, 600 ms), --i posé par le JS.
-   Mouvement lent et doux : fondu + montée de 18 px (12 px sur mobile) + léger flou sur desktop.
-   « translate » plutôt que « transform » : il se compose avec les rotations des stickers, polaroïds et pastilles.
-   Sortie instantanée (l'élément est déjà hors de l'écran), entrée en 900 ms. */
-/* intensité ramenée à 70 % puis −15 % le 17/10 (distances, écart de graisse), flou de départ 2,5 px, puis 20 % plus rapide, à la demande de Corentin.
-   Effet « rêve éveillé » : chaque élément arrive surexposé, comme dans la lumière, puis se pose. Ordre important : contrast() AVANT brightness(),
-   sinon le contraste ramène les blancs vers le gris (effet terne). Ici les noirs partent d'un gris clair et les teintes pâles d'un quasi-blanc. */
-html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:760ms;--rv-glow:contrast(.55) brightness(1.5)}
-[data-reveal]{--rv-d:min(calc(var(--i, 0) * 60ms), 400ms)}
+html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:1065ms;--rv-glow:contrast(.55) brightness(1.5)}
+[data-reveal]{--rv-d:min(calc(var(--i, 0) * 84ms), 560ms)}
 .js-reveal [data-reveal]:not([data-split]){opacity:0;translate:0 var(--rv-y)}
 .js-reveal [data-reveal].is-in:not([data-split]){opacity:1;translate:none;
   transition:opacity var(--rv-dur) var(--rv-ease) var(--rv-d), translate var(--rv-dur) var(--rv-ease) var(--rv-d), filter var(--rv-dur) var(--rv-ease) var(--rv-d)}
 .js-reveal [data-reveal]:not(.is-in):not([data-split]):not(.stk){filter:var(--rv-glow)}
 @media (min-width:640px){ .js-reveal [data-reveal]:not(.is-in):not([data-split]):not(.stk){filter:blur(2.5px) var(--rv-glow)} }
-@media (max-width:639px){ html{--rv-y:7px;--rv-dur:660ms} }
-
-/* Titres découpés (data-split : H1, titres H2, « Claire Martin »), sans bibliothèque (voir le JS « Découpe des titres »).
-   Chaque mot est un inline-block insécable : les retours à la ligne restent ceux du texte. Les lettres n'existent que
-   pendant l'animation, chacune à la chasse qu'elle a dans le mot crénelé : elles montent, apparaissent et passent d'une
-   graisse fine à la graisse finale en vague, sans rien pousser. Au repos, le mot redevient du texte (crénage intact).
-   H2 : discret. H1 et nom du pied de page : un peu plus marqué (graisse partant de 100, montée plus haute). */
+@media (max-width:639px){ html{--rv-y:7px;--rv-dur:925ms} }
 .w{display:inline-block;white-space:nowrap}
 .c{display:inline-block;white-space:pre}
-[data-split]{--sp-step:15ms;--sp-y:.18em;--sp-w0:320;--sp-dur:760ms;--sp-wdur:1000ms}
-.hero h1[data-split]{--sp-step:19ms;--sp-y:.3em;--sp-w0:260;--sp-dur:880ms;--sp-wdur:1300ms}
-.sig[data-split]{--sp-step:22ms;--sp-y:.27em;--sp-w0:260;--sp-dur:880ms;--sp-wdur:1450ms}
+[data-split]{--sp-step:21ms;--sp-y:.18em;--sp-w0:320;--sp-dur:1065ms;--sp-wdur:1400ms}
+.hero h1[data-split]{--sp-step:27ms;--sp-y:.3em;--sp-w0:260;--sp-dur:1230ms;--sp-wdur:1820ms}
+.sig[data-split]{--sp-step:31ms;--sp-y:.27em;--sp-w0:260;--sp-dur:1230ms;--sp-wdur:2030ms}
 .js-reveal [data-split]:not(.is-in){opacity:0}
 .sp-run .c{animation:sp-in var(--sp-dur) var(--rv-ease) both, sp-w var(--sp-wdur) var(--rv-ease) both;
   animation-delay:calc(var(--rv-d, 0ms) + var(--ci) * var(--sp-step))}
 @keyframes sp-in{from{opacity:0;transform:translate3d(0, var(--sp-y), 0);filter:var(--rv-glow)}}
 @keyframes sp-w{from{font-weight:var(--sp-w0)}}
-
-/* ================= >= 640 ================= */
 @media (min-width:640px){
   .proofs{grid-template-columns:repeat(2, max-content);gap:14px 34px}
   .who-list{grid-template-columns:1fr 1fr;column-gap:44px;padding:12px 34px}
@@ -548,7 +385,6 @@ html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:760ms;--rv-glow:con
   .pillars{grid-template-columns:repeat(3,1fr)}
   .portrait{width:min(74%, 380px)}
 }
-/* ================= >= 980 : desktop ================= */
 @media (min-width:980px){
   html{--hh:84px}
   body{padding-bottom:0}
@@ -569,7 +405,6 @@ html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:760ms;--rv-glow:con
   .section-head.split .lead{margin-top:0}
   .scene{min-height:calc(100svh - 2 * var(--m))}
 }
-/* scène : tablette et desktop (tracés de collines larges) */
 @media (min-width:640px){
   .land .m{display:none}.land .d{display:block}
   .scene{--hb:200px;--hm:150px;--hf:100px;--sun:clamp(240px, 30vw, 330px);--sun-y:196px;--sig:clamp(4.2rem, 9.6vw, 7rem);--sig-b:120px;--gap:340px;--fpad:40px}
@@ -595,11 +430,7 @@ html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:760ms;--rv-glow:con
 }
 @media (max-width:419px){ .brand-role{display:none} .brand-name{font-size:1.2rem} }
 @media (max-width:374px){ .btn{padding-left:18px;padding-right:18px} .header-cta .btn-sm{padding:0 13px;font-size:.875rem} }
-@media (max-width:339px){ .header-cta .btn-sm{padding:0 11px} .site-header .wrap{gap:8px} }   /* 320 px : le bouton dépassait de 2 à 3 px */
-/* Approche optique (17/10) : plus le texte est grand, plus l'approche est serrée.
-   XL -5,5 % (H1, CTA final, prix) · L -4,5 % (titres de section) · M -3,5 % (piliers, « Depuis 2019 ») · S -2,5 % (étapes, tarifs, marque)
-   pilules -2 % · XS -1,5 % (FAQ, avis, note des étapes) · UI -1 % (boutons, titre du pied de page) · texte courant 0.
-   Sur mobile, les très grands titres se desserrent un peu (XL -4,2 %, L -3,5 %) pour rester lisibles. */
+@media (max-width:339px){ .header-cta .btn-sm{padding:0 11px} .site-header .wrap{gap:8px} }   
 html{--tr-xl:-.055em;--tr-l:-.045em;--tr-m:-.035em;--tr-s:-.025em;--tr-xs:-.015em;--tr-ui:-.01em}
 @media (max-width:600px){ html{--tr-xl:-.042em;--tr-l:-.035em} }
 .section h2{letter-spacing:var(--tr-l)}
@@ -616,8 +447,6 @@ html{--tr-xl:-.055em;--tr-l:-.045em;--tr-m:-.035em;--tr-s:-.025em;--tr-xs:-.015e
   .js-reveal [data-reveal],.js-reveal [data-split]{opacity:1;translate:none;filter:none}
 }
 html.static *,html.static *::before,html.static *::after{transition:none!important;animation:none!important}
-
-/* ================= PANNEAU DA (neutre, hors direction) ================= */
 .da{position:fixed;left:12px;bottom:12px;z-index:90;font:13px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#222}
 .da-toggle{all:unset;box-sizing:border-box;cursor:pointer;min-width:44px;height:44px;padding:0 12px;border-radius:8px;background:#2b2b2b;color:#fff;font:600 12px/44px system-ui,sans-serif;letter-spacing:.06em;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.25)}
 .da-toggle:focus-visible{outline:2px solid #1a73e8;outline-offset:2px}
@@ -636,7 +465,6 @@ body.clean .da{display:none}
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
-
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="sh-star8" viewBox="-56 -56 112 112"><path d="M-3.8 -45.1Q0 -50 3.8 -45.1L11 -35.5Q13.4 -32.3 17.3 -32.9L29.2 -34.5Q35.4 -35.4 34.5 -29.2L32.9 -17.3Q32.3 -13.4 35.5 -11L45.1 -3.8Q50 0 45.1 3.8L35.5 11Q32.3 13.4 32.9 17.3L34.5 29.2Q35.4 35.4 29.2 34.5L17.3 32.9Q13.4 32.3 11 35.5L3.8 45.1Q0 50 -3.8 45.1L-11 35.5Q-13.4 32.3 -17.3 32.9L-29.2 34.5Q-35.4 35.4 -34.5 29.2L-32.9 17.3Q-32.3 13.4 -35.5 11L-45.1 3.8Q-50 0 -45.1 -3.8L-35.5 -11Q-32.3 -13.4 -32.9 -17.3L-34.5 -29.2Q-35.4 -35.4 -29.2 -34.5L-17.3 -32.9Q-13.4 -32.3 -11 -35.5Z"/></symbol>
@@ -649,9 +477,7 @@ body.clean .da{display:none}
     <symbol id="i-phone" viewBox="0 0 24 24"><path fill="currentColor" d="M19.95 21q-3.125 0-6.175-1.362t-5.55-3.863q-2.5-2.5-3.862-5.55T3 4.05q0-.45.3-.75t.75-.3H8.1q.35 0 .625.238t.325.562l.65 3.5q.05.4-.025.675T9.4 8.45L6.975 10.9q.5.925 1.187 1.787t1.513 1.663q.775.775 1.625 1.438T13.1 17l2.35-2.35q.225-.225.588-.337t.712-.063l3.45.7q.35.1.575.363T21 15.9v4.05q0 .45-.3.75t-.75.3Z"/></symbol>
   </defs>
 </svg>
-
 <div class="ribbon" role="note">Maquette préparée pour vous par Volteface.studio, à partir de votre site actuel. Elle sera supprimée le 9 novembre. <a href="https://volteface.studio/">En savoir plus</a><button class="ribbon-x" type="button" aria-label="Fermer le bandeau"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5 2.5l9 9M11.5 2.5l-9 9"/></svg></button></div>
-
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="#main" aria-label="Claire Martin, sophrologue, retour en haut">
@@ -660,7 +486,7 @@ body.clean .da{display:none}
     </a>
     <nav class="nav" aria-label="Menu principal">
       <ul>
-        <li><a href="#approche"><span class="tx">L'approche</span></a></li>
+        <li><a href="#approche"><span class="tx">L&#39;approche</span></a></li>
         <li><a href="#tarifs"><span class="tx">Séances &amp; tarifs</span></a></li>
         <li><a href="#parcours"><span class="tx">Parcours</span></a></li>
         <li><a href="#avis"><span class="tx">Avis</span></a></li>
@@ -674,34 +500,29 @@ body.clean .da{display:none}
     </div>
   </div>
 </header>
-
 <main id="main">
-
-  <!-- 1. Hero -->
   <section class="hero" id="hero" aria-labelledby="hero-title">
     <div class="wrap hero-grid">
       <div class="hero-text" data-stagger>
         <p class="chip"><svg aria-hidden="true"><use href="#sh-star8"/></svg><span class="tx">Sophrologue · Paris 11e &amp; visio</span></p>
-        <h1 id="hero-title" data-split>Retrouver du calme, <em>une séance après l'autre.</em></h1>
-        <p class="hero-sub">J'accompagne les adultes et les adolescents qui traversent une période de stress, de fatigue ou de changement, avec des exercices simples à refaire chez soi.</p>
+        <h1 id="hero-title" data-split>Retrouver du calme, <em>une séance après l&#39;autre.</em></h1>
+        <p class="hero-sub">J&#39;accompagne les adultes et les adolescents qui traversent une période de stress, de fatigue ou de changement, avec des exercices simples à refaire chez soi.</p>
         <div class="hero-ctas">
           <a class="btn btn-hero" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="tx">Prendre rendez-vous</span></a>
-          <a class="btn btn-line-hero" href="#approche"><span class="tx">Découvrir l'approche</span></a>
+          <a class="btn btn-line-hero" href="#approche"><span class="tx">Découvrir l&#39;approche</span></a>
         </div>
         <ul class="proofs" data-stagger>
           <li><span class="ic" style="--b:var(--s1)" aria-hidden="true"><svg class="star"><use href="#i-star"/></svg></span><span class="tx"><span class="sr-only">Note : </span>4,9 · 37 avis Google</span></li>
-          <li><span class="ic" style="--b:var(--s5)" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 7v5.2l3.4 2.1" fill="none" stroke="var(--b)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--b)"/></svg></span><span class="tx">Séance de 60 min · 70 €</span></li>
-          <li><span class="ic" style="--b:var(--s2)" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg></span><span class="tx">Premier appel de 15 min offert</span></li>
+          <li><span class="ic" style="--b:var(--s5)" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 7v5.2l3.4 2.1" fill="none" stroke="var(--b)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--b)"/></svg></span><span class="tx">Séance de 60 min · 70 €</span></li>
+          <li><span class="ic" style="--b:var(--s2)" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg></span><span class="tx">Premier appel de 15 min offert</span></li>
           <li><span class="ic" style="--b:var(--s7)" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.8V4.6L8 9l4-4.4v7.2"/></svg></span><span class="tx">Métro Voltaire (9)</span></li>
         </ul>
       </div>
-
       <figure class="portrait" style="margin-bottom:0" data-reveal>
         <span class="arch-b" aria-hidden="true"></span>
         <div class="portrait-arch">
-          <!-- Photo : https://unsplash.com/photos/G8pMDFlHhwk · Maria Kovalets (Unsplash License, lien direct images.unsplash.com) -->
           <img src="https://images.unsplash.com/photo-1737056747310-7818d47fcc3e?auto=format&amp;fit=crop&amp;w=900&amp;q=70" width="900" height="1350"
-               alt="Les mains de Claire Martin autour d'une tasse blanche, dans un pull en maille bleu-vert" fetchpriority="high" decoding="async"
+               alt="Les mains de Claire Martin autour d&#39;une tasse blanche, dans un pull en maille bleu-vert" style="object-position:50% 50%" fetchpriority="high" decoding="async"
                onerror="this.style.display='none'">
         </div>
         <svg class="stk fl" aria-hidden="true" style="--c:var(--hstar);--w:20cqw;left:-9%;top:9%;--r:-4deg;--d:8s;--dl:-2s;--dr:2deg"><use href="#sh-star8"/></svg>
@@ -711,14 +532,12 @@ body.clean .da{display:none}
       </figure>
     </div>
   </section>
-
-  <!-- 2. Pour qui -->
   <section class="section" id="pour-qui" aria-labelledby="who-title">
     <div class="wrap">
       <div class="section-head split" data-stagger>
         <div data-stagger>
           <p class="num" aria-hidden="true" style="--n:var(--s1)"><span class="tx">01</span></p>
-          <h2 id="who-title" data-split>Vous vous reconnaissez ?</h2>
+          <h2 id="who-title" data-split>Vous vous reconnaissez ?</h2>
         </div>
         <p class="lead">La sophrologie peut vous aider si…</p>
       </div>
@@ -727,7 +546,7 @@ body.clean .da{display:none}
           <li><svg class="b" style="--c:var(--s6)" aria-hidden="true"><use href="#sh-flower" style="--c2:var(--who)"/></svg><span>Vous avez du mal à décrocher le soir.</span></li>
           <li><svg class="b" style="--c:var(--s3)" aria-hidden="true"><use href="#sh-star8"/></svg><span>Le sommeil est devenu léger ou irrégulier.</span></li>
           <li><svg class="b" style="--c:var(--s4)" aria-hidden="true"><use href="#sh-star4"/></svg><span>Un examen, un oral ou un entretien approche.</span></li>
-          <li><svg class="b" style="--c:var(--s2)" aria-hidden="true"><use href="#sh-pin"/></svg><span>Vous traversez un changement : déménagement, naissance, nouveau poste.</span></li>
+          <li><svg class="b" style="--c:var(--s2)" aria-hidden="true"><use href="#sh-pin"/></svg><span>Vous traversez un changement : déménagement, naissance, nouveau poste.</span></li>
           <li><svg class="b" style="--c:var(--s6)" aria-hidden="true"><use href="#sh-star8"/></svg><span>Vous voulez mieux vivre une période de fatigue.</span></li>
           <li><svg class="b" style="--c:var(--s3)" aria-hidden="true"><use href="#sh-flower" style="--c2:var(--who)"/></svg><span>Vous cherchez un moment à vous, régulier, sans écran.</span></li>
         </ul>
@@ -735,21 +554,19 @@ body.clean .da{display:none}
       </div>
     </div>
   </section>
-
-  <!-- 3. L'approche -->
   <section class="section block band approach" id="approche" aria-labelledby="approach-title">
     <svg class="stk fl deco" aria-hidden="true" style="--c:var(--s4);--w:clamp(40px, 4.4vw, 60px);--r:4deg;--d:9s;--dr:2deg"><use href="#sh-star4"/></svg>
     <div class="wrap">
       <div class="section-head" data-stagger>
         <p class="num" aria-hidden="true" style="--n:var(--s1)"><span class="tx">02</span></p>
         <h2 id="approach-title" data-split>Une méthode simple, que vous gardez avec vous</h2>
-        <p class="lead">La sophrologie associe la respiration, la détente musculaire et la visualisation. Pas besoin d'être souple ni « doué pour la méditation » : on avance à votre rythme, assis ou debout, habillé normalement.</p>
+        <p class="lead">La sophrologie associe la respiration, la détente musculaire et la visualisation. Pas besoin d&#39;être souple ni « doué pour la méditation » : on avance à votre rythme, assis ou debout, habillé normalement.</p>
       </div>
       <ul class="pillars" data-stagger>
         <li class="pillar">
           <svg class="cloud" aria-hidden="true" style="fill:var(--s4)"><use href="#sh-cloud"/></svg>
           <h3>Respirer</h3>
-          <p>Des respirations courtes à utiliser n'importe où, même dans le métro.</p>
+          <p>Des respirations courtes à utiliser n&#39;importe où, même dans le métro.</p>
         </li>
         <li class="pillar">
           <svg aria-hidden="true" style="--c:var(--s6);--c2:var(--s1);fill:var(--c)"><use href="#sh-pin"/></svg>
@@ -764,45 +581,41 @@ body.clean .da{display:none}
       </ul>
     </div>
   </section>
-
-  <!-- 4. La première séance -->
   <section class="section" id="premiere-seance" aria-labelledby="first-title">
     <div class="wrap">
       <div class="section-head" data-stagger>
         <p class="num" aria-hidden="true" style="--n:var(--s2)"><span class="tx">03</span></p>
         <h2 id="first-title" data-split>Votre première séance, pas à pas</h2>
-        <p class="lead">1 h 15 pour faire connaissance et repartir avec un premier outil. Rien à préparer : vous venez comme vous êtes.</p>
+        <p class="lead">1 h 15 pour faire connaissance et repartir avec un premier outil. Rien à préparer : vous venez comme vous êtes.</p>
       </div>
       <ol class="steps" data-stagger>
         <li class="step" style="--n:var(--s1)">
-          <p class="dur">20 min</p>
+          <p class="dur">20 min</p>
           <h3>Vous me racontez</h3>
           <p>ce qui vous amène et ce que vous aimeriez voir changer.</p>
         </li>
         <li class="step" style="--n:var(--s5)">
-          <p class="dur">25 min</p>
+          <p class="dur">25 min</p>
           <h3>On essaie ensemble</h3>
           <p>un exercice guidé de respiration et de détente, en douceur.</p>
         </li>
         <li class="step" style="--n:var(--s2)">
-          <p class="dur">15 min</p>
+          <p class="dur">15 min</p>
           <h3>On fait le point</h3>
           <p>ce que vous avez ressenti, à votre rythme et sans jugement.</p>
         </li>
         <li class="step" style="--n:var(--s3)">
-          <p class="dur">15 min</p>
+          <p class="dur">15 min</p>
           <h3>Vous repartez avec un outil</h3>
           <p>un exercice simple à refaire chez vous, et le rythme de séances qui vous convient.</p>
         </li>
       </ol>
       <div class="recap" data-reveal>
-        <p><svg aria-hidden="true"><use href="#sh-star8"/></svg><span class="tx"><strong>Première séance</strong> · 1&nbsp;h&nbsp;15 · 85&nbsp;€ · au cabinet ou en visio</span></p>
+        <p><svg aria-hidden="true"><use href="#sh-star8"/></svg><span class="tx"><strong>Première séance</strong> · 1 h 15 · 85 € · au cabinet ou en visio</span></p>
         <a class="btn btn-hero" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="tx">Prendre rendez-vous</span></a>
       </div>
     </div>
   </section>
-
-  <!-- 5. Séances & tarifs -->
   <section class="section" id="tarifs" aria-labelledby="prices-title" style="padding-top:0">
     <div class="wrap">
       <div class="section-head" data-stagger>
@@ -812,86 +625,80 @@ body.clean .da{display:none}
       <ul class="prices" data-stagger>
         <li class="price" style="--pb:var(--pr1);--pa:var(--pa1)">
           <h3><span class="tx">Première séance</span></h3>
-          <p class="meta">1 h 15</p>
-          <p class="amount">85 €</p>
+          <p class="meta">1 h 15</p>
+          <p class="amount">85 €</p>
           <p class="where">Au cabinet ou en visio</p>
         </li>
         <li class="price" style="--pb:var(--pr2);--pa:var(--pa2)">
           <h3><span class="tx">Séance de suivi</span></h3>
-          <p class="meta">1 h</p>
-          <p class="amount">70 €</p>
+          <p class="meta">1 h</p>
+          <p class="amount">70 €</p>
           <p class="where">Au cabinet ou en visio</p>
         </li>
         <li class="price" style="--pb:var(--pr3);--pa:var(--pa3)">
-          <h3><span class="tx">Forfait 5 séances</span></h3>
-          <p class="meta">5 × 1 h</p>
-          <p class="amount">320 €</p>
+          <h3><span class="tx">Forfait 5 séances</span></h3>
+          <p class="meta">5 × 1 h</p>
+          <p class="amount">320 €</p>
           <p class="where">Valable 4 mois</p>
         </li>
       </ul>
       <div class="prices-foot" data-stagger>
-        <p class="legal-note">TVA non applicable, art. 293 B du CGI. Séances non remboursées par la Sécurité sociale ; certaines mutuelles les prennent en charge, je vous remets une note à chaque séance.</p>
+        <p class="legal-note">TVA non applicable, art. 293 B du CGI. Séances non remboursées par la Sécurité sociale ; certaines mutuelles les prennent en charge, je vous remets une note à chaque séance.</p>
         <div class="prices-cta"><a class="btn btn-primary" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="tx">Prendre rendez-vous</span></a></div>
       </div>
     </div>
   </section>
-
-  <!-- 6. Parcours -->
   <section class="section block band2" id="parcours" aria-labelledby="bio-title">
     <div class="wrap bio-grid">
       <div class="bio-text" data-stagger>
         <p class="num" aria-hidden="true" style="--n:#000;--ni:var(--bg)"><span class="tx">05</span></p>
         <h2 id="bio-title" data-split>Mon parcours</h2>
-        <p class="lead">Après dix ans dans la communication, j'ai découvert la sophrologie pendant une période où j'avais besoin de souffler. Je me suis formée, et je reçois depuis 2019 dans mon cabinet du 11e.</p>
+        <p class="lead">Après dix ans dans la communication, j&#39;ai découvert la sophrologie pendant une période où j&#39;avais besoin de souffler. Je me suis formée, et je reçois depuis 2019 dans mon cabinet du 11e.</p>
         <h3 class="sr-only">Formation</h3>
         <ul class="bio-list" data-stagger>
           <li><svg aria-hidden="true"><use href="#sh-star4"/></svg><span>Certification RNCP de sophrologue (niveau 5)</span></li>
           <li><svg aria-hidden="true"><use href="#sh-star4"/></svg><span>Membre de la Chambre syndicale de la sophrologie</span></li>
-          <li><svg aria-hidden="true"><use href="#sh-star4"/></svg><span>Formation complémentaire : sophrologie et sommeil</span></li>
+          <li><svg aria-hidden="true"><use href="#sh-star4"/></svg><span>Formation complémentaire : sophrologie et sommeil</span></li>
         </ul>
       </div>
       <div class="sheet" data-reveal data-stagger>
         <div class="sheet-board" data-stagger>
-          <!-- Photo : https://unsplash.com/photos/95baBTvQ5gI · Sreeraj S (Unsplash License, lien direct images.unsplash.com) -->
           <figure class="polaroid" style="--r:-3deg;--tr:-6deg;--ph:#E6F3E4;left:6%;top:7%">
             <span class="ph"><img src="https://images.unsplash.com/photo-1674708271645-4d77f9d68707?auto=format&amp;fit=crop&amp;w=600&amp;q=70" width="600" height="600" loading="lazy" decoding="async"
-              alt="Ombre d'une plante sur un mur clair, dans la lumière du matin" onerror="this.style.display='none'"></span>
+              alt="Ombre d&#39;une plante sur un mur clair, dans la lumière du matin" style="object-position:50% 50%" onerror="this.style.display='none'"></span>
           </figure>
-          <!-- Photo : https://unsplash.com/photos/XfOAfV8vl8I · Joyful (Unsplash License, lien direct images.unsplash.com) -->
           <figure class="polaroid" style="--r:4deg;--tr:5deg;--ph:#FCE6F0;right:6%;top:12%">
             <span class="ph"><img src="https://images.unsplash.com/photo-1568051417544-7be7671f4c2a?auto=format&amp;fit=crop&amp;w=600&amp;q=70" width="600" height="600" loading="lazy" decoding="async"
-              alt="Tulipes blanches posées à côté d'un carnet ouvert" onerror="this.style.display='none'"></span>
+              alt="Tulipes blanches posées à côté d&#39;un carnet ouvert" style="object-position:50% 50%" onerror="this.style.display='none'"></span>
           </figure>
           <svg class="stk" aria-hidden="true" style="--c:var(--s2);--w:10cqw;left:44%;bottom:6%;--r:-6deg"><use href="#sh-star4"/></svg>
         </div>
         <div class="sheet-label">
           <p class="since">Depuis 2019</p>
-          <p class="count">plus de <strong>1 200 séances</strong></p>
+          <p class="count">plus de <strong>1 200&nbsp;séances</strong></p>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- 7. Avis -->
   <section class="section block band3" id="avis" aria-labelledby="reviews-title">
     <div class="wrap">
       <div class="section-head" data-stagger>
         <p class="num" aria-hidden="true" style="--n:#000;--ni:var(--bg)"><span class="tx">06</span></p>
-        <h2 id="reviews-title" data-split>Ce qu'en disent mes clients</h2>
+        <h2 id="reviews-title" data-split>Ce qu&#39;en disent mes clients</h2>
         <p class="rating"><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><span class="tx">4,9 sur 37 avis Google</span></p>
       </div>
       <ul class="reviews" data-stagger>
         <li style="display:flex">
           <figure class="review">
             <svg class="q" aria-hidden="true" style="--c:var(--s3)"><use href="#sh-star8"/></svg>
-            <blockquote><p>« Des exercices très concrets que j'utilise encore tous les jours. Claire est à l'écoute sans jamais forcer. »</p></blockquote>
+            <blockquote><p>« Des exercices très concrets que j&#39;utilise encore tous les jours. Claire est à l&#39;écoute sans jamais forcer. »</p></blockquote>
             <figcaption><strong>Julie R.</strong> · mars 2026</figcaption>
           </figure>
         </li>
         <li style="display:flex">
           <figure class="review">
             <svg class="q" aria-hidden="true" style="--c:var(--s2);--c2:var(--s4)"><use href="#sh-pin"/></svg>
-            <blockquote><p>« Je venais pour préparer un concours. J'y suis arrivé beaucoup plus serein. »</p></blockquote>
+            <blockquote><p>« Je venais pour préparer un concours. J&#39;y suis arrivé beaucoup plus serein. »</p></blockquote>
             <figcaption><strong>Thomas B.</strong> · janvier 2026</figcaption>
           </figure>
         </li>
@@ -903,11 +710,9 @@ body.clean .da{display:none}
           </figure>
         </li>
       </ul>
-      <p class="legal-note" data-reveal>Avis publiés sur Google, reproduits avec leur date. Ils ne font l'objet d'aucune contrepartie ni d'aucune vérification de ma part.</p>
+      <p class="legal-note" data-reveal>Avis publiés sur Google, reproduits avec leur date. Ils ne font l&#39;objet d&#39;aucune contrepartie ni d&#39;aucune vérification de ma part.</p>
     </div>
   </section>
-
-  <!-- 8. FAQ -->
   <section class="section" id="faq" aria-labelledby="faq-title">
     <div class="wrap faq-grid">
       <div class="section-head" data-stagger>
@@ -916,34 +721,32 @@ body.clean .da{display:none}
       </div>
       <div class="faq" data-stagger>
         <details>
-          <summary><span class="tx">Combien de séances faut-il ?</span><span class="pm" aria-hidden="true"></span></summary>
-          <p>Souvent entre 5 et 10, à raison d'une séance par semaine ou tous les quinze jours. On en reparle ensemble à la première séance.</p>
+          <summary><span class="tx">Combien de séances faut-il ?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Souvent entre 5 et 10, à raison d&#39;une séance par semaine ou tous les quinze jours. On en reparle ensemble à la première séance.</p>
         </details>
         <details>
-          <summary><span class="tx">La visio, ça marche aussi bien ?</span><span class="pm" aria-hidden="true"></span></summary>
+          <summary><span class="tx">La visio, ça marche aussi bien ?</span><span class="pm" aria-hidden="true"></span></summary>
           <p>Oui, la plupart des exercices se font très bien à distance. Il vous faut juste un endroit calme et une chaise.</p>
         </details>
         <details>
-          <summary><span class="tx">Est-ce remboursé ?</span><span class="pm" aria-hidden="true"></span></summary>
-          <p>Pas par la Sécurité sociale. Certaines mutuelles prennent en charge une partie des séances : je vous remets une note à chaque fois.</p>
+          <summary><span class="tx">Est-ce remboursé ?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Pas par la Sécurité sociale. Certaines mutuelles prennent en charge une partie des séances : je vous remets une note à chaque fois.</p>
         </details>
         <details>
-          <summary><span class="tx">Comment annuler un rendez-vous ?</span><span class="pm" aria-hidden="true"></span></summary>
-          <p>Directement depuis le lien de réservation, jusqu'à 24 h avant la séance.</p>
+          <summary><span class="tx">Comment annuler un rendez-vous ?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Directement depuis le lien de réservation, jusqu&#39;à 24 h avant la séance.</p>
         </details>
         <details>
-          <summary><span class="tx">Est-ce que ça remplace un suivi médical ?</span><span class="pm" aria-hidden="true"></span></summary>
-          <p>Non. La sophrologie vient en complément : si un médecin vous suit, continuez ce suivi.</p>
+          <summary><span class="tx">Est-ce que ça remplace un suivi médical ?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Non. La sophrologie vient en complément : si un médecin vous suit, continuez ce suivi.</p>
         </details>
       </div>
       <div class="faq-call" data-reveal>
-        <p><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg></span><span class="tx">Premier appel de 15 min offert</span></p>
+        <p><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg></span><span class="tx">Premier appel de 15 min offert</span></p>
         <a class="btn btn-ghost btn-sm btn-ic" href="tel:+33612345678" aria-label="Appeler le 06 12 34 56 78"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="tx">06 12 34 56 78</span></a>
       </div>
     </div>
   </section>
-
-  <!-- 9. Accès -->
   <section class="section" id="acces" aria-labelledby="access-title" style="padding-top:0">
     <div class="wrap">
       <div class="section-head" data-stagger>
@@ -952,14 +755,14 @@ body.clean .da{display:none}
       </div>
       <div class="access-grid">
         <dl class="info" data-stagger>
-          <div style="--n:var(--s3)"><dt><span class="tx">Adresse</span></dt><dd>Rue de la Roquette, 75011 Paris<small>(l'adresse exacte est envoyée à la réservation)</small></dd></div>
-          <div style="--n:var(--s1)"><dt><span class="tx">Accès</span></dt><dd>Métro Voltaire (ligne 9) ou Bastille (lignes 1, 5, 8) · Bus 61, 69</dd></div>
-          <div style="--n:var(--s2)"><dt><span class="tx">Horaires</span></dt><dd>Du lundi au vendredi, 9 h – 20 h · Samedi matin</dd></div>
+          <div style="--n:var(--s3)"><dt><span class="tx">Adresse</span></dt><dd>Rue de la Roquette, 75011 Paris<small>(l&#39;adresse exacte est envoyée à la réservation)</small></dd></div>
+          <div style="--n:var(--s1)"><dt><span class="tx">Accès</span></dt><dd>Métro Voltaire (ligne 9) ou Bastille (lignes 1, 5, 8) · Bus 61, 69</dd></div>
+          <div style="--n:var(--s2)"><dt><span class="tx">Horaires</span></dt><dd>Du lundi au vendredi, 9 h – 20 h · Samedi matin</dd></div>
           <div style="--n:var(--s5)"><dt><span class="tx">Accessibilité</span></dt><dd>Rez-de-chaussée, accessible en fauteuil</dd></div>
           <div style="--n:var(--s4)"><dt><span class="tx">Contact</span></dt><dd><a href="tel:+33612345678">06 12 34 56 78</a><br><a href="mailto:bonjour@clairemartin-sophrologue.fr">bonjour@clairemartin-sophrologue.fr</a></dd></div>
         </dl>
         <div class="map" data-reveal>
-          <svg viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Plan stylisé du quartier : rue de la Roquette, entre Bastille et Voltaire, Paris 11e">
+          <svg viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Plan stylisé du quartier : Rue de la Roquette, Paris 11e">
             <defs><clipPath id="mapclip"><rect width="600" height="380"/></clipPath></defs>
             <g clip-path="url(#mapclip)">
               <rect width="600" height="380" fill="var(--map-bg)"/>
@@ -1000,25 +803,19 @@ body.clean .da{display:none}
           </svg>
           <div class="map-foot">
             <span class="tx">Paris 11e · Roquette</span>
-            <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Rue+de+la+Roquette+75011+Paris" target="_blank" rel="noopener"><span class="tx">Ouvrir dans Maps</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg></a>
+            <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Rue+de+la+Roquette%2C+75011+Paris" target="_blank" rel="noopener"><span class="tx">Ouvrir dans Maps</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg></a>
           </div>
         </div>
       </div>
     </div>
   </section>
-
 </main>
-
-<!-- Scène finale « lever de soleil » : le CTA final et le pied de page « Cadre & limites » dans un même plein écran.
-     Le ciel se réchauffe et le soleil se lève au défilement ; les stickers tombent, s'empilent et se lancent à la main.
-     Tout le décor est aria-hidden ; les textes et les liens restent du vrai texte. -->
 <div class="scene" id="scene">
   <div class="sky" aria-hidden="true">
     <span class="sky-warm sv"></span>
     <svg class="cloud c1 sv"><use href="#sh-cloud"/></svg>
     <svg class="cloud c2 sv"><use href="#sh-cloud"/></svg>
   </div>
-
   <section class="final" id="final" aria-labelledby="final-title">
     <div class="wrap" data-stagger>
       <h2 id="final-title" data-split>Un premier échange, sans engagement</h2>
@@ -1028,7 +825,6 @@ body.clean .da{display:none}
       </div>
     </div>
   </section>
-
   <footer class="site-footer" id="cadre">
     <div class="land" aria-hidden="true">
       <div class="sun"><div class="sun-rise sv"><svg class="sun-halo"><use href="#sh-star8"/></svg><span class="sun-disc"></span></div></div>
@@ -1045,7 +841,7 @@ body.clean .da{display:none}
     <div class="wrap foot" data-stagger>
       <div class="foot-cadre">
         <h2>Cadre &amp; limites</h2>
-        <p class="cadre">Mes séances de sophrologie relèvent du bien-être et de l'accompagnement. Elles ne remplacent pas un avis, un diagnostic ou un traitement médical, et je vous encourage à poursuivre tout suivi en cours. Séances non remboursées par la Sécurité sociale ; certaines mutuelles les prennent en charge. TVA non applicable, art. 293 B du CGI. Médiateur de la consommation : [nom, coordonnées].</p>
+        <p class="cadre">Mes séances de sophrologie relèvent du bien-être et de l&#39;accompagnement. Elles ne remplacent pas un avis, un diagnostic ou un traitement médical, et je vous encourage à poursuivre tout suivi en cours. Séances non remboursées par la Sécurité sociale ; certaines mutuelles les prennent en charge. TVA non applicable, art. 293 B du CGI.</p>
       </div>
       <div class="foot-meta">
         <ul class="foot-links">
@@ -1056,8 +852,6 @@ body.clean .da{display:none}
       </div>
     </div>
   </footer>
-
-  <!-- stickers qui tombent : 12 sur desktop, 7 sous 980 px (data-m). data-k : c rond · p pilule · l feuille ; data-r : rayon / largeur -->
   <div class="drops" aria-hidden="true">
     <svg class="stk" data-m style="--c:var(--k1);--w:clamp(62px, 6.2vw, 94px)" data-r=".47"><use href="#sh-star8"/></svg>
     <span class="tag" data-m data-k="p"><span class="pill p4">Respirer</span></span>
@@ -1073,13 +867,10 @@ body.clean .da{display:none}
     <svg class="stk" style="--c:var(--k3);--w:clamp(42px, 4.2vw, 60px)" data-r=".47"><use href="#sh-star8"/></svg>
   </div>
 </div>
-
 <div class="mbar" id="mbar" aria-hidden="true">
   <a class="btn btn-primary" href="https://www.resalib.fr/" target="_blank" rel="noopener" tabindex="-1"><span class="tx">Prendre rendez-vous</span></a>
   <a class="btn btn-black tel" href="tel:+33612345678" aria-label="Appeler le 06 12 34 56 78" tabindex="-1"><svg aria-hidden="true" style="width:20px;height:20px"><use href="#i-phone"/></svg></a>
 </div>
-
-<!-- Panneau DA (outil interne, style neutre) -->
 <div class="da" id="da">
   <div class="da-panel" id="da-panel" hidden>
     <fieldset id="da-dom">
@@ -1110,7 +901,6 @@ body.clean .da{display:none}
   </div>
   <button class="da-toggle" type="button" aria-expanded="false" aria-controls="da-panel">DA</button>
 </div>
-
 <script>
 (function(){
   var root=document.documentElement, body=document.body, q=new URLSearchParams(location.search);
@@ -1124,7 +914,6 @@ body.clean .da{display:none}
   var ribbon=q.get('ribbon')!=='0';
   if(q.get('clean')==='1')body.classList.add('clean');
   if(still)root.classList.add('static');
-
   /* ---- panneau DA ---- */
   var skyFs=document.getElementById('da-sky'), domFs=document.getElementById('da-dom');
   function apply(){
@@ -1160,7 +949,7 @@ body.clean .da{display:none}
   function closed(){return root.classList.contains('ribbon-closed');}
   var rb=document.getElementById('da-ribbon');rb.checked=ribbon&&!closed();body.classList.toggle('no-ribbon',!ribbon);
   /* croix du bandeau : masque et retient le choix pour cette page */
-  document.querySelector('.ribbon-x').addEventListener('click',function(){
+  var rx=document.querySelector('.ribbon-x');if(rx)rx.addEventListener('click',function(){
     root.classList.add('ribbon-closed');rb.checked=false;
     try{localStorage.setItem(RKEY,'1');}catch(e){}
     var t=document.querySelector('.site-header .brand');if(t)t.focus({preventScroll:true});
@@ -1168,7 +957,6 @@ body.clean .da{display:none}
   var tg=document.querySelector('.da-toggle'), pn=document.getElementById('da-panel');
   tg.addEventListener('click',function(){var open=pn.hasAttribute('hidden');if(open)pn.removeAttribute('hidden');else pn.setAttribute('hidden','');tg.setAttribute('aria-expanded',open?'true':'false');});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pn.hasAttribute('hidden')){pn.setAttribute('hidden','');tg.setAttribute('aria-expanded','false');tg.focus();}});
-
   /* ---- Stickers manipulables ----
      Pointer Events ; au lâcher : inertie, rebond sur les bords du bloc, inclinaison qui suit la vitesse (ressort amorti).
      On passe par les propriétés individuelles translate / rotate, qui se composent avec l'animation de flottement. */
@@ -1220,20 +1008,17 @@ body.clean .da{display:none}
     var box=document.querySelector(z[0]);
     box.querySelectorAll(z[1]).forEach(function(el){el.classList.add('drag');draggable(el,box);});
   });
-
   /* pilules : frétillent au tap */
   document.querySelectorAll('.pill').forEach(function(p){
     p.addEventListener('pointerdown',function(){p.classList.remove('wig');void p.offsetWidth;p.classList.add('wig');});
     p.addEventListener('animationend',function(e){if(e.animationName==='wig')p.classList.remove('wig');});
   });
-
   /* barre mobile : visible après le hero */
   var bar=document.getElementById('mbar'), hero=document.getElementById('hero');
   function showBar(on){bar.classList.toggle('is-on',on);bar.setAttribute('aria-hidden',on?'false':'true');bar.querySelectorAll('a').forEach(function(a){a.tabIndex=on?0:-1;});}
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(es){es.forEach(function(e){showBar(!e.isIntersecting && e.boundingClientRect.top<0);});},{threshold:0}).observe(hero);
   }
-
   /* ---- Découpe des titres (data-split), sans bibliothèque ----
      Les pièges de split-type évités : (1) chaque mot est un <span class="w"> inline-block insécable, donc les lignes
      cassent aux mêmes espaces que le texte d'origine et un redimensionnement ne casse rien ; (2) les lettres ne sont
@@ -1272,7 +1057,6 @@ body.clean .da{display:none}
     joinChars(el);var n=splitChars(el),cs=getComputedStyle(el),ms=function(k){return parseFloat(cs.getPropertyValue(k))||0;};
     el._sp=setTimeout(function(){joinChars(el);},delay+(n-1)*ms('--sp-step')+Math.max(ms('--sp-dur'),ms('--sp-wdur'))+80);
   }
-
   /* ---- Apparitions : rejouées à chaque entrée dans l'écran, en cascade douce (jamais si mouvement réduit ou ?static=1) ----
      data-stagger : ses enfants directs deviennent des apparitions (sauf un sous-groupe ou un texte masqué).
      Entrée quand l'élément atteint la zone à 6 % des bords de l'écran ; remise à zéro seulement quand il a entièrement
@@ -1289,8 +1073,8 @@ body.clean .da{display:none}
     var show=function(list){
       var now=performance.now();
       list.sort(function(a,b){return a.compareDocumentPosition(b)&4?-1:1;}).forEach(function(el){
-        var sc=el.closest('section, footer')||body,t=Math.max(clock.get(sc)||0,now),d=Math.min(t-now,600);
-        clock.set(sc,now+d+80);el.style.setProperty('--i',(d/80).toFixed(2));
+        var sc=el.closest('section, footer')||body,t=Math.max(clock.get(sc)||0,now),d=Math.min(t-now,840);
+        clock.set(sc,now+d+112);el.style.setProperty('--i',(d/112).toFixed(2));
         if(el.hasAttribute('data-split'))playSplit(el,el.hasAttribute('data-reveal')?d:0);
         el.classList.add('is-in');
       });
@@ -1300,7 +1084,7 @@ body.clean .da{display:none}
     /* les mesures des lettres demandent la vraie police : on attend qu'elle soit là (1,5 s au plus) */
     Promise.race([document.fonts&&document.fonts.ready||Promise.resolve(),new Promise(function(r){setTimeout(r,1500);})]).then(function(){
       /* déclenché un peu AVANT l'entrée à l'écran (marge basse positive) : le contenu n'est jamais retenu ; la sortie a une marge plus large (pas de clignotement) */
-      var ioIn=new IntersectionObserver(enter,{rootMargin:'0px 0px 8% 0px',threshold:0});
+      var ioIn=new IntersectionObserver(enter,{rootMargin:'0px 0px -10% 0px',threshold:0});
       var ioOut=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)hide(e.target);});},{rootMargin:'6% 0px 14% 0px',threshold:0});
       [].forEach.call(document.querySelectorAll('[data-reveal]'),function(el){ioIn.observe(el);ioOut.observe(el);});
       /* « Claire Martin » : sa vague part quand il est sorti de l'horizon (90 % visible), comme avant */
@@ -1325,7 +1109,6 @@ body.clean .da{display:none}
     var sc=document.getElementById('scene'); if(!sc)return;
     var calm=reduce||still, foot=sc.querySelector('.site-footer'), sig=sc.querySelector('.sig');
     var near=true;
-
     /* 1. repli du défilement : les mêmes animations CSS, en pause, avancées à la main (currentTime) selon la position.
           Sans getAnimations, on n'active pas le repli : l'état final s'affiche. */
     if(!calm && !(window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()')) && document.getAnimations){
@@ -1336,7 +1119,6 @@ body.clean .da{display:none}
       addEventListener('scroll',function(){if(!sq)sq=requestAnimationFrame(scrub);},{passive:true});
       addEventListener('resize',scrub);requestAnimationFrame(scrub);
     }
-
     /* 2. physique */
     var layer=sc.querySelector('.drops'), items=[].slice.call(layer.children), bodies=[];
     var W=0,H=0,FX=4,floor=new Float32Array(2),G=2600,DT=1/120,raf=0,last=0,acc=0,quiet=0,ea=100,
@@ -1464,7 +1246,6 @@ body.clean .da{display:none}
       if(calm)return;
       var r=rng(7),t0=performance.now();queue=bodies.map(function(b,k){return {b:b,k:k,r:r,t:t0+k*150};});wake();
     }
-
     /* manipulation (mêmes classes que les stickers du hero : .drag, .is-held) */
     items.forEach(function(el){
       el.classList.add('drag');var id=null,lt=0,ox=0,oy=0,b=null;
@@ -1493,7 +1274,6 @@ body.clean .da{display:none}
       }
       el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);el.addEventListener('lostpointercapture',up);
     });
-
     /* mise en route : après les polices (la largeur des pilules en dépend) ; on recale tout si la scène change de taille */
     var lastW=0;
     function layout(){
