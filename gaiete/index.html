@@ -136,14 +136,14 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .site-header{position:relative;z-index:3;color:var(--accent-ink)}
 .site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--hh)}
 .site-header :focus-visible{outline-color:var(--accent-ink)}
-.brand{display:flex;flex-direction:column;justify-content:center;text-decoration:none;line-height:1.05;min-height:44px}
+.brand{display:flex;flex-direction:column;justify-content:center;text-decoration:none;line-height:1.05;min-height:44px;min-width:0}
 .brand-name{font-family:var(--font-display);font-stretch:100%;font-weight:var(--dw);font-size:1.3rem;letter-spacing:var(--dtrack);white-space:nowrap}
 .brand-role{font-size:.75rem;font-weight:500;color:var(--ink-soft);margin-top:3px;white-space:nowrap}
 .nav{display:none}
 .nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0}
 .nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;text-decoration:none;font-family:var(--font-display);font-stretch:100%;font-weight:500;font-size:.9688rem;border-radius:999px;white-space:nowrap}
 .nav a:hover{background:color-mix(in srgb, var(--accent-ink) 12%, transparent)}
-.header-cta{display:flex;align-items:center;gap:8px}
+.header-cta{display:flex;align-items:center;gap:8px;flex:none}
 .header-tel{display:none}
 .hero{position:relative;overflow:hidden;background:var(--accent);color:var(--accent-ink);
   margin-top:calc(-1 * var(--hh));padding:calc(var(--hh) + 18px) 0 52px;border-radius:0 0 var(--block) var(--block)}
@@ -428,7 +428,7 @@ html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:1065ms;--rv-glow:co
   .pillar svg.cloud{width:52px}
   .pillar h3{margin-bottom:4px;font-size:1.5rem}
 }
-@media (max-width:419px){ .brand-role{display:none} .brand-name{font-size:1.2rem} }
+@media (max-width:419px){ .brand-role{display:none} .brand-name{font-size:1.2rem;white-space:normal} }   
 @media (max-width:374px){ .btn{padding-left:18px;padding-right:18px} .header-cta .btn-sm{padding:0 13px;font-size:.875rem} }
 @media (max-width:339px){ .header-cta .btn-sm{padding:0 11px} .site-header .wrap{gap:8px} }   
 html{--tr-xl:-.055em;--tr-l:-.045em;--tr-m:-.035em;--tr-s:-.025em;--tr-xs:-.015em;--tr-ui:-.01em}
@@ -461,6 +461,10 @@ html.static *,html.static *::before,html.static *::after{transition:none!importa
 .da input:focus-visible{outline:2px solid #1a73e8;outline-offset:2px}
 body.clean .da{display:none}
 @media (max-width:979px){ .da{bottom:90px} }
+.bn{white-space:nowrap}
+.cta-short{display:none}
+@media (max-width:419px){ .is-long .cta-full{display:none} .is-long .cta-short{display:inline} }
+@media (max-width:359px){ .is-long .hdr-rdv{display:none} }
 </style>
 </head>
 <body>
@@ -481,7 +485,7 @@ body.clean .da{display:none}
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="#main" aria-label="Claire Martin, sophrologue, retour en haut">
-      <span class="brand-name">Claire Martin</span>
+      <span class="brand-name"><span class="bn">Claire</span> <span class="bn">Martin</span></span>
       <span class="brand-role">Sophrologue · Paris 11e</span>
     </a>
     <nav class="nav" aria-label="Menu principal">
@@ -496,7 +500,7 @@ body.clean .da{display:none}
     </nav>
     <div class="header-cta">
       <a class="btn btn-line-hero btn-sm btn-ic header-tel" href="tel:+33612345678" aria-label="Appeler le 06 12 34 56 78"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="tx">06 12 34 56 78</span></a>
-      <a class="btn btn-hero btn-sm" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="tx">Prendre rendez-vous</span></a>
+      <a class="btn btn-hero btn-sm hdr-rdv" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="tx"><span class="cta-full">Prendre rendez-vous</span><span class="cta-short">Rendez-vous</span></span></a>
     </div>
   </div>
 </header>
