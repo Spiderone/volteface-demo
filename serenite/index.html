@@ -612,29 +612,29 @@ html.no-tb .proofs li{text-box:none;padding-top:16px;padding-bottom:14px}
    opacité de départ 0,4), flou de départ 2,5 px, pas de flou sur mobile ; durées et rythme inchangés. */
 html{--ease-calm:cubic-bezier(.2,.7,.2,1);--rv-y:8.5px;--rv-blur:2.5px;--rv-o:.4}
 @media (max-width:639px){ html{--rv-y:6px;--rv-blur:0px} }
-[data-reveal]{--rd:min(calc(var(--i, 0) * 45ms), 270ms)}
+[data-reveal]{--rd:min(calc(var(--i, 0) * 65ms), 420ms)}
 .js-motion [data-reveal=""]{opacity:var(--rv-o);translate:0 var(--rv-y);filter:blur(var(--rv-blur))}
 .js-motion [data-reveal=""].is-in{opacity:1;translate:none;filter:none;
-  transition:opacity .5s var(--ease-calm) var(--rd), translate .55s var(--ease-calm) var(--rd), filter .45s var(--ease-calm) var(--rd)}
+  transition:opacity .75s var(--ease-calm) var(--rd), translate .8s var(--ease-calm) var(--rd), filter .7s var(--ease-calm) var(--rd)}
 /* filets métalliques, eau : simple fondu (--o = opacité de repos de l'élément) */
 .js-motion [data-reveal="fade"]{opacity:calc(var(--o, 1) * var(--rv-o))}
-.js-motion [data-reveal="fade"].is-in{opacity:var(--o, 1);transition:opacity .55s var(--ease-calm) var(--rd)}
+.js-motion [data-reveal="fade"].is-in{opacity:var(--o, 1);transition:opacity .8s var(--ease-calm) var(--rd)}
 /* photos : rideau qui monte depuis le bas + photo 1,06 → 1 dans son cadre. Marges négatives sur les côtés et en bas :
    l'ombre portée (toujours décalée vers le bas) n'est pas rognée ; le haut s'arrête au bord de la photo, si bien que le
    rideau dure vraiment 1,6 s. */
 .js-motion [data-reveal="photo"]{clip-path:inset(60% -140px 0 -140px);opacity:var(--rv-o)}
 .js-motion [data-reveal="photo"] > img{scale:1.035}
 .js-motion [data-reveal="photo"].is-in{clip-path:inset(0 -140px -140px -140px);opacity:1;
-  transition:clip-path .6s cubic-bezier(.3,.1,.2,1) var(--rd), opacity .5s var(--ease-calm) var(--rd)}
-.js-motion [data-reveal="photo"].is-in > img{scale:1;transition:scale .6s var(--ease-calm) var(--rd)}
+  transition:clip-path .85s cubic-bezier(.3,.1,.2,1) var(--rd), opacity .75s var(--ease-calm) var(--rd)}
+.js-motion [data-reveal="photo"].is-in > img{scale:1;transition:scale .9s var(--ease-calm) var(--rd)}
 /* titres découpés : mots insécables, lettres animées (flou doux, légère montée), partie italique un souffle après */
 .w{display:inline-block;white-space:nowrap}
 .c{display:inline-block}
 .js-motion [data-split]:not(.is-split){opacity:var(--rv-o)}
 .js-motion [data-split] .c{opacity:var(--rv-o);translate:0 .16em;filter:blur(var(--rv-blur))}
-.js-motion [data-split].is-in .c{opacity:1;translate:none;filter:none;--cd:calc(var(--rd) + var(--ci, 0) * var(--cs, 10ms));
-  transition:opacity .4s var(--ease-calm) var(--cd), translate .44s var(--ease-calm) var(--cd), filter .4s var(--ease-calm) var(--cd)}
-.js-motion [data-split].is-in .it .c{--cd:calc(var(--rd) + var(--ci, 0) * var(--cs, 10ms) + 50ms)}
+.js-motion [data-split].is-in .c{opacity:1;translate:none;filter:none;--cd:calc(var(--rd) + var(--ci, 0) * var(--cs, 15ms));
+  transition:opacity .6s var(--ease-calm) var(--cd), translate .66s var(--ease-calm) var(--cd), filter .6s var(--ease-calm) var(--cd)}
+.js-motion [data-split].is-in .it .c{--cd:calc(var(--rd) + var(--ci, 0) * var(--cs, 15ms) + 90ms)}
 .js-motion .hero .arch-line{animation:breathe 14s ease-in-out infinite alternate}
 @keyframes breathe{from{rotate:.5deg;scale:.992}to{rotate:1.5deg;scale:1.008}}
 [data-par]{will-change:transform}
@@ -1543,7 +1543,7 @@ body.clean .da{display:none}
      Lettres : span.c seulement pendant l'animation ; chacune reçoit une marge (em) = écart entre sa position dans le texte
      crénelé et sa position découpée, donc rien ne bouge au découpage ni au retour en texte simple.
      Accessibilité : copie .sr-only du titre, version découpée aria-hidden. */
-  var CPS=10, SPREAD=130, IT_DELAY=50, CHAR_DUR=440, STEP=45, CAP=270;  /* réglage « rien ne fait attendre » */
+  var CPS=15, SPREAD=220, IT_DELAY=90, CHAR_DUR=660, STEP=65, CAP=420;  /* juste milieu (17/10) : ni « retenu », ni « nerveux » */
   function splitWords(h){
     var sr=document.createElement('span'), vis=document.createElement('span');
     sr.className='sr-only';sr.textContent=h.textContent.replace(/[ \t\n\r\f]+/g,' ').trim();
