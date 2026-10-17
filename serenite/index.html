@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<!--
+  Direction F — « Sérénité » (piste parallèle à E, exploration)
+  Intention : un one-page « spa » calme et premium, sans cliché : fond greige, bleu nuit et bronze, beaucoup d'air,
+  grotesque légère + fin de titre en serif italique, portrait en arche + carte cabinet, ovale à peine incliné,
+  collage de photos et grand texte qui défile. Itération 2 : rotations réduites partout (arche -1,5°, ovale -8°, collage <= 3°).
+  Itération 3 (17/10) :
+    - Matière signature « satin champagne → bronze » (--metal, --metal-ring, --metal-navy, --metal-text), jamais sur les photos :
+      anneau de l'arche, cadre de la photo du cabinet, filets des surtitres et de la liste du parcours,
+      contour de la barre récapitulative de la première séance,
+      orbites et séparateurs des tarifs dans les bandes bleu nuit, reflet satiné des bandes (lié au défilement),
+      reflet qui traverse le bouton principal au survol, chiffres 01–03 des piliers (remplissage métallique).
+    - Bruit supprimé (fond de page et grain des emplacements).
+    - Prix et « 2019 / 1 200 » en grotesque (police des titres) 300, approche -4 % ; € à 42 %, bronze clair, calé en haut.
+      Playfair italique gardée pour les petits et moyens accents (fins de titres, 01–06, « 15 min », preuves du hero).
+    - Piliers : pictos SVG remplacés par 01 / 02 / 03 en serif italique (plus grands que ceux de « Pour qui », en tête de carte, avec filet).
+    - Ombres : seulement là où elles suivent la forme (arche, tuiles du collage, carte cabinet, cartes des piliers) ; retirées sur
+      l'ovale, la photo du cabinet, les avis et les pastilles.
+  Itération 4 (17/10) :
+    - Palette « multi » (défaut, ?palette=multi|mono) : les 4 encres ensemble, une dominante par section, 2 bandes sombres au plus.
+        bleu nuit : header, hero, boutons principaux, barre mobile, « première séance », bande tarifs ;
+        terracotta : petites touches chaudes (pour qui : mot italique + 01–06 ; FAQ : mot italique + pastille ouverte ; étoiles ;
+                     € en terracotta clair #E8A88C sur la bande bleu nuit) ;
+        eucalyptus : approche (mot italique, chiffres satinés 01–03 #174845 → #2E6E69), accès (mot italique, lien, repère de carte),
+                     scène finale (nom, fin du titre ; ex-bande du CTA final) ;
+        prune : parcours (mot italique, « 2019 / 1 200 ») et avis (mot italique, 4,9, prénoms).
+      « mono » = comportement d'avant : un seul accent choisi par ?accent, bandes bleu nuit.
+    - Fond « clair » (défaut, ?fond=clair|grege) : --bg #F6F1EA, cartes #FCFAF6 (bord bronze 13 %), plan #EAE3D9 ;
+      « grège » d'origine : #E8E4DF / #F2F0EC.
+    - Photos réelles (Unsplash, liées en direct, aucune légende, aucun calque) ; ?photos=0 = aplats de ton (usage interne).
+    - Centrage optique des libellés : text-box: trim-both cap alphabetic (boutons, nav, pastille M, questions de la FAQ,
+      pied de la carte, marque, bandeau, cellules des preuves) ; filets alignés sur la demi-capitale (surtitres) ou la
+      demi-hauteur d'x (piliers, parcours) ; repli mesuré au pixel (classe .no-tb, ?tb=0 pour le tester).
+    - Bandeau maquette : croix « Fermer le bandeau » (44 × 44), choix mémorisé dans localStorage
+      ('vf-ribbon-closed:' + chemin), classe posée dans <head> (pas de flash) ; la case du panneau DA le réaffiche.
+  Itération 5 (17/10) — « Première séance » :
+    - Texte de contenu-commun.md : « Votre première séance, pas à pas » + chapeau, 4 étapes 20 / 25 / 15 / 15 min = 1 h 15
+      (comme la carte « Première séance » des tarifs).
+    - Plus d'air : grand écart titre → étapes, colonnes plus espacées (40 → 72 px), interlignage 1,7, rythme durée → titre → texte
+      (empilé à toutes les tailles) ; au-dessus de 980 px, une phrase par ligne dans le chapeau.
+    - Note « 5 à 10 séances » retirée (reste dans la FAQ), remplacée par une barre récapitulative : carte douce à contour satiné,
+      « Première séance · 1 h 15 · 85 € · au cabinet ou en visio » + bouton « Prendre rendez-vous » ; empilée sur mobile.
+  Itération 6 (17/10) — « Eau » derrière l'arche (?eau=gouttes|caustiques|0, panneau DA) :
+    - Shader WebGL1 (un quad, sans bibliothèque) sur une toile derrière l'arche, plus grande qu'elle, fondu radial + fondu
+      aux bords du hero ; rien par-dessus la photo, l'anneau métallique et la carte cabinet restent au-dessus.
+    - « Gouttes » (défaut) : anneaux concentriques façon goutte de lait, qui naissent sous l'arche (une goutte toutes les
+      3 à 5 s, parfois un rebond), interférences, éclairage doux par la normale ; petite goutte au pointeur ou au toucher.
+    - « Caustiques » : lignes de lumière floues et lentes, comme au fond d'une piscine.
+    - Couleurs tirées du fond : creux et ombres aqua #9ECCC7 / #8CC2BD + soupçon d'eucalyptus, crêtes champagne #F3E3C8
+      puis #FFFCF5, reflet nacré. Pire cas mesuré derrière le texte du hero : #57514B à 5,3:1 (AA).
+    - 30 i/s au plus, rendu à 0,55–0,75 px par px CSS, pause hors écran et onglet caché ; image fixe si mouvement réduit
+      ou ?static=1 ; anneaux en dégradés CSS sans WebGL (?gl=0 pour tester le repli).
+  Itération 7 (17/10) — Apparitions :
+    - Elles se rejouent à chaque retour dans l'écran, dans les deux sens. .is-in est posée en avance (zone d'entrée élargie de
+      8 % au-dessus et 15 % au-dessous de l'écran) et retirée seulement hors d'une zone encore plus large (25 % / 30 %),
+      donc jamais sous les yeux ; l'écart entre les deux zones évite tout clignotement. Sortie sans transition.
+    - Découpage plus fin : surtitre, titre, chapeau, puis chaque ligne / carte / pilier / étape / prix / avis / question / photo.
+      Groupe [data-stagger] : --i pose le retard, min(--i × 45 ms, 270 ms) ; --i est recalé au moment de l'entrée (un élément
+      qui entre seul n'attend pas, plusieurs à la fois s'égrènent dans l'ordre).
+      Réglages de Corentin (« trop intense », puis « un peu lent, ça empêche de voir le contenu ») : petites amplitudes,
+      animations courtes, rien ne fait attendre. Hero : tout ce qui est au-dessus de la ligne de flottaison est en place
+      ~700 ms après la première apparition (mesuré à 1440, 1100 et 390).
+      Texte et cartes : opacité 0,4 → 1 (0,5 s) + translateY 8,5 px → 0 (6 px sur mobile, 0,55 s) + flou 2,5 px → 0
+      (aucun sur mobile, 0,45 s), cubic-bezier(.2,.7,.2,1).
+      Photos (data-reveal="photo") : rideau clip-path qui monte depuis le bas (de 60 %, 0,6 s), photo 1,035 → 1 (0,6 s).
+      Filets métalliques et eau : simple fondu (data-reveal="fade"). Une photo est observée via son parent (Chrome compte
+      le clip-path de la cible : rideau fermé = « hors écran »).
+    - Titres (H1 et H2, data-split) lettre à lettre, sans bibliothèque : chaque mot dans span.w (inline-block, nowrap : les
+      coupures de ligne ne changent jamais), lettres dans span.c seulement pendant l'animation (flou 2,5 px, montée 0,16 em,
+      0,4–0,44 s par lettre, 10 ms d'écart resserré pour que l'étalement reste ≤ 130 ms, la partie italique 50 ms après :
+      un titre entier en ~600 ms ; les titres attendent leur police 500 ms au plus) ; copie .sr-only lisible, version découpée aria-hidden.
+      Approche : chaque lettre reçoit une marge (en em) mesurée sur le texte non découpé, si bien que les positions sont
+      identiques ; à la fin, les lettres redeviennent du texte simple (crénage parfait au repos), re-découpées à la sortie.
+      Mesuré : écart ≤ 0,06 px au repos et ≤ 0,22 px pendant l'animation, mêmes coupures de ligne.
+  Itération 8 (17/10) — Scène finale « Reflet » (CTA + pied de page, un seul plein écran, 100svh) :
+    - Ciel clair : CTA (titre + boutons), puis un disque champagne qui respire dans son anneau satiné (guide de respiration
+      sans mots : 4 s d'inspiration, 6 s d'expiration, échelle 0,82 ↔ 0,92), et « Claire Martin » en Playfair italique
+      eucalyptus posé sur l'horizon (filet satiné). Le nom apparaît lettre à lettre.
+    - Eau dessous : même moteur WebGL que le hero (makeWater, un seul shader, mode « reflet ») : reflet miroir du nom
+      (texture dessinée une fois) et du disque (suit la respiration), voilé, houle lente horizontale, fines lignes d'eau ;
+      gouttes très douces toutes les 6 à 10 s, au pointeur ou au toucher. 30 i/s, pause hors écran ; image fixe si
+      mouvement réduit ou ?static=1 ; sans WebGL (?gl=0) : copie CSS retournée et voilée + lignes d'eau.
+    - Dans l'eau, en 13–14 px : « Cadre & limites » (texte intégral), Mentions légales, Confidentialité, crédit Volteface ;
+      sous 980 px ils passent sous le reflet, au-dessus de la barre mobile (marge de 76 px dans la scène).
+
+  Typo (titre/texte + serif italique d'accent) :
+    1. Manrope 300/400/500 + Playfair Display Italic          (le plus proche des références, défaut)
+    2. Plus Jakarta Sans 300/400/500 + Instrument Serif Italic (plus éditorial, italique fine)
+    3. Fixel variable (auto-hébergée ../fonts/fixel/FixelVariable-latin.woff2, titres wdth 100 %, texte 87,5 %)
+       + Newsreader Italic
+  Fraunces : interdite (non utilisée).
+
+  Couleurs (fond clair #F6F1EA / grège #E8E4DF) :
+    --ink #1B1B1B (15,3:1 / 13,6:1) · --ink-soft #57514B (7,0:1 / 6,2:1) · bronze texte #7A5A3F (5,6:1 / 4,9:1 ; 6,0:1 sur carte)
+    #8E6B4E réservé aux filets et pictos (>= 3:1)
+    bandes : texte #F2F0EC sur bleu nuit 11,9:1, sur eucalyptus 6,9:1 · texte doux #B9C3CE 7,6:1 · bronze clair #C8B49E 6,8:1
+    métal (filets) #8A6748 → #CBAE86 · chiffres métalliques #6E5034 → #94724C → #5E432C (3,5:1 au pire, chiffres >= 41 px)
+  Accents, texte sur fond clair / grège (texte clair #F2F0EC posé dessus) :
+    1. Bleu nuit      #13304A  (12,1:1 / 10,7:1 · 11,9:1)
+    2. Eucalyptus     #1E5A57  (7,0:1 / 6,3:1 · 6,9:1)
+    3. Terracotta     #9A4228  (5,9:1 / 5,2:1 · 5,8:1)
+    4. Prune          #5C2D4F  (9,6:1 / 8,5:1 · 9,5:1)
+  Photos (Unsplash, gratuites, sans visage reconnaissable ; auteur et lien en commentaire à côté de chaque <img>) :
+    arche XWT6pBc6Z6A · ovale i4sb1vu9eG0 · collage wi-78W-29D8, sEMuBSKcYqQ, hLqoaMJYFdM, ns4hOjUOfBs · cabinet SRZcOAERBUQ
+  Paramètres d'URL : ?typo=1|2|3  ?palette=multi|mono  ?accent=1|2|3|4 (mono)  ?fond=clair|grege  ?photos=1|0
+                     ?eau=gouttes|caustiques|0  ?gl=0 (repli CSS de l'eau)
+                     ?clean=1  ?ribbon=0  ?tb=0 (repli sans text-box)  ?static=1 (captures : tout visible, aucun mouvement)
+  Mouvement : apparitions douces rejouées au défilement (titres lettre à lettre), respiration du disque final, léger parallaxe (transform, rAF, ±32 px max) sur l'arche du hero, l'ovale de l'approche,
+    la photo du parcours et le collage,
+    texte défilant lent, reflet satiné des bandes bleu nuit lié au défilement, reflet du bouton au survol ;
+    tout est coupé si prefers-reduced-motion.
+-->
+<html lang="fr" data-typo="1" data-accent="1" data-palette="multi" data-fond="clair" data-photos="1">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claire Martin · Sophrologue à Paris 11e et en visio</title>
+<meta name="description" content="Claire Martin, sophrologue à Paris 11e (métro Voltaire) et en visio. Séance de 60 min, 70 €. Premier appel de 15 min offert.">
+<script>/* bandeau maquette fermé : classe posée avant le rendu, pas de flash */
+try{if(localStorage.getItem('vf-ribbon-closed:'+location.pathname))document.documentElement.classList.add('ribbon-closed');}catch(e){}
+if(!(window.CSS&&CSS.supports&&CSS.supports('text-box','trim-both cap alphabetic'))||/[?&]tb=0(&|$)/.test(location.search))document.documentElement.classList.add('no-tb');
+/* apparitions : classe posée avant le rendu (pas de flash) ; jamais si mouvement réduit ou ?static=1 ; filet de sécurité à 4 s */
+if(!/[?&]static=1(&|$)/.test(location.search)&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){
+  document.documentElement.classList.add('js-motion');
+  setTimeout(function(){var r=document.documentElement;if(!r.classList.contains('rv-ok'))r.classList.remove('js-motion');},4000);}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Manrope:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,300..500&family=Playfair+Display:ital,wght@1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap">
+<style>
+/* Même fichier variable sous les deux noms installés chez Corentin (Fixel Display / Fixel Text) : les captures Figma
+   reprennent le nom CSS, qui retombe ainsi sur ses polices locales au lieu d'une police manquante. */
+@font-face{font-family:"Fixel Display";src:url("../fonts/fixel/FixelVariable-latin.woff2") format("woff2");font-weight:100 900;font-stretch:87.5% 100%;font-style:normal;font-display:swap}
+@font-face{font-family:"Fixel Text";src:url("../fonts/fixel/FixelVariable-latin.woff2") format("woff2");font-weight:100 900;font-stretch:87.5% 100%;font-style:normal;font-display:swap}
+
+/* ================= TOKENS ================= */
+html{
+  /* fond « clair » (défaut, itération 4) : plus lumineux, à peine plus chaud ; « grège » d'origine via data-fond */
+  --bg:#F6F1EA;
+  --surface:#FCFAF6;
+  --surface-2:#ECE5DB;
+  --card-line:rgba(122,90,63,.13);   /* bord des cartes : le blanc ne se voit plus sur un fond clair */
+  --marquee:#E6DDD1;
+  --map-bg:#EAE3D9; --map-st1:#F4EFE8; --map-st2:#FDFBF8;
+  /* les 4 encres de la palette « multi » */
+  --c-navy:#13304A; --c-euca:#1E5A57; --c-terra:#9A4228; --c-plum:#5C2D4F;
+  --c-terra-soft:#E8A88C;            /* terracotta éclairci, seulement sur bande sombre (€) */
+  --band:var(--navy);                /* couleur des bandes sombres */
+  --ink:#1B1B1B;
+  --ink-soft:#57514B;
+  --line:rgba(27,27,27,.13);
+  --line-strong:rgba(27,27,27,.3);
+  --bronze:#7A5A3F;          /* texte (AA) */
+  --bronze-line:#8E6B4E;     /* filets, pictos */
+  --navy:#13304A;
+  --navy-ink:#F2F0EC;
+  --navy-soft:#B9C3CE;
+  --navy-bronze:#C8B49E;
+  --navy-line:rgba(242,240,236,.24);
+  /* matière métallique (satin champagne → bronze) : filets, anneaux, bande bleu nuit, bouton. Jamais sur les photos. */
+  --metal:linear-gradient(90deg, #8A6748 0%, #B08C66 38%, #CBAE86 52%, #A07D58 70%, #8A6748 100%);
+  --metal-ring:linear-gradient(155deg, #E6D3B0 0%, #B08B60 26%, #8E6B4E 50%, #CDB18A 74%, #9C7A55 100%);
+  --metal-navy:linear-gradient(100deg, rgba(200,180,158,.55) 0%, rgba(236,220,190,.95) 42%, rgba(176,146,110,.6) 70%, rgba(200,180,158,.4) 100%);
+  /* chiffres italiques métalliques : arrêt le plus clair #94724C = 3,3:1 au pire (carte posée sur l'ovale), chiffres >= 41 px */
+  --metal-text:linear-gradient(115deg, #6E5034 0%, #94724C 36%, #5E432C 64%, #8A6A48 100%);
+  --accent:#13304A;
+  --accent-ink:#F2F0EC;
+  --font-display:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif:"Playfair Display", Georgia, "Times New Roman", serif;
+  --display-weight:300;
+  --display-track:-.03em;
+  --display-stretch:100%;
+  --body-stretch:100%;
+  --serif-scale:1;
+  --serif-weight:400;
+  --serif-track:-.01em;
+  --radius:6px;
+  --wrap:1240px;
+  --gutter:clamp(20px, 5vw, 56px);
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+html[data-typo="2"]{
+  --font-display:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --display-track:-.035em; --serif-scale:1.14; --serif-weight:400; --serif-track:-.005em;
+}
+html[data-typo="3"]{
+  --font-display:"Fixel Display", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:"Fixel Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif:"Newsreader", Georgia, "Times New Roman", serif;
+  --display-track:-.025em; --display-stretch:100%; --body-stretch:87.5%; --serif-scale:1.06; --serif-weight:400; --serif-track:-.015em;
+}
+html[data-accent="2"]{--accent:#1E5A57;--accent-ink:#F2F0EC}
+html[data-accent="3"]{--accent:#9A4228;--accent-ink:#F2F0EC}
+html[data-accent="4"]{--accent:#5C2D4F;--accent-ink:#F2F0EC}
+html[data-fond="grege"]{
+  --bg:#E8E4DF; --surface:#F2F0EC; --surface-2:#DDD7CF; --card-line:rgba(255,255,255,.6); --marquee:#D4CEC6;
+  --map-bg:#DDD7CF; --map-st1:#ECE8E2; --map-st2:#F7F5F1;
+}
+
+/* ===== Palette « multi » (défaut) : les 4 encres ensemble, une dominante par section, 2 bandes sombres au plus =====
+   bleu nuit : header, hero, boutons principaux, première séance, bande tarifs
+   terracotta : petites touches chaudes (pour qui : mot italique + 01–06 ; FAQ : mot italique + « − » ouvert ; étoiles ; € en clair)
+   eucalyptus : approche (mot italique, chiffres satinés 01–03), accès (mot italique, lien et repère de carte), scène finale (nom, fin du titre)
+   prune : parcours (mot italique, « 2019 / 1 200 ») et avis (mot italique, 4,9, prénoms) */
+html[data-palette="multi"]{--accent:var(--c-navy);--accent-ink:#F2F0EC}
+html[data-palette="multi"] #pour-qui, html[data-palette="multi"] #faq{--accent:var(--c-terra)}
+html[data-palette="multi"] #approche, html[data-palette="multi"] #acces{--accent:var(--c-euca)}
+html[data-palette="multi"] #parcours, html[data-palette="multi"] #avis{--accent:var(--c-plum)}
+/* chiffres 01–03 : même satin, teinté eucalyptus (arrêt le plus clair #2E6E69 = 4,4:1 au pire, posé sur l'ovale) */
+html[data-palette="multi"] #approche{--metal-text:linear-gradient(115deg, #174845 0%, #2E6E69 36%, #123E3B 64%, #25625E 100%)}
+html[data-palette="multi"] .who-list .fig,
+html[data-palette="multi"] .stat .num,
+html[data-palette="multi"] .stat .dot,
+html[data-palette="multi"] .rating .fig,
+html[data-palette="multi"] .review figcaption strong{color:var(--accent)}
+html[data-palette="multi"] .proofs .star, html[data-palette="multi"] .rating .star{color:var(--c-terra)}
+html[data-palette="multi"] .price .cur{color:var(--c-terra-soft)}
+html[data-palette="multi"] .faq details[open] .pm{border-color:var(--accent);color:var(--accent)}
+
+/* ================= BASE ================= */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:24px;overflow-x:clip}
+body{
+  margin:0;background:var(--bg);color:var(--ink);overflow-x:clip;
+  font-family:var(--font-body);font-stretch:var(--body-stretch);font-size:1.0625rem;line-height:1.65;font-weight:400;
+  text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--font-display);font-stretch:var(--display-stretch);font-weight:var(--display-weight);letter-spacing:var(--display-track);line-height:1.06;margin:0;text-wrap:balance}
+p{margin:0}
+.it{font-family:var(--font-serif);font-style:italic;font-weight:var(--serif-weight);letter-spacing:var(--serif-track);font-size:calc(1.04em * var(--serif-scale));font-stretch:100%;color:var(--accent)}
+.fig{font-family:var(--font-serif);font-style:italic;font-weight:var(--serif-weight);letter-spacing:var(--serif-track);font-stretch:100%;line-height:1}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+.on-navy :focus-visible{outline-color:var(--navy-ink)}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:8px;text-decoration:none}
+.skip:focus{top:12px}
+
+/* surtitres */
+.eyebrow{font-family:var(--font-body);font-size:.75rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--bronze);line-height:1.5}
+.kicker{display:flex;align-items:baseline;gap:14px;font-size:.75rem;font-weight:600;letter-spacing:.22em;color:var(--bronze);margin-bottom:18px}
+/* filet posé sur la ligne de base puis remonté d'une demi-capitale : il passe au milieu des chiffres, quelle que soit la typo */
+.kicker::before{content:"";flex:none;width:44px;height:1px;background:var(--metal);translate:0 calc(.5px - .5cap)}
+
+/* boutons */
+.btn{--ls:.14em;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 26px;border-radius:999px;
+  font-family:var(--font-body);font-size:.8125rem;font-weight:600;letter-spacing:var(--ls);text-transform:uppercase;text-decoration:none;line-height:1.2;white-space:nowrap;
+  border:1px solid transparent;transition:background-color .25s, color .25s, border-color .25s}
+.btn svg{width:17px;height:17px;flex:none}
+.btn-primary{background:var(--accent);color:var(--accent-ink);position:relative;overflow:hidden;isolation:isolate}
+.btn-primary:hover{background:color-mix(in srgb, var(--accent) 84%, #000)}
+/* reflet satin qui traverse le bouton au survol, sous le texte (z-index -1 dans le contexte isolé) */
+.btn-primary::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;translate:-115% 0;
+  background:linear-gradient(105deg, rgba(236,220,190,0) 28%, rgba(236,220,190,.2) 44%, rgba(255,246,228,.32) 50%, rgba(236,220,190,.2) 56%, rgba(236,220,190,0) 72%);
+  transition:translate 1.2s cubic-bezier(.45,0,.35,1)}
+.btn-primary:hover::after,.btn-primary:focus-visible::after{translate:115% 0}
+.btn-line{border-color:var(--line-strong);color:var(--ink);background:transparent}
+.btn-line:hover{border-color:var(--ink);background:rgba(255,255,255,.3)}
+.btn-light{background:var(--navy-ink);color:var(--band)}
+.btn-light:hover{background:#fff}
+.btn-line-light{border-color:rgba(242,240,236,.55);color:var(--navy-ink);background:transparent}
+.btn-line-light:hover{border-color:var(--navy-ink);background:rgba(242,240,236,.06)}
+.btn-sm{--ls:.12em;min-height:44px;padding:10px 18px;font-size:.75rem}
+
+/* bandeau maquette */
+.ribbon{position:relative;background:var(--ink);color:#E9E5DE;font-size:.8125rem;line-height:1.45;padding:13px 52px 13px var(--gutter);text-align:center}
+.ribbon-text{margin:0}
+.ribbon a{color:#fff;font-weight:600;text-underline-offset:3px;display:inline-block;padding:12px 6px;margin:-12px -6px}
+/* croix : cible 44×44, icône 14 px, centrée sur la boîte (trait symétrique, pas de texte à recaler) */
+.ribbon-close{all:unset;box-sizing:border-box;position:absolute;right:4px;top:50%;translate:0 -50%;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;color:#E9E5DE;border-radius:50%}
+.ribbon-close svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+.ribbon-close:hover{color:#fff;background:rgba(255,255,255,.08)}
+.ribbon-close:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
+
+/* header */
+.site-header{position:relative;z-index:20}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px;padding-top:10px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.brand{display:flex;flex-direction:column;text-decoration:none;line-height:1.1;min-height:44px;justify-content:center;white-space:nowrap}
+.brand-name{font-family:var(--font-display);font-stretch:var(--display-stretch);font-weight:500;font-size:1.25rem;letter-spacing:-.02em}
+.brand-name .it{font-weight:var(--serif-weight)}
+.brand-role{font-size:.625rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze);margin-top:9px}
+.nav{display:none}
+.nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.nav a{--h:44px;display:block;padding-inline:12px;text-decoration:none;font-size:.9375rem;color:var(--ink-soft);white-space:nowrap;position:relative}
+.nav a::after{content:"";position:absolute;left:12px;right:12px;bottom:10px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{transform:none}
+.header-cta{display:flex;align-items:center;gap:8px}
+.header-tel{display:none}
+
+/* ================= PHOTOS ================= */
+/* Vraies photos (Unsplash, liées en direct), sans aucun calque par-dessus : pas de reflet, pas de vignette.
+   ?photos=0 : aplats de ton simples, sans légende (usage interne). Le ton d'aplat sert aussi de fond pendant le chargement. */
+.ph{position:relative;overflow:hidden;isolation:isolate;background:var(--ph-flat, #D8D1C8)}
+.ph > img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover}
+html[data-photos="0"] .ph > img{display:none}
+.ph--light{--ph-flat:#D9CDBE}
+.ph--linen{--ph-flat:#E2DACF}
+.ph--room{--ph-flat:#CFC3B5}
+.ph--dusk{--ph-flat:#B39A82}
+
+/* ================= HERO ================= */
+.hero{position:relative;padding:28px 0 64px;overflow:clip}
+.hero::before{content:"";position:absolute;right:-10%;top:-10%;width:70vw;height:70vw;max-width:900px;max-height:900px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side, rgba(255,250,242,.7), rgba(255,250,242,0))}
+.hero-grid{position:relative;display:grid;gap:40px}
+.hero h1{font-size:clamp(2.3rem, 1.45rem + 3.4vw, 4.4rem);margin:16px 0 20px}
+.hero h1 .it{display:block;margin-top:.04em}
+.hero-sub{font-size:1.0625rem;color:var(--ink-soft);max-width:31em}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:10px 12px;margin-top:26px}
+.proofs{list-style:none;margin:34px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.proofs li{padding:22px 14px 22px 0;font-size:.875rem;line-height:1.35;color:var(--ink-soft);border-bottom:1px solid var(--line)}
+.proofs li:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
+.proofs .fig{white-space:nowrap;font-size:calc(1.85rem * var(--serif-scale));color:var(--ink);vertical-align:-.08em;margin-right:.08em}
+.proofs .star{color:var(--bronze);font-size:.95rem;margin-right:2px}
+
+/* portrait en arche (quasi droite) + anneau décalé de ~2,5° + carte cabinet qui chevauche le coin bas gauche */
+.hero-visual{position:relative;display:flex;justify-content:center;padding:22px 0 34px}
+.arch-par{position:relative;width:min(78%, 290px)}
+.arch{aspect-ratio:4/5.2;border-radius:999px 999px 4px 4px;rotate:-1.5deg;box-shadow:0 34px 60px -40px rgba(40,28,18,.5)}
+/* filet métallique d'1 px : dégradé masqué en anneau, suit le rayon de la forme */
+.metal-ring{background:var(--metal-ring);padding:1px;pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)}
+.arch-line{position:absolute;inset:-14px;--o:.85;opacity:var(--o);border-radius:999px 999px 10px 10px;rotate:1deg}
+.place-card{position:absolute;z-index:2;left:-12%;bottom:17%;max-width:min(236px, 92%);margin:0;
+  background:var(--surface);border:1px solid var(--card-line);border-radius:var(--radius);padding:13px 16px 14px;
+  box-shadow:0 22px 44px -26px rgba(40,28,18,.5), 0 2px 6px -3px rgba(40,28,18,.12)}
+.place-card .pc-label{display:block;font-size:.625rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;line-height:1.4;color:var(--bronze)}
+.place-card .pc-main{display:block;margin-top:3px;font-family:var(--font-serif);font-style:italic;font-weight:var(--serif-weight);letter-spacing:var(--serif-track);
+  font-size:calc(1.3rem * var(--serif-scale));line-height:1.15;color:var(--ink)}
+.place-card .pc-sub{display:flex;align-items:baseline;gap:8px;margin-top:8px;font-size:.8125rem;line-height:1.4;color:var(--ink-soft)}
+.place-card .nw{white-space:nowrap}
+@media (max-width:639px){ .place-card .nw{display:block} .place-card .pc-dot{display:none} }
+/* pastille M : boîte rognée (capitale → ligne de base) + padding = 19 px ; alignée sur la ligne de base du texte voisin,
+   puis remontée de l'écart entre les deux demi-capitales (texte 13 px / pastille 10 px : 0,15 cap) */
+.metro{--h:19px;display:block;flex:none;box-sizing:border-box;width:19px;text-align:center;border-radius:50%;background:var(--navy);color:var(--navy-ink);
+  font:700 .625rem/1 var(--font-body);font-stretch:100%;letter-spacing:0;translate:0 -.15cap}
+
+/* ===== Eau derrière l'arche (itération 6) : shader WebGL, jamais par-dessus la photo =====
+   Toile centrée sur l'arche, plus grande qu'elle ; le fondu radial et le fondu aux bords du hero sont faits dans le shader
+   (aucun rectangle visible). Le texte du hero et l'arche passent au-dessus. Repli sans WebGL : anneaux en dégradés CSS. */
+.hero-text{position:relative;z-index:1}
+.arch-par{z-index:1}
+.water{--ww:600px;--wh:640px;position:absolute;left:50%;top:50%;width:var(--ww);height:var(--wh);translate:-50% -50%;z-index:0;pointer-events:none}
+.water canvas{display:block;width:100%;height:100%}
+html[data-eau="0"] .water{display:none}
+.water.is-css canvas{display:none}
+.water.is-css{
+  background:radial-gradient(ellipse 50% 50% at 50% 50%,
+    rgba(255,251,243,0) 30%, rgba(255,251,243,.75) 33.5%, rgba(30,90,87,.07) 37%, rgba(255,251,243,0) 40%,
+    rgba(255,251,243,.6) 45%, rgba(30,90,87,.055) 49%, rgba(255,251,243,0) 53%,
+    rgba(255,251,243,.45) 59%, rgba(30,90,87,.04) 63.5%, rgba(255,251,243,0) 68%,
+    rgba(255,251,243,.3) 75%, rgba(30,90,87,.03) 80%, rgba(255,251,243,0) 86%);
+  -webkit-mask:radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%);
+  mask:radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%)}
+@media (min-width:640px){ .water{--ww:820px;--wh:800px} }
+@media (min-width:980px){ .water{--ww:1000px;--wh:900px} }
+
+/* ================= SECTIONS ================= */
+.section{padding:clamp(72px, 10vw, 136px) 0}
+.section-head{max-width:44rem;margin-bottom:clamp(32px, 4.5vw, 60px)}
+.section h2{font-size:clamp(2rem, 1.45rem + 2.3vw, 3.4rem)}
+.section h2 .it{white-space:normal}
+.lead{margin-top:18px;color:var(--ink-soft);font-size:1.0625rem;max-width:36em}
+
+/* pour qui */
+.who{display:grid;gap:8px}
+.who-list{list-style:none;margin:0;padding:0;display:grid;counter-reset:w}
+.who-list li{display:grid;grid-template-columns:56px 1fr;align-items:baseline;gap:12px;padding:20px 0;border-top:1px solid var(--line-strong);font-size:1.0625rem}
+.who-list li:last-child{border-bottom:1px solid var(--line-strong)}
+.who-list .fig{font-size:calc(1.75rem * var(--serif-scale));color:var(--bronze)}
+
+/* approche : ovale + cartes flottantes */
+.stage{position:relative;margin-top:8px}
+.stage-oval-par{position:relative;width:94%;aspect-ratio:1.6/1;max-width:560px;margin:0 auto}
+.stage-oval{position:absolute;inset:4% 0;border-radius:50%;rotate:-6deg}
+.pillars{list-style:none;margin:-36px 0 0;padding:0;display:grid;gap:12px;position:relative;z-index:2}
+.pillar{background:color-mix(in srgb, var(--surface) 90%, transparent);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
+  border-radius:var(--radius);padding:26px 24px 24px;box-shadow:0 24px 50px -34px rgba(40,28,18,.5);border:1px solid var(--card-line)}
+/* numéros des piliers : plus grands que ceux de « Pour qui », en tête de carte, remplissage métallique + filet */
+.pillar .pillar-n{display:flex;align-items:baseline;gap:14px;margin:0 0 14px;font-size:calc(3rem * var(--serif-scale));color:var(--bronze)}
+.pillar-n span{background:var(--metal-text);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding:.08em .1em .08em 0}
+.pillar-n::after{content:"";flex:1;height:1px;background:var(--metal);opacity:.7;translate:0 calc(.5px - .5ex)}
+.pillar h3{font-size:1.375rem;font-weight:400;letter-spacing:-.02em;margin-bottom:8px}
+.pillar p{color:var(--ink-soft);font-size:.9688rem;line-height:1.6}
+
+/* collage + texte défilant */
+.collage{position:relative;overflow:hidden;padding:clamp(40px, 6vw, 80px) 0 clamp(60px, 8vw, 110px)}
+.marquee{position:absolute;left:0;right:0;bottom:clamp(30px, 5vw, 70px);z-index:0;pointer-events:none;user-select:none;white-space:nowrap;
+  font-family:var(--font-serif);font-style:italic;font-weight:var(--serif-weight);letter-spacing:-.01em;line-height:1;
+  font-size:calc(clamp(4.5rem, 2rem + 11vw, 12.5rem) * var(--serif-scale));color:var(--marquee)}
+.marquee-track{display:inline-flex;animation:marq 90s linear infinite;will-change:transform}
+.marquee-track span{padding-right:.35em}
+@keyframes marq{to{transform:translateX(-50%)}}
+.marquee.is-paused .marquee-track{animation-play-state:paused}
+.tiles{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;padding:0 var(--gutter)}
+.tile{flex:none;position:relative}
+.tile .ph{border-radius:3px;box-shadow:0 26px 50px -34px rgba(40,28,18,.45)}
+.tile + .tile{margin-left:-6vw}
+.tile-1{width:35vw;z-index:2}.tile-1 .ph{aspect-ratio:3/4;rotate:-3deg}
+.tile-2{width:42vw;z-index:3;margin-top:-6vw}.tile-2 .ph{aspect-ratio:5/4;rotate:2deg}
+.tile-3{width:35vw;z-index:2;margin-top:8vw}.tile-3 .ph{aspect-ratio:4/5;rotate:-1.5deg}
+.tile-4{display:none}
+
+/* première séance */
+/* Rythme vertical de chaque étape : durée → titre → texte, toujours empilés (flux naturel : un titre sur deux lignes
+   pousse seulement son propre texte, l'écart titre → texte reste le même partout). */
+.first-head{margin-bottom:clamp(52px, 7vw, 104px)}
+.first-head .lead{margin-top:22px;max-width:34em;line-height:1.7;text-wrap:pretty}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.step{position:relative;padding:30px 0 36px;border-top:1px solid var(--line-strong)}
+.step .fig{display:block;margin:0 0 20px;font-size:calc(3rem * var(--serif-scale));color:var(--accent)}
+.step .fig small{font-size:.42em;font-style:italic;margin-left:.15em;letter-spacing:0}
+.step h3{font-size:1.3125rem;font-weight:400;letter-spacing:-.02em;line-height:1.3}
+.step-text{margin-top:12px;color:var(--ink-soft);line-height:1.7;max-width:24em}
+.step-text::first-letter{text-transform:uppercase}
+
+/* barre récapitulative : carte douce + contour satiné champagne → bronze (pseudo-élément masqué en anneau d'1 px) */
+.recap{position:relative;margin-top:clamp(40px, 6vw, 96px);display:flex;flex-direction:column;align-items:stretch;gap:22px;
+  padding:28px 22px 22px;background:var(--surface);border-radius:var(--radius)}
+.recap::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--metal-ring);opacity:.7;pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)}
+.recap-text{color:var(--ink);font-size:1.0625rem;line-height:1.5}
+.recap-title{display:block;margin-bottom:6px;font-family:var(--font-serif);font-style:italic;font-weight:var(--serif-weight);letter-spacing:var(--serif-track);
+  font-size:calc(1.625rem * var(--serif-scale));line-height:1.15;color:var(--accent)}
+.recap-sep{color:var(--bronze-line);margin:0 .2em}
+/* mobile : « Première séance » / « 1 h 15 · 85 € » / « au cabinet ou en visio » */
+.recap-sep--title, .recap-sep--where{display:none}
+.recap-where{display:block;color:var(--ink-soft)}
+
+/* bande bleu nuit : séances & tarifs */
+.on-navy{background:var(--band);color:var(--navy-ink);position:relative;overflow:hidden;isolation:isolate}
+/* lumière satinée : large reflet diagonal très doux, glisse avec le défilement (--sx posé par le JS), fixe si mouvement réduit */
+.on-navy::before{content:"";position:absolute;inset:-10% -40%;z-index:-1;pointer-events:none;translate:calc(var(--sx, 0) * 14%) 0;
+  background:
+    linear-gradient(112deg, rgba(220,200,168,0) 30%, rgba(220,200,168,.03) 40%, rgba(240,226,200,.065) 47%, rgba(220,200,168,.025) 54%, rgba(220,200,168,0) 64%),
+    radial-gradient(40% 50% at 70% 0%, rgba(200,180,158,.07), rgba(200,180,158,0) 70%)}
+.on-navy .kicker{color:var(--navy-bronze)}
+.on-navy .kicker::before{background:var(--metal-navy)}
+.on-navy .it{color:var(--navy-ink)}
+.on-navy .lead,.on-navy .legal-note{color:var(--navy-soft)}
+.orbits{position:absolute;pointer-events:none;border-radius:50%;--metal-ring:var(--metal-navy);opacity:.45}
+.prices{list-style:none;margin:0;padding:0;display:grid;gap:0;position:relative}
+.price{display:flex;flex-direction:column;padding:28px 0 30px;background:var(--metal-navy) left top/100% 1px no-repeat}
+/* prix : grotesque claire (Manrope 300 par défaut), approche -4 %, € plus petit, bronze clair, calé en haut */
+.price .amount{order:-1;font-family:var(--font-display);font-stretch:var(--display-stretch);font-style:normal;font-weight:300;
+  letter-spacing:-.04em;line-height:1;font-size:clamp(3.5rem, 2.9rem + 2.2vw, 5.25rem);margin-bottom:16px;word-spacing:-.07em}
+.price .cur{font-size:.42em;font-weight:400;letter-spacing:0;color:var(--navy-bronze);vertical-align:1em;word-spacing:0}
+.price h3{font-size:1.375rem;font-weight:400;letter-spacing:-.015em}
+.price .meta{margin-top:6px;font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--navy-bronze)}
+.price .where{margin-top:14px;color:var(--navy-soft);font-size:.9375rem}
+.legal-note{margin-top:26px;font-size:.875rem;color:var(--ink-soft);max-width:48rem}
+.prices-cta{margin-top:30px}
+
+/* parcours */
+.bio-grid{display:grid;gap:48px;align-items:center}
+/* photo du cabinet : rectangle arrondi droit + cadre fin décalé (statique, la photo seule a le parallaxe) */
+.cab-par{position:relative;width:min(84%, 360px);margin:0 auto;translate:-9px 0}
+.cab-frame{position:absolute;inset:18px -18px -18px 18px;--o:.8;opacity:var(--o);border-radius:26px}
+.cab{aspect-ratio:4/5;border-radius:22px}
+.bio-list{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:0}
+.bio-list li{display:flex;align-items:baseline;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.bio-list li::before{content:"";flex:none;width:16px;height:1px;background:var(--metal);translate:0 calc(.5px - .5ex)}
+.stat{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 22px;margin-top:34px;color:var(--ink-soft)}
+.stat > span{display:flex;align-items:baseline;gap:8px}
+/* « 2019 », « 1 200 » : même grotesque claire que les prix, taille modérée */
+.stat .num{font-family:var(--font-display);font-stretch:var(--display-stretch);font-weight:300;letter-spacing:-.04em;line-height:1;
+  font-size:clamp(2.5rem, 2.1rem + 1.4vw, 3.25rem);color:var(--ink);word-spacing:.1em}
+.stat .dot{color:var(--bronze-line);align-self:center;font-size:1.5rem}
+
+/* avis */
+.reviews-head{text-align:center;margin:0 auto clamp(32px, 4.5vw, 60px);max-width:44rem}
+.reviews-head .kicker{justify-content:center}
+.rating{display:inline-flex;align-items:baseline;gap:10px;margin-top:18px;color:var(--ink-soft)}
+.rating .fig{font-size:calc(2.2rem * var(--serif-scale));color:var(--ink)}
+.rating .star{color:var(--bronze)}
+.reviews{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.review{margin:0;height:100%;display:flex;flex-direction:column;background:var(--surface);border-radius:var(--radius);padding:30px 26px 24px;border:1px solid var(--card-line)}
+.review blockquote{margin:0;font-family:var(--font-serif);font-style:italic;font-weight:var(--serif-weight);font-size:calc(1.3rem * var(--serif-scale));line-height:1.42;letter-spacing:var(--serif-track)}
+.review figcaption{margin-top:auto;padding-top:22px;font-size:.875rem;color:var(--ink-soft)}
+.review figcaption strong{color:var(--ink);font-weight:600}
+.reviews-legal{text-align:center;margin-left:auto;margin-right:auto}
+
+/* FAQ */
+.faq-grid{display:grid;gap:10px}
+.faq details{border-bottom:1px solid var(--line-strong)}
+.faq details:first-of-type{border-top:1px solid var(--line-strong)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:18px;min-height:64px;padding:18px 0;
+  font-family:var(--font-display);font-stretch:var(--display-stretch);font-size:1.1875rem;font-weight:400;letter-spacing:-.015em;line-height:1.3}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pm{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-strong);position:relative;color:var(--ink);transition:background-color .25s}
+.faq summary:hover .pm{background:var(--surface)}
+.faq summary .pm::before,.faq summary .pm::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1px;background:currentColor;transform:translate(-50%,-50%);transition:transform .3s var(--ease)}
+.faq summary .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.faq details[open] .pm::after{transform:translate(-50%,-50%) rotate(0)}
+.faq details p{padding:0 52px 24px 0;color:var(--ink-soft)}
+
+/* accès */
+.access-grid{display:grid;gap:32px}
+.info{margin:0;display:grid}
+.info div{padding:16px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}
+.info div:first-child{padding-top:0}
+.info dt{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze)}
+.info dd{margin:0}
+.info dd a{display:inline-flex;align-items:center;min-height:44px;margin:-8px 0;overflow-wrap:anywhere}
+.info small{display:block;color:var(--ink-soft);font-size:.875rem}
+.map{overflow:hidden;position:relative;background:var(--surface);border-radius:var(--radius);border:1px solid var(--line)}
+.map svg{width:100%;height:clamp(280px, 70vw, 420px)}
+.map-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px 10px 18px;border-top:1px solid var(--line);font-size:.875rem;color:var(--ink-soft)}
+.map-link{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;font-weight:600;color:var(--accent);text-underline-offset:4px;white-space:nowrap}
+.map-link svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ================= SCÈNE FINALE « REFLET » (itération 8) =================
+   Un seul plein écran (min-height 100svh) : ciel clair en haut (CTA, puis le disque et le nom posés sur l'horizon),
+   eau en bas (reflet WebGL, même shader que le hero) où sont rangés le cadre légal, les liens et le crédit.
+   --D : diamètre de l'anneau du disque ; --nf : corps du nom. */
+.reflet{--D:clamp(150px, min(19vw, 23svh), 270px);--nf:clamp(3.1rem, 1rem + 8.2vw, 8.25rem);
+  position:relative;min-height:100svh;display:grid;grid-template-rows:1fr auto;overflow:clip;background:var(--bg)}
+.reflet-sky{display:flex;flex-direction:column;padding-top:clamp(48px, 8svh, 104px);
+  background:radial-gradient(46% 62% at 50% 100%, rgba(255,252,246,.95), rgba(255,252,246,0) 72%)}
+.reflet-cta{text-align:center;margin-bottom:clamp(28px, 4svh, 56px)}
+.reflet-cta h2{font-size:clamp(2rem, 1.45rem + 2.3vw, 3.4rem);max-width:15em;margin:0 auto}
+.reflet-cta .btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:30px}
+html[data-palette="multi"] .reflet-cta .it, html[data-palette="multi"] .moon-name{color:var(--c-euca)}
+/* disque : anneau satiné fixe (la cible de l'inspiration) + disque champagne qui respire dedans, 4 s / 6 s */
+.moon{position:relative;flex:none;margin-top:auto;height:calc(var(--D) + var(--nf) * .42)}
+.moon-ring, .moon-disc{position:absolute;left:50%;top:0;width:var(--D);height:var(--D);margin-left:calc(var(--D) / -2);border-radius:50%}
+.moon-ring{--o:.75;opacity:var(--o)}
+.moon-face{position:absolute;inset:0;border-radius:50%;scale:.87;
+  background:radial-gradient(circle at 42% 36%, #F8F0E1 0%, #F0E2C8 46%, #E6D2AF 100%);
+  box-shadow:inset 0 0 0 1px rgba(176,139,96,.22)}
+.js-motion .moon-face{animation:moon-breath 10s infinite}
+@keyframes moon-breath{
+  0%{scale:.82;animation-timing-function:cubic-bezier(.37,0,.63,1)}
+  40%{scale:.92;animation-timing-function:cubic-bezier(.37,0,.63,1)}
+  100%{scale:.82}}
+/* le nom : boîte d'une ligne (line-height 1) calée en bas, ligne de base ~0,15 em au-dessus de l'horizon */
+.moon-name{position:absolute;left:0;right:0;bottom:calc(var(--nf) * .06);margin:0;text-align:center;white-space:nowrap;
+  font-family:var(--font-serif);font-style:italic;font-weight:var(--serif-weight);font-size:calc(var(--nf) * var(--serif-scale));
+  line-height:1;letter-spacing:-.015em;color:var(--accent)}
+/* eau : un ton plus sourd et plus frais que le ciel ; horizon = filet satiné qui s'efface aux bords */
+.reflet-low{position:relative;isolation:isolate;background:linear-gradient(180deg, #ECE7DF 0%, #E6E4DC 45%, #E0E1DA 100%)}
+.reflet-low::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;z-index:2;background:var(--metal);opacity:.9;pointer-events:none;
+  -webkit-mask:linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);mask:linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)}
+.reflet-water{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.reflet-water canvas{display:block;width:100%;height:100%}
+/* repli sans WebGL : copie retournée du disque et du nom, voilée, + fines lignes d'eau */
+.reflet-water.is-css canvas{display:none}
+.reflet-water .refl-css{position:absolute;left:0;right:0;bottom:100%;margin:0;transform:scaleY(-1);transform-origin:50% 100%;opacity:.3;filter:blur(.8px);
+  -webkit-mask:linear-gradient(to top, #000, transparent 90%);mask:linear-gradient(to top, #000, transparent 90%)}
+.reflet-water.is-css::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(180deg, rgba(255,252,245,0) 0 7px, rgba(255,252,245,.32) 7px 8px);
+  -webkit-mask:linear-gradient(#000, transparent 70%);mask:linear-gradient(#000, transparent 70%)}
+/* textes rangés dans l'eau, 13–14 px ; sous 980 px ils passent sous le reflet, au-dessus de la barre mobile */
+.reflet-foot{position:relative;z-index:1;display:grid;gap:22px;font-size:.8125rem;line-height:1.6;color:#4C4741;
+  padding-top:calc(var(--D) + var(--nf) * .5);padding-bottom:calc(30px + 76px + env(safe-area-inset-bottom))}
+.reflet-foot h2{font-family:var(--font-body);font-size:.8125rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;line-height:1.4;color:#694C35;margin:0 0 8px}
+.reflet-foot .cadre{max-width:40em}
+.foot-links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:0 24px}
+.foot-links a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);font-size:.875rem;text-underline-offset:4px}
+.foot-final{margin:2px 0 0}
+.foot-final a{color:var(--ink);text-underline-offset:3px}
+@media (min-width:980px){
+  .reflet-foot{grid-template-columns:minmax(0,1fr) auto;align-items:end;column-gap:48px;padding-top:calc(var(--nf) * .9);padding-bottom:28px}
+  .rf-cadre{max-width:min(40em, 36vw)}
+  .rf-meta{text-align:right}
+  .foot-links{justify-content:flex-end}
+}
+
+/* barre mobile */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb, var(--surface) 92%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  transform:translateY(110%);transition:transform .4s var(--ease);visibility:hidden}
+.mbar.is-on{transform:none;visibility:visible}
+.mbar .btn-primary{flex:1}
+.mbar .tel{flex:none;width:52px;min-height:48px;padding:0}
+
+/* ================= CENTRAGE OPTIQUE DES LIBELLÉS ================= */
+/* Règle commune : la boîte de texte est rognée de la hauteur de capitale à la ligne de base (text-box), si bien que
+   le centrage flex / padding centre ce que l'œil voit (les capitales) et non l'interligne. Ne marche que sur un
+   conteneur bloc : les libellés des boutons et des questions sont donc dans un <span class="l"> / <span class="q">.
+   Boîtes à hauteur fixe : --h (bouton 48/44 via min-height, nav 44, pastille M 19). */
+.l, .q, .metro, .nav a, .map-foot > span, .brand-name, .brand-role, .ribbon-text, .proofs li{text-box:trim-both cap alphabetic}
+.metro, .nav a{padding-block:calc((var(--h) - 1cap) / 2)}
+/* capitales espacées : on retire l'espacement de fin de mot pour centrer l'encre horizontalement */
+.btn .l{margin-right:calc(-1 * var(--ls, 0em))}
+/* Repli mesuré au pixel (navigateurs sans text-box, ou ?tb=0 pour le tester) : sans rognage, les capitales sont trop
+   hautes ; on les descend de --cap-nudge (valeur négative = capitale au-dessus du centre) : Manrope 0,03 em,
+   Jakarta 0,035 em, Fixel 0,08 em. Précision ±0,5 px (arrondi au pixel du navigateur). */
+html{--cap-nudge:-.03em}
+html[data-typo="2"]{--cap-nudge:-.035em}
+html[data-typo="3"]{--cap-nudge:-.08em}
+html.no-tb .l, html.no-tb .q, html.no-tb .map-foot > span, html.no-tb .metro, html.no-tb .nav a, html.no-tb .brand-name, html.no-tb .brand-role, html.no-tb .ribbon-text{text-box:none}
+html.no-tb .l, html.no-tb .q, html.no-tb .map-foot > span{position:relative;top:calc(-1 * var(--cap-nudge))}
+html.no-tb .metro, html.no-tb .nav a{line-height:1;padding-block:calc((var(--h) - 1em) / 2 - var(--cap-nudge)) calc((var(--h) - 1em) / 2 + var(--cap-nudge))}
+html.no-tb .brand-role{margin-top:5px}
+html.no-tb .ribbon{padding-top:9px;padding-bottom:9px}
+html.no-tb .proofs li{text-box:none;padding-top:16px;padding-bottom:14px}
+
+/* ================= MOUVEMENT ================= */
+/* Apparitions rejouées (itération 7). Propriété translate (indépendante des rotate / transform du parallaxe).
+   Pas de transition à la sortie (l'élément est déjà hors écran) : seul .is-in porte les transitions. */
+/* Amplitudes calibrées par Corentin (« un tout petit peu trop intense ») : ~60 % du cahier des charges (14 px → 8,5 px,
+   opacité de départ 0,4), flou de départ 2,5 px, pas de flou sur mobile ; durées et rythme inchangés. */
+html{--ease-calm:cubic-bezier(.2,.7,.2,1);--rv-y:8.5px;--rv-blur:2.5px;--rv-o:.4}
+@media (max-width:639px){ html{--rv-y:6px;--rv-blur:0px} }
+[data-reveal]{--rd:min(calc(var(--i, 0) * 45ms), 270ms)}
+.js-motion [data-reveal=""]{opacity:var(--rv-o);translate:0 var(--rv-y);filter:blur(var(--rv-blur))}
+.js-motion [data-reveal=""].is-in{opacity:1;translate:none;filter:none;
+  transition:opacity .5s var(--ease-calm) var(--rd), translate .55s var(--ease-calm) var(--rd), filter .45s var(--ease-calm) var(--rd)}
+/* filets métalliques, eau : simple fondu (--o = opacité de repos de l'élément) */
+.js-motion [data-reveal="fade"]{opacity:calc(var(--o, 1) * var(--rv-o))}
+.js-motion [data-reveal="fade"].is-in{opacity:var(--o, 1);transition:opacity .55s var(--ease-calm) var(--rd)}
+/* photos : rideau qui monte depuis le bas + photo 1,06 → 1 dans son cadre. Marges négatives sur les côtés et en bas :
+   l'ombre portée (toujours décalée vers le bas) n'est pas rognée ; le haut s'arrête au bord de la photo, si bien que le
+   rideau dure vraiment 1,6 s. */
+.js-motion [data-reveal="photo"]{clip-path:inset(60% -140px 0 -140px);opacity:var(--rv-o)}
+.js-motion [data-reveal="photo"] > img{scale:1.035}
+.js-motion [data-reveal="photo"].is-in{clip-path:inset(0 -140px -140px -140px);opacity:1;
+  transition:clip-path .6s cubic-bezier(.3,.1,.2,1) var(--rd), opacity .5s var(--ease-calm) var(--rd)}
+.js-motion [data-reveal="photo"].is-in > img{scale:1;transition:scale .6s var(--ease-calm) var(--rd)}
+/* titres découpés : mots insécables, lettres animées (flou doux, légère montée), partie italique un souffle après */
+.w{display:inline-block;white-space:nowrap}
+.c{display:inline-block}
+.js-motion [data-split]:not(.is-split){opacity:var(--rv-o)}
+.js-motion [data-split] .c{opacity:var(--rv-o);translate:0 .16em;filter:blur(var(--rv-blur))}
+.js-motion [data-split].is-in .c{opacity:1;translate:none;filter:none;--cd:calc(var(--rd) + var(--ci, 0) * var(--cs, 10ms));
+  transition:opacity .4s var(--ease-calm) var(--cd), translate .44s var(--ease-calm) var(--cd), filter .4s var(--ease-calm) var(--cd)}
+.js-motion [data-split].is-in .it .c{--cd:calc(var(--rd) + var(--ci, 0) * var(--cs, 10ms) + 50ms)}
+.js-motion .hero .arch-line{animation:breathe 14s ease-in-out infinite alternate}
+@keyframes breathe{from{rotate:.5deg;scale:.992}to{rotate:1.5deg;scale:1.008}}
+[data-par]{will-change:transform}
+html.static .marquee-track{animation:none}
+
+/* ================= >= 640 ================= */
+@media (min-width:640px){
+  .arch-par{width:330px}
+  .place-card{left:-22%;max-width:300px}
+  .who-list{grid-template-columns:1fr 1fr;column-gap:40px}
+  .who-list li:nth-last-child(2){border-bottom:1px solid var(--line-strong)}
+  .reviews{grid-template-columns:repeat(3,1fr)}
+  .prices{grid-template-columns:repeat(3,1fr);gap:0 40px}
+  .pillars{grid-template-columns:repeat(3,1fr);margin-top:-60px}
+  .tile + .tile{margin-left:-4vw}
+  .tile-1{width:22vw}.tile-2{width:28vw}.tile-3{width:22vw}
+  .tile-4{display:block;width:24vw;z-index:1;margin-top:-2vw}.tile-4 .ph{aspect-ratio:4/5;rotate:3deg}
+  .steps{grid-template-columns:1fr 1fr;column-gap:56px}
+  .first-head h2 .it{display:block}
+  /* récapitulatif sur une ligne de texte, bouton dessous (la ligne entière ne tient qu'à partir de 980) */
+  .recap{align-items:flex-start;padding:30px 32px 32px}
+  .recap-title{display:inline;margin:0}
+  .recap-sep--title, .recap-sep--where{display:inline}
+  .recap-sep{margin:0 .3em}
+  .recap-where{display:inline}
+}
+/* ================= >= 980 : desktop ================= */
+@media (min-width:980px){
+  body{padding-bottom:0}
+  .mbar{display:none}
+  .nav{display:block}
+  .header-tel{display:inline-flex}
+  .hero{padding:56px 0 110px}
+  .hero-grid{grid-template-columns:minmax(0,1.22fr) minmax(0,.78fr);align-items:center;gap:32px}
+  .hero-visual{padding:30px 0 40px}
+  .arch-par{width:min(84%, 380px)}
+  .place-card{left:-15%;bottom:15%;max-width:310px;padding:15px 20px 16px}
+  .proofs{max-width:560px}
+  .who{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:72px;align-items:start}
+  .who .section-head{position:sticky;top:40px}
+  .who-list{grid-template-columns:1fr}
+  .who-list li{grid-template-columns:72px 1fr;padding:22px 0;font-size:1.1875rem}
+  .who-list li:nth-last-child(2){border-bottom:0}
+  .approach-head{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:end;max-width:none}
+  .approach-head .lead{margin-top:0}
+  /* scène desktop : ovale légèrement incliné, cartes qui le chevauchent (réf. 1) */
+  .stage{height:660px;margin-top:10px}
+  .stage-oval-par{position:absolute;inset:0;margin:auto;width:min(66%, 780px);height:420px;max-width:none;aspect-ratio:auto}
+  .stage-oval{inset:0;rotate:-8deg}
+  .pillars{display:block;margin:0;position:absolute;inset:0;pointer-events:none}
+  .pillar{position:absolute;width:290px;pointer-events:auto}
+  .pillar:nth-child(1){left:0;top:16%}
+  .pillar:nth-child(2){left:31%;top:0}
+  .pillar:nth-child(3){right:1%;bottom:6%}
+  .tiles{padding:0}
+  .tile + .tile{margin-left:-3.2vw}
+  .tile-1{width:min(18vw,270px)}.tile-2{width:min(23vw,340px)}.tile-3{width:min(19vw,280px)}.tile-4{width:min(21vw,310px)}
+  .steps{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(40px, 4.4vw, 72px)}
+  .step{padding:36px 0 8px}
+  .step .fig{margin-bottom:30px;font-size:calc(3.6rem * var(--serif-scale))}
+  .step-text{margin-top:14px}
+  .first-head .lead{max-width:none}
+  .first-head .lead .nl{display:block}
+  .recap{flex-direction:row;align-items:center;justify-content:space-between;gap:32px;padding:26px 26px 26px 40px}
+  .recap .btn{flex:none}
+  .prices{gap:0 56px}
+  .price{padding-top:34px}
+  .bio-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:96px}
+  .cab-par{width:min(88%, 400px)}
+  .faq-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:72px;align-items:start}
+  .access-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:64px;align-items:start}
+}
+@media (min-width:980px) and (max-width:1279px){
+  .header-tel{width:44px;padding:0;font-size:0;gap:0} .header-tel svg{width:18px;height:18px}
+  .nav a{padding:0 9px} .nav a::after{left:9px;right:9px}
+  .pillar{width:260px}
+  .place-card{left:-9%;bottom:14%}
+  .stage{height:620px}
+  .stage-oval-par{height:400px;width:64%}
+  .pillar:nth-child(2){left:34%}
+}
+@media (max-width:639px){
+  .on-navy .orbits{display:none}
+  .proofs .fig{font-size:calc(1.5rem * var(--serif-scale))}
+  .stat{flex-direction:column;align-items:flex-start;gap:4px}
+  .stat .dot{display:none}
+  .pillar{padding:22px 20px}
+  .pillar .pillar-n{font-size:calc(2.6rem * var(--serif-scale));margin-bottom:10px}
+  .pillar h3{margin-bottom:4px}
+}
+@media (max-width:419px){ .brand-role{display:none} .brand-name{font-size:1.125rem} }
+@media (max-width:380px){ .btn{padding-left:18px;padding-right:18px} .header-cta .btn-sm{padding:10px 13px;--ls:.08em} }
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .js-motion [data-reveal], .js-motion [data-split] .c{opacity:var(--o, 1);translate:none;filter:none;clip-path:none}
+  .js-motion [data-reveal] > img{scale:none}
+  [data-par]{transform:none!important}
+  .btn-primary::after{display:none}
+}
+
+/* ================= PANNEAU DA (neutre, hors direction) ================= */
+.da{position:fixed;left:12px;bottom:12px;z-index:90;font:13px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#222;letter-spacing:0;text-transform:none}
+.da-toggle{all:unset;box-sizing:border-box;cursor:pointer;min-width:44px;height:44px;padding:0 12px;border-radius:8px;background:#2b2b2b;color:#fff;font:600 12px/44px system-ui,sans-serif;letter-spacing:.06em;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.da-toggle:focus-visible{outline:2px solid #1a73e8;outline-offset:2px}
+.da-panel{position:absolute;left:0;bottom:52px;width:262px;max-height:calc(100vh - 140px);overflow:auto;background:#f6f6f6;border:1px solid #cfcfcf;border-radius:8px;padding:12px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.da-panel[hidden]{display:none}
+.da fieldset{border:0;margin:0 0 10px;padding:0}
+.da legend{font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#555;margin-bottom:4px;padding:0}
+.da label{display:flex;align-items:center;gap:8px;min-height:30px;cursor:pointer}
+.da input{margin:0;accent-color:#333}
+.da .sw{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.2);flex:none}
+.da .hex{color:#777;font-family:ui-monospace,Consolas,monospace;font-size:11px;margin-left:auto}
+.da input:focus-visible{outline:2px solid #1a73e8;outline-offset:2px}
+.da .sws{display:inline-flex;flex:none}
+.da .sws .sw{width:12px;height:12px}
+.da .sws .sw + .sw{margin-left:-3px}
+.da .da-note{font-weight:400;text-transform:none;letter-spacing:0;color:#888}
+.da fieldset:disabled label{opacity:.45;cursor:default}
+body.clean .da{display:none}
+@media (max-width:979px){ .da{bottom:84px} }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.4 4.1-2 1.3a12 12 0 0 0 6.5 6.5l1.3-2 4.1 1.4v2.6a1.8 1.8 0 0 1-2 1.8A16.6 16.6 0 0 1 4.8 5.5a1.8 1.8 0 0 1 1.8-2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="ribbon" id="ribbon" role="note"><p class="ribbon-text">Maquette préparée pour vous par Volteface.studio, à partir de votre site actuel. Elle sera supprimée le 9 novembre. <a href="https://volteface.studio/">En savoir plus</a></p>
+  <button class="ribbon-close" id="ribbon-close" type="button" aria-label="Fermer le bandeau"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12"/></svg></button></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#main" aria-label="Claire Martin, sophrologue, retour en haut">
+      <span class="brand-name">Claire Martin</span>
+      <span class="brand-role">Sophrologue · Paris 11e</span>
+    </a>
+    <nav class="nav" aria-label="Menu principal">
+      <ul>
+        <li><a href="#approche">L'approche</a></li>
+        <li><a href="#tarifs">Séances &amp; tarifs</a></li>
+        <li><a href="#parcours">Parcours</a></li>
+        <li><a href="#avis">Avis</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#acces">Accès</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-line btn-sm header-tel" href="tel:+33612345678" aria-label="Appeler le 06 12 34 56 78"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l">06 12 34 56 78</span></a>
+      <a class="btn btn-primary btn-sm" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="l">Prendre rendez-vous</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 1. Hero -->
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-text" data-stagger>
+        <p class="eyebrow" data-reveal>Sophrologue · Paris 11e &amp; visio</p>
+        <h1 id="hero-title" data-reveal="title" data-split>Retrouver du calme, <span class="it">une séance après l'autre.</span></h1>
+        <p class="hero-sub" data-reveal>J'accompagne les adultes et les adolescents qui traversent une période de stress, de fatigue ou de changement, avec des exercices simples à refaire chez soi.</p>
+        <div class="hero-ctas" data-reveal>
+          <a class="btn btn-primary" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="l">Prendre rendez-vous</span></a>
+          <a class="btn btn-line" href="#approche"><span class="l">Découvrir l'approche</span></a>
+        </div>
+        <ul class="proofs">
+          <li data-reveal><span class="star" aria-hidden="true">★</span><span class="sr-only">Note : </span><span class="fig">4,9</span> · 37 avis Google</li>
+          <li data-reveal>Séance de <span class="fig">60 min</span> · <span class="fig">70 €</span></li>
+          <li data-reveal>Premier appel de <span class="fig">15 min</span> offert</li>
+          <li data-reveal>Métro Voltaire <span class="fig">(9)</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" data-stagger>
+        <div class="water" id="water" aria-hidden="true" data-reveal="fade"><canvas></canvas></div>
+        <div class="arch-par">
+          <div data-par=".035">
+            <span class="arch-line metal-ring" aria-hidden="true" data-reveal="fade"></span>
+            <!-- Unsplash XWT6pBc6Z6A · Shalom Mwenesi · https://unsplash.com/photos/XWT6pBc6Z6A -->
+            <div class="ph ph--light arch" data-reveal="photo"><img src="https://images.unsplash.com/photo-1527614092500-739b1a574173?auto=format&amp;fit=crop&amp;w=800&amp;q=70" srcset="https://images.unsplash.com/photo-1527614092500-739b1a574173?auto=format&amp;fit=crop&amp;w=400&amp;q=70 400w, https://images.unsplash.com/photo-1527614092500-739b1a574173?auto=format&amp;fit=crop&amp;w=660&amp;q=70 660w, https://images.unsplash.com/photo-1527614092500-739b1a574173?auto=format&amp;fit=crop&amp;w=800&amp;q=70 800w" sizes="(min-width:980px) 380px, 330px" alt="Claire Martin, de dos, en pull crème, dans la lumière du jour" style="object-position:50% 30%" decoding="async" fetchpriority="high"></div>
+          </div>
+          <p class="place-card" data-reveal>
+            <span class="pc-label">Cabinet · Paris 11e</span>
+            <span class="pc-main">Rue de la Roquette</span>
+            <span class="pc-sub"><span class="metro" aria-hidden="true">M</span><span><span class="nw">Métro Voltaire, ligne&nbsp;9</span> <span class="nw"><span class="pc-dot">· </span>et en visio</span></span></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Pour qui -->
+  <section class="section" id="pour-qui" data-stagger aria-labelledby="who-title" style="padding-top:clamp(40px,6vw,80px)">
+    <div class="wrap who">
+      <div class="section-head">
+        <p class="kicker" aria-hidden="true" data-reveal>01</p>
+        <h2 id="who-title" data-reveal="title" data-split>Vous vous <span class="it">reconnaissez&nbsp;?</span></h2>
+        <p class="lead" data-reveal>La sophrologie peut vous aider si…</p>
+      </div>
+      <ul class="who-list">
+        <li data-reveal><span class="fig" aria-hidden="true">01</span><span>Vous avez du mal à décrocher le soir.</span></li>
+        <li data-reveal><span class="fig" aria-hidden="true">02</span><span>Le sommeil est devenu léger ou irrégulier.</span></li>
+        <li data-reveal><span class="fig" aria-hidden="true">03</span><span>Un examen, un oral ou un entretien approche.</span></li>
+        <li data-reveal><span class="fig" aria-hidden="true">04</span><span>Vous traversez un changement : déménagement, naissance, nouveau poste.</span></li>
+        <li data-reveal><span class="fig" aria-hidden="true">05</span><span>Vous voulez mieux vivre une période de fatigue.</span></li>
+        <li data-reveal><span class="fig" aria-hidden="true">06</span><span>Vous cherchez un moment à vous, régulier, sans écran.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. L'approche : ovale légèrement incliné + cartes flottantes -->
+  <section class="section" id="approche" data-stagger aria-labelledby="approach-title" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head approach-head">
+        <div>
+          <p class="kicker" aria-hidden="true" data-reveal>02</p>
+          <h2 id="approach-title" data-reveal="title" data-split>Une méthode simple, <span class="it">que vous gardez avec vous</span></h2>
+        </div>
+        <p class="lead" data-reveal>La sophrologie associe la respiration, la détente musculaire et la visualisation. Pas besoin d'être souple ni «&nbsp;doué pour la méditation&nbsp;» : on avance à votre rythme, assis ou debout, habillé normalement.</p>
+      </div>
+      <div class="stage">
+        <div class="stage-oval-par">
+          <div class="stage-par" data-par=".035" style="position:absolute;inset:0">
+            <!-- Unsplash i4sb1vu9eG0 · Daniela Almeida · https://unsplash.com/photos/i4sb1vu9eG0 -->
+            <div class="ph ph--dusk stage-oval" data-reveal="photo"><img src="https://images.unsplash.com/photo-1771597118630-de3854c5f271?auto=format&amp;fit=crop&amp;w=1200&amp;q=70" srcset="https://images.unsplash.com/photo-1771597118630-de3854c5f271?auto=format&amp;fit=crop&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1771597118630-de3854c5f271?auto=format&amp;fit=crop&amp;w=1000&amp;q=70 1000w, https://images.unsplash.com/photo-1771597118630-de3854c5f271?auto=format&amp;fit=crop&amp;w=1600&amp;q=70 1600w" sizes="(min-width:980px) 780px, 94vw" alt="Ombre d'une plante sur un mur chaud, dans la lumière du soir" style="object-position:50% 45%" decoding="async" loading="lazy"></div>
+          </div>
+        </div>
+        <ul class="pillars">
+          <li class="pillar" data-reveal>
+            <p class="fig pillar-n" aria-hidden="true"><span>01</span></p>
+            <h3>Respirer</h3>
+            <p>Des respirations courtes à utiliser n'importe où, même dans le métro.</p>
+          </li>
+          <li class="pillar" data-reveal>
+            <p class="fig pillar-n" aria-hidden="true"><span>02</span></p>
+            <h3>Relâcher</h3>
+            <p>Repérer les tensions du corps et apprendre à les laisser partir.</p>
+          </li>
+          <li class="pillar" data-reveal>
+            <p class="fig pillar-n" aria-hidden="true"><span>03</span></p>
+            <h3>Se projeter</h3>
+            <p>Préparer un moment précis (un oral, une reprise) avec plus de confiance.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bande collage (décorative) : 4 emplacements à peine inclinés + grand texte qui défile -->
+  <div class="collage">
+    <p class="marquee" id="marquee" aria-hidden="true"><span class="marquee-track"><span>Respirer · Relâcher · Se projeter ·</span><span>Respirer · Relâcher · Se projeter ·</span></span></p>
+    <div class="tiles" data-stagger>
+      <!-- Unsplash wi-78W-29D8 · GUY GRANDJEAN · https://unsplash.com/photos/wi-78W-29D8 -->
+      <div class="tile tile-1"><div data-par=".03"><div class="ph ph--linen" data-reveal="photo"><img src="https://images.unsplash.com/photo-1772268485810-29dc9d231f26?auto=format&amp;fit=crop&amp;w=600&amp;q=70" srcset="https://images.unsplash.com/photo-1772268485810-29dc9d231f26?auto=format&amp;fit=crop&amp;w=300&amp;q=70 300w, https://images.unsplash.com/photo-1772268485810-29dc9d231f26?auto=format&amp;fit=crop&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1772268485810-29dc9d231f26?auto=format&amp;fit=crop&amp;w=900&amp;q=70 900w" sizes="(min-width:980px) 270px, (min-width:640px) 22vw, 35vw" alt="Voilages traversés par le soleil et l'ombre des feuilles" style="object-position:50% 50%" decoding="async" loading="lazy"></div></div></div>
+      <!-- Unsplash sEMuBSKcYqQ · Laura Cleffmann · https://unsplash.com/photos/sEMuBSKcYqQ -->
+      <div class="tile tile-2"><div data-par=".06"><div class="ph ph--light" data-reveal="photo"><img src="https://images.unsplash.com/photo-1641115078189-ced153b170c2?auto=format&amp;fit=crop&amp;w=700&amp;q=70" srcset="https://images.unsplash.com/photo-1641115078189-ced153b170c2?auto=format&amp;fit=crop&amp;w=350&amp;q=70 350w, https://images.unsplash.com/photo-1641115078189-ced153b170c2?auto=format&amp;fit=crop&amp;w=700&amp;q=70 700w, https://images.unsplash.com/photo-1641115078189-ced153b170c2?auto=format&amp;fit=crop&amp;w=1000&amp;q=70 1000w" sizes="(min-width:980px) 340px, (min-width:640px) 28vw, 42vw" alt="Mains qui tiennent une tasse de thé sur un vêtement en lin" style="object-position:50% 55%" decoding="async" loading="lazy"></div></div></div>
+      <!-- Unsplash hLqoaMJYFdM · Valeria Reverdo · https://unsplash.com/photos/hLqoaMJYFdM -->
+      <div class="tile tile-3"><div data-par=".015"><div class="ph ph--linen" data-reveal="photo"><img src="https://images.unsplash.com/photo-1709291853064-98a4d38034b9?auto=format&amp;fit=crop&amp;w=600&amp;q=70" srcset="https://images.unsplash.com/photo-1709291853064-98a4d38034b9?auto=format&amp;fit=crop&amp;w=300&amp;q=70 300w, https://images.unsplash.com/photo-1709291853064-98a4d38034b9?auto=format&amp;fit=crop&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1709291853064-98a4d38034b9?auto=format&amp;fit=crop&amp;w=900&amp;q=70 900w" sizes="(min-width:980px) 280px, (min-width:640px) 22vw, 35vw" alt="Ombre d'un bouquet sur un mur beige" style="object-position:50% 50%" decoding="async" loading="lazy"></div></div></div>
+      <!-- Unsplash ns4hOjUOfBs · Tomi Saputra · https://unsplash.com/photos/ns4hOjUOfBs -->
+      <div class="tile tile-4"><div data-par=".05"><div class="ph ph--room" data-reveal="photo"><img src="https://images.unsplash.com/photo-1760533534981-e6d2c1c73ea4?auto=format&amp;fit=crop&amp;w=640&amp;q=70" srcset="https://images.unsplash.com/photo-1760533534981-e6d2c1c73ea4?auto=format&amp;fit=crop&amp;w=320&amp;q=70 320w, https://images.unsplash.com/photo-1760533534981-e6d2c1c73ea4?auto=format&amp;fit=crop&amp;w=640&amp;q=70 640w, https://images.unsplash.com/photo-1760533534981-e6d2c1c73ea4?auto=format&amp;fit=crop&amp;w=960&amp;q=70 960w" sizes="(min-width:980px) 310px, 24vw" alt="Chaise en rotin et table en bois dans la lumière chaude du soir" style="object-position:50% 55%" decoding="async" loading="lazy"></div></div></div>
+    </div>
+  </div>
+
+  <!-- 4. La première séance -->
+  <section class="section" id="premiere-seance" data-stagger aria-labelledby="first-title">
+    <div class="wrap">
+      <div class="section-head first-head">
+        <p class="kicker" aria-hidden="true" data-reveal>03</p>
+        <h2 id="first-title" data-reveal="title" data-split>Votre première séance, <span class="it">pas à pas</span></h2>
+        <p class="lead" data-reveal>1&nbsp;h&nbsp;15 pour faire connaissance et repartir avec un premier outil. <span class="nl">Rien à préparer&nbsp;: vous venez comme vous êtes.</span></p>
+      </div>
+      <ol class="steps">
+        <li class="step" data-reveal>
+          <p class="fig" aria-hidden="true">20<small>min</small></p>
+          <h3>Vous me racontez <span class="sr-only">(20 min)</span></h3>
+          <p class="step-text">ce qui vous amène et ce que vous aimeriez voir changer.</p>
+        </li>
+        <li class="step" data-reveal>
+          <p class="fig" aria-hidden="true">25<small>min</small></p>
+          <h3>On essaie ensemble <span class="sr-only">(25 min)</span></h3>
+          <p class="step-text">un exercice guidé de respiration et de détente, en douceur.</p>
+        </li>
+        <li class="step" data-reveal>
+          <p class="fig" aria-hidden="true">15<small>min</small></p>
+          <h3>On fait le point <span class="sr-only">(15 min)</span></h3>
+          <p class="step-text">ce que vous avez ressenti, à votre rythme et sans jugement.</p>
+        </li>
+        <li class="step" data-reveal>
+          <p class="fig" aria-hidden="true">15<small>min</small></p>
+          <h3>Vous repartez avec un outil <span class="sr-only">(15 min)</span></h3>
+          <p class="step-text">un exercice simple à refaire chez vous, et le rythme de séances qui vous convient.</p>
+        </li>
+      </ol>
+      <!-- récapitulatif : carte douce à contour satiné ; empilé sur mobile -->
+      <div class="recap" data-reveal>
+        <p class="recap-text"><span class="recap-title">Première séance</span><span class="recap-sep recap-sep--title"> · </span><span class="recap-fact">1&nbsp;h&nbsp;15</span><span class="recap-sep"> · </span><span class="recap-fact">85&nbsp;€</span><span class="recap-sep recap-sep--where"> · </span><span class="recap-fact recap-where">au cabinet ou en visio</span></p>
+        <a class="btn btn-primary" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="l">Prendre rendez-vous</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Séances & tarifs : bande bleu nuit satinée, prix en grotesque claire -->
+  <section class="section on-navy" id="tarifs" data-stagger aria-labelledby="prices-title">
+    <span class="orbits metal-ring" aria-hidden="true" style="width:900px;height:520px;right:-280px;top:-180px;rotate:-10deg"></span>
+    <span class="orbits metal-ring" aria-hidden="true" style="width:760px;height:430px;right:-240px;top:-120px;rotate:-4deg;opacity:.28"></span>
+    <div class="wrap" style="position:relative">
+      <div class="section-head">
+        <p class="kicker" aria-hidden="true" data-reveal>04</p>
+        <h2 id="prices-title" data-reveal="title" data-split>Séances <span class="it">&amp; tarifs</span></h2>
+      </div>
+      <ul class="prices">
+        <li class="price" data-reveal>
+          <h3>Première séance</h3>
+          <p class="meta">1 h 15</p>
+          <p class="amount">85 <span class="cur">€</span></p>
+          <p class="where">Au cabinet ou en visio</p>
+        </li>
+        <li class="price" data-reveal>
+          <h3>Séance de suivi</h3>
+          <p class="meta">1 h</p>
+          <p class="amount">70 <span class="cur">€</span></p>
+          <p class="where">Au cabinet ou en visio</p>
+        </li>
+        <li class="price" data-reveal>
+          <h3>Forfait 5 séances</h3>
+          <p class="meta">5 × 1 h</p>
+          <p class="amount">320 <span class="cur">€</span></p>
+          <p class="where">Valable 4 mois</p>
+        </li>
+      </ul>
+      <p class="legal-note" data-reveal>TVA non applicable, art. 293 B du CGI. Séances non remboursées par la Sécurité sociale ; certaines mutuelles les prennent en charge, je vous remets une note à chaque séance.</p>
+      <div class="prices-cta" data-reveal><a class="btn btn-line-light" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="l">Prendre rendez-vous</span></a></div>
+    </div>
+  </section>
+
+  <!-- 6. Parcours -->
+  <section class="section" id="parcours" data-stagger aria-labelledby="bio-title">
+    <div class="wrap bio-grid">
+      <div class="cab-par">
+        <span class="cab-frame metal-ring" aria-hidden="true" data-reveal="fade"></span>
+        <div data-par=".03">
+          <!-- Unsplash SRZcOAERBUQ · Micke Lindström · https://unsplash.com/photos/SRZcOAERBUQ -->
+          <div class="ph ph--room cab" data-reveal="photo"><img src="https://images.unsplash.com/photo-1774477178005-bff823e43be8?auto=format&amp;fit=crop&amp;w=800&amp;q=70" srcset="https://images.unsplash.com/photo-1774477178005-bff823e43be8?auto=format&amp;fit=crop&amp;w=400&amp;q=70 400w, https://images.unsplash.com/photo-1774477178005-bff823e43be8?auto=format&amp;fit=crop&amp;w=800&amp;q=70 800w, https://images.unsplash.com/photo-1774477178005-bff823e43be8?auto=format&amp;fit=crop&amp;w=1200&amp;q=70 1200w" sizes="(min-width:980px) 400px, 84vw" alt="Le cabinet : un fauteuil et un repose-pieds près de la fenêtre, une lampe, des tons chauds" style="object-position:40% 60%" decoding="async" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="bio-text">
+        <p class="kicker" aria-hidden="true" data-reveal>05</p>
+        <h2 id="bio-title" data-reveal="title" data-split>Mon <span class="it">parcours</span></h2>
+        <p class="lead" data-reveal>Après dix ans dans la communication, j'ai découvert la sophrologie pendant une période où j'avais besoin de souffler. Je me suis formée, et je reçois depuis 2019 dans mon cabinet du 11e.</p>
+        <h3 class="sr-only">Formation</h3>
+        <ul class="bio-list">
+          <li data-reveal>Certification RNCP de sophrologue (niveau 5)</li>
+          <li data-reveal>Membre de la Chambre syndicale de la sophrologie</li>
+          <li data-reveal>Formation complémentaire : sophrologie et sommeil</li>
+        </ul>
+        <p class="stat" data-reveal><span>Depuis <span class="num">2019</span></span><span class="dot">·</span><span>plus de <span class="num">1 200</span> séances</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Avis -->
+  <section class="section" id="avis" data-stagger aria-labelledby="reviews-title" style="padding-top:0">
+    <div class="wrap">
+      <div class="reviews-head">
+        <p class="kicker" aria-hidden="true" data-reveal>06</p>
+        <h2 id="reviews-title" data-reveal="title" data-split>Ce qu'en disent <span class="it">mes clients</span></h2>
+        <p class="rating" data-reveal><span class="star" aria-hidden="true">★</span><span><span class="fig">4,9</span> sur 37 avis Google</span></p>
+      </div>
+      <ul class="reviews">
+        <li data-reveal>
+          <figure class="review">
+            <blockquote><p>« Des exercices très concrets que j'utilise encore tous les jours. Claire est à l'écoute sans jamais forcer. »</p></blockquote>
+            <figcaption><strong>Julie R.</strong> · mars 2026</figcaption>
+          </figure>
+        </li>
+        <li data-reveal>
+          <figure class="review">
+            <blockquote><p>« Je venais pour préparer un concours. J'y suis arrivé beaucoup plus serein. »</p></blockquote>
+            <figcaption><strong>Thomas B.</strong> · janvier 2026</figcaption>
+          </figure>
+        </li>
+        <li data-reveal>
+          <figure class="review">
+            <blockquote><p>« Un vrai moment pour moi chaque semaine. Le cabinet est calme et lumineux. »</p></blockquote>
+            <figcaption><strong>Sophie L.</strong> · novembre 2025</figcaption>
+          </figure>
+        </li>
+      </ul>
+      <p class="legal-note reviews-legal" data-reveal>Avis publiés sur Google, reproduits avec leur date. Ils ne font l'objet d'aucune contrepartie ni d'aucune vérification de ma part.</p>
+    </div>
+  </section>
+
+  <!-- 8. FAQ -->
+  <section class="section" id="faq" data-stagger aria-labelledby="faq-title" style="padding-top:0">
+    <div class="wrap faq-grid">
+      <div class="section-head">
+        <p class="kicker" aria-hidden="true" data-reveal>07</p>
+        <h2 id="faq-title" data-reveal="title" data-split>Questions <span class="it">fréquentes</span></h2>
+      </div>
+      <div class="faq">
+        <details data-reveal>
+          <summary><span class="q">Combien de séances faut-il&nbsp;?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Souvent entre 5 et 10, à raison d'une séance par semaine ou tous les quinze jours. On en reparle ensemble à la première séance.</p>
+        </details>
+        <details data-reveal>
+          <summary><span class="q">La visio, ça marche aussi bien&nbsp;?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Oui, la plupart des exercices se font très bien à distance. Il vous faut juste un endroit calme et une chaise.</p>
+        </details>
+        <details data-reveal>
+          <summary><span class="q">Est-ce remboursé&nbsp;?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Pas par la Sécurité sociale. Certaines mutuelles prennent en charge une partie des séances : je vous remets une note à chaque fois.</p>
+        </details>
+        <details data-reveal>
+          <summary><span class="q">Comment annuler un rendez-vous&nbsp;?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Directement depuis le lien de réservation, jusqu'à 24 h avant la séance.</p>
+        </details>
+        <details data-reveal>
+          <summary><span class="q">Est-ce que ça remplace un suivi médical&nbsp;?</span><span class="pm" aria-hidden="true"></span></summary>
+          <p>Non. La sophrologie vient en complément : si un médecin vous suit, continuez ce suivi.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Accès -->
+  <section class="section" id="acces" data-stagger aria-labelledby="access-title" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker" aria-hidden="true" data-reveal>08</p>
+        <h2 id="access-title" data-reveal="title" data-split>Le <span class="it">cabinet</span></h2>
+      </div>
+      <div class="access-grid">
+        <dl class="info">
+          <div data-reveal><dt>Adresse</dt><dd>Rue de la Roquette, 75011 Paris<small>(l'adresse exacte est envoyée à la réservation)</small></dd></div>
+          <div data-reveal><dt>Accès</dt><dd>Métro Voltaire (ligne 9) ou Bastille (lignes 1, 5, 8) · Bus 61, 69</dd></div>
+          <div data-reveal><dt>Horaires</dt><dd>Du lundi au vendredi, 9 h – 20 h · Samedi matin</dd></div>
+          <div data-reveal><dt>Accessibilité</dt><dd>Rez-de-chaussée, accessible en fauteuil</dd></div>
+          <div data-reveal><dt>Contact</dt><dd><a href="tel:+33612345678">06 12 34 56 78</a><br><a href="mailto:bonjour@clairemartin-sophrologue.fr">bonjour@clairemartin-sophrologue.fr</a></dd></div>
+        </dl>
+        <div class="map" data-reveal>
+          <svg viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Plan stylisé du quartier : rue de la Roquette, entre Bastille et Voltaire, Paris 11e">
+            <defs>
+              <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0v6" stroke="#8E6B4E" stroke-width="1" opacity=".55"/></pattern>
+              <clipPath id="mapclip"><rect width="600" height="380"/></clipPath>
+            </defs>
+            <g clip-path="url(#mapclip)">
+              <rect width="600" height="380" fill="var(--map-bg)"/>
+              <g fill="none" stroke="var(--map-st1)" stroke-linecap="round">
+                <path d="M200 -10 268 400" stroke-width="5"/>
+                <path d="M-10 250 180 172 300 120" stroke-width="5"/>
+                <path d="M470 400 520 -10" stroke-width="5"/>
+                <path d="M230 -10 560 330" stroke-width="5" opacity=".8"/>
+                <path d="M395 -10 445 390" stroke-width="9"/>
+                <path d="M40 430 600 170" stroke-width="9"/>
+              </g>
+              <g fill="none" stroke="var(--map-st2)" stroke-linecap="round">
+                <path d="M70 390 115 -10" stroke-width="18"/>
+                <path d="M130 0 520 390" stroke-width="16"/>
+                <path d="M40 372 610 65" stroke-width="11"/>
+              </g>
+              <path d="M70 390 115 -10" stroke="#13304A" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round" opacity=".45"/>
+              <g transform="translate(548 62) rotate(-28)"><ellipse rx="40" ry="24" fill="url(#hatch)" stroke="#8E6B4E" stroke-opacity=".55"/></g>
+              <!-- trajet suggéré depuis Voltaire -->
+              <path d="M339 210 C 310 232, 268 250, 238 264" fill="none" stroke="#8E6B4E" stroke-width="1.6" stroke-dasharray="1 5" stroke-linecap="round"/>
+              <g font-family="var(--font-body)" font-size="11" letter-spacing="1.6" fill="#57514B" font-weight="600">
+                <text transform="translate(392 300) rotate(45)">BD VOLTAIRE</text>
+                <text transform="translate(385 190) rotate(-28.3)">RUE DE LA ROQUETTE</text>
+                <text transform="translate(103 300) rotate(-83.6)">BD RICHARD-LENOIR</text>
+                <text transform="translate(278 322) rotate(-24.9)">RUE DE CHARONNE</text>
+              </g>
+              <ellipse cx="232" cy="268" rx="58" ry="40" transform="rotate(-10 232 268)" fill="var(--accent)" fill-opacity=".08" stroke="var(--accent)" stroke-width="1" stroke-opacity=".55"/>
+              <ellipse cx="232" cy="268" rx="82" ry="56" transform="rotate(-4 232 268)" fill="none" stroke="#8E6B4E" stroke-width="1" stroke-opacity=".4"/>
+              <circle cx="232" cy="268" r="9" fill="var(--accent)"/>
+              <circle cx="232" cy="268" r="3.2" fill="#F2F0EC"/>
+              <g font-family="var(--font-body)" font-size="12" font-weight="600">
+                <circle cx="339" cy="210" r="12" fill="#13304A"/>
+                <path d="M333.5 215.5v-10.5l5.5 6.5 5.5-6.5v10.5" fill="none" stroke="#F2F0EC" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+                <text x="359" y="225" fill="#1B1B1B">Voltaire</text>
+                <circle cx="100" cy="340" r="12" fill="#13304A"/>
+                <path d="M94.5 345.5v-10.5l5.5 6.5 5.5-6.5v10.5" fill="none" stroke="#F2F0EC" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+                <text x="118" y="361" fill="#1B1B1B">Bastille</text>
+              </g>
+            </g>
+          </svg>
+          <div class="map-foot">
+            <span>Paris 11e · Roquette</span>
+            <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Rue+de+la+Roquette+75011+Paris" target="_blank" rel="noopener"><span class="l">Ouvrir dans Maps</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Scène finale « Reflet » (itération 8) : CTA + pied de page sur un seul plein écran. Ciel clair au-dessus d'un horizon
+     satiné ; disque champagne qui respire (4 s d'inspiration, 6 s d'expiration) dans son anneau ; « Claire Martin » posé
+     sur l'horizon ; dessous, l'eau (même shader que le hero) renvoie le reflet du disque et du nom. -->
+<footer class="reflet" id="cadre" data-stagger>
+  <section class="reflet-sky" id="final" aria-labelledby="final-title">
+    <div class="wrap reflet-cta">
+      <h2 id="final-title" data-reveal="title" data-split>Un premier échange, <span class="it">sans engagement</span></h2>
+      <div class="btns" data-reveal>
+        <a class="btn btn-primary" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="l">Prendre rendez-vous</span></a>
+        <a class="btn btn-line" href="tel:+33612345678"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="l">Appeler</span></a>
+      </div>
+    </div>
+    <div class="moon" id="moon" aria-hidden="true">
+      <span class="moon-ring metal-ring" data-reveal="fade"></span>
+      <span class="moon-disc" data-reveal="fade"><span class="moon-face"></span></span>
+      <p class="moon-name" data-reveal="title" data-split>Claire Martin</p>
+    </div>
+  </section>
+  <div class="reflet-low" id="reflet-low">
+    <div class="reflet-water" id="reflet-water" aria-hidden="true"><canvas></canvas></div>
+    <div class="wrap reflet-foot">
+      <div class="rf-cadre" data-reveal>
+        <h2>Cadre &amp; limites</h2>
+        <p class="cadre">Mes séances de sophrologie relèvent du bien-être et de l'accompagnement. Elles ne remplacent pas un avis, un diagnostic ou un traitement médical, et je vous encourage à poursuivre tout suivi en cours. Séances non remboursées par la Sécurité sociale ; certaines mutuelles les prennent en charge. TVA non applicable, art. 293 B du CGI. Médiateur de la consommation : [nom, coordonnées].</p>
+      </div>
+      <div class="rf-meta" data-reveal>
+        <ul class="foot-links">
+          <li><a href="#"><span class="l">Mentions légales</span></a></li>
+          <li><a href="#"><span class="l">Confidentialité</span></a></li>
+        </ul>
+        <p class="foot-final">© 2026 Claire Martin · Site réalisé par <a href="https://volteface.studio">Volteface.studio</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar" aria-hidden="true">
+  <a class="btn btn-primary" href="https://www.resalib.fr/" target="_blank" rel="noopener" tabindex="-1"><span class="l">Prendre rendez-vous</span></a>
+  <a class="btn btn-line tel" href="tel:+33612345678" aria-label="Appeler le 06 12 34 56 78" tabindex="-1"><svg aria-hidden="true" style="width:20px;height:20px"><use href="#i-phone"/></svg></a>
+</div>
+
+<!-- Panneau DA (outil interne, style neutre) -->
+<div class="da" id="da">
+  <div class="da-panel" id="da-panel" hidden>
+    <fieldset>
+      <legend>Typo</legend>
+      <label><input type="radio" name="typo" value="1"> Manrope + Playfair It.</label>
+      <label><input type="radio" name="typo" value="2"> Jakarta + Instrument It.</label>
+      <label><input type="radio" name="typo" value="3"> Fixel + Newsreader It.</label>
+    </fieldset>
+    <fieldset>
+      <legend>Palette</legend>
+      <label><input type="radio" name="palette" value="multi"><span class="sws"><span class="sw" style="background:#13304A"></span><span class="sw" style="background:#1E5A57"></span><span class="sw" style="background:#5C2D4F"></span><span class="sw" style="background:#9A4228"></span></span>Multi (défaut)</label>
+      <label><input type="radio" name="palette" value="mono"> Mono : un seul accent</label>
+    </fieldset>
+    <fieldset id="da-accent">
+      <legend>Accent <span class="da-note">(palette mono)</span></legend>
+      <label><input type="radio" name="accent" value="1"><span class="sw" style="background:#13304A"></span>Bleu nuit<span class="hex">#13304A</span></label>
+      <label><input type="radio" name="accent" value="2"><span class="sw" style="background:#1E5A57"></span>Eucalyptus<span class="hex">#1E5A57</span></label>
+      <label><input type="radio" name="accent" value="3"><span class="sw" style="background:#9A4228"></span>Terracotta<span class="hex">#9A4228</span></label>
+      <label><input type="radio" name="accent" value="4"><span class="sw" style="background:#5C2D4F"></span>Prune<span class="hex">#5C2D4F</span></label>
+    </fieldset>
+    <fieldset>
+      <legend>Fond</legend>
+      <label><input type="radio" name="fond" value="clair"><span class="sw" style="background:#F6F1EA"></span>Clair (défaut)<span class="hex">#F6F1EA</span></label>
+      <label><input type="radio" name="fond" value="grege"><span class="sw" style="background:#E8E4DF"></span>Grège d'origine<span class="hex">#E8E4DF</span></label>
+    </fieldset>
+    <fieldset>
+      <legend>Photos</legend>
+      <label><input type="radio" name="photos" value="1"> Emplacements riches</label>
+      <label><input type="radio" name="photos" value="0"> Aplats simples</label>
+    </fieldset>
+    <fieldset>
+      <legend>Eau <span class="da-note">(derrière l'arche)</span></legend>
+      <label><input type="radio" name="eau" value="gouttes"> Gouttes (défaut)</label>
+      <label><input type="radio" name="eau" value="caustiques"> Caustiques</label>
+      <label><input type="radio" name="eau" value="0"> Sans</label>
+    </fieldset>
+    <fieldset style="margin:0">
+      <legend>Maquette</legend>
+      <label><input type="checkbox" id="da-ribbon" checked> Bandeau maquette</label>
+    </fieldset>
+  </div>
+  <button class="da-toggle" type="button" aria-expanded="false" aria-controls="da-panel">DA</button>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, body=document.body, q=new URLSearchParams(location.search);
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, still=q.get('static')==='1';
+  if(still)root.classList.add('static');
+  function pick(k,re,d){var v=q.get(k);return re.test(v||'')?v:d;}
+  var st={typo:pick('typo',/^[1-3]$/,'1'), palette:pick('palette',/^(multi|mono)$/,'multi'), accent:pick('accent',/^[1-4]$/,'1'),
+          fond:pick('fond',/^(clair|grege)$/,'clair'), photos:pick('photos',/^[01]$/,'1'), eau:pick('eau',/^(gouttes|caustiques|0)$/,'gouttes')};
+  var water={set:function(){}}, refl=null, onTypo=function(){};
+  var ribbon=q.get('ribbon')!=='0';
+  if(q.get('clean')==='1')body.classList.add('clean');
+
+  /* ---- panneau DA ---- */
+  function apply(){Object.keys(st).forEach(function(k){root.dataset[k]=st[k];});
+    document.getElementById('da-accent').disabled=(st.palette==='multi');}
+  function syncInputs(){Object.keys(st).forEach(function(k){var i=document.querySelector('.da input[name="'+k+'"][value="'+st[k]+'"]');if(i)i.checked=true;});}
+  function syncURL(){var p=new URLSearchParams(location.search);
+    Object.keys(st).forEach(function(k){p.set(k,st[k]);});
+    if(ribbon)p.delete('ribbon');else p.set('ribbon','0');
+    try{history.replaceState(null,'','?'+p.toString()+location.hash);}catch(e){}}
+  apply();syncInputs();
+  /* bandeau maquette : ?ribbon=0, case du panneau, et croix (choix mémorisé par page dans localStorage) */
+  var RKEY='vf-ribbon-closed:'+location.pathname, rb=document.getElementById('da-ribbon');
+  function ribbonShown(){return ribbon && !root.classList.contains('ribbon-closed');}
+  body.classList.toggle('no-ribbon',!ribbon);rb.checked=ribbonShown();
+  document.getElementById('ribbon-close').addEventListener('click',function(){
+    root.classList.add('ribbon-closed');rb.checked=false;
+    try{localStorage.setItem(RKEY,'1');}catch(e){}
+    var b=document.querySelector('.brand');if(b)b.focus();
+  });
+  document.getElementById('da').addEventListener('change',function(e){
+    var t=e.target;
+    if(t.id==='da-ribbon'){ribbon=t.checked;body.classList.toggle('no-ribbon',!ribbon);
+      if(ribbon){root.classList.remove('ribbon-closed');try{localStorage.removeItem(RKEY);}catch(e){}}
+      syncURL();return;}
+    if(!(t.name in st))return;
+    st[t.name]=t.value;apply();syncURL();
+    if(t.name==='eau')water.set(st.eau);
+    if(t.name==='typo'){onTypo();if(refl&&document.fonts)document.fonts.ready.then(refl.refresh);}
+  });
+  var tg=document.querySelector('.da-toggle'), pn=document.getElementById('da-panel');
+  tg.addEventListener('click',function(){var open=pn.hasAttribute('hidden');if(open)pn.removeAttribute('hidden');else pn.setAttribute('hidden','');tg.setAttribute('aria-expanded',open?'true':'false');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pn.hasAttribute('hidden')){pn.setAttribute('hidden','');tg.setAttribute('aria-expanded','false');tg.focus();}});
+
+  /* ---- barre mobile : visible après le hero ---- */
+  var bar=document.getElementById('mbar'), hero=document.getElementById('hero');
+  function showBar(on){bar.classList.toggle('is-on',on);bar.setAttribute('aria-hidden',on?'false':'true');bar.querySelectorAll('a').forEach(function(a){a.tabIndex=on?0:-1;});}
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){showBar(!e.isIntersecting && e.boundingClientRect.top<0);});},{threshold:0}).observe(hero);
+  }
+
+  /* ---- moteur d'eau partagé : WebGL1, un seul quad, sans bibliothèque (hero + scène finale) ----
+     « gouttes » : anneaux concentriques (paquets d'ondes amorties, interférences par somme des hauteurs), éclairage doux
+       par la normale (ombre eucalyptus très légère, reflet champagne, spéculaire nacré) ; une goutte toutes les 3 à 5 s
+       sous l'arche, + une petite au passage du pointeur (au plus toutes les 0,28 s) ou au toucher.
+     « caustiques » : réseau de lignes lumineuses floues (Voronoï animé, F2 − F1, déformé), fond d'eau à peine aqua.
+     « reflet » (scène finale) : image miroir du nom (texture dessinée une fois, à l'envers), du disque et de son anneau
+       (calculés dans le shader, ils suivent la respiration), déformée par une houle lente et par les mêmes gouttes.
+     Couleurs composées dans le shader (alpha prémultiplié) : seul l'écart au fond est peint, le fond de la page reste
+     visible sous la toile. 30 i/s au plus, rendu à 0,55–0,75 px par px CSS, en pause hors écran ou onglet caché ;
+     image fixe composée si mouvement réduit ou ?static=1 ; repli CSS si pas de WebGL (?gl=0 pour le tester). */
+  var WATER_VS='attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}';
+  var WATER_FS=[
+'#ifdef GL_FRAGMENT_PRECISION_HIGH',
+'precision highp float;',
+'#else',
+'precision mediump float;',
+'#endif',
+'uniform vec2 uRes;uniform float uScale;uniform float uTime;uniform float uMode;',
+'uniform vec4 uDrops[12];uniform vec4 uMask;uniform vec4 uClip;uniform vec2 uFade;uniform float uGain;',
+'uniform sampler2D uTex;uniform vec4 uDisc;uniform vec4 uRefl;',
+/* superposition « normale » d'une couleur non prémultipliée sur un résultat prémultiplié */
+'vec4 over(vec4 d,vec3 c,float a){return vec4(c*a+d.rgb*(1.0-a),a+d.a*(1.0-a));}',
+'vec2 hash2(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return fract(sin(p)*43758.5453);}',
+/* distance au bord de cellule (F2 - F1) d'un Voronoï dont les germes oscillent doucement */
+'float cells(vec2 x,float t){vec2 n=floor(x),f=fract(x);float d1=8.0,d2=8.0;',
+' for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){vec2 g=vec2(float(i),float(j));vec2 o=hash2(n+g);',
+'  o=0.5+0.4*sin(t*(0.6+0.5*o.yx)+6.2831*o);vec2 r=g+o-f;float d=dot(r,r);',
+'  if(d<d1){d2=d1;d1=d;}else if(d<d2){d2=d;}}',
+' return sqrt(d2)-sqrt(d1);}',
+'void main(){',
+' vec2 p=vec2(gl_FragCoord.x,uRes.y*uScale-gl_FragCoord.y)/uScale;',
+' vec2 m=(p-uMask.xy)/uMask.zw;float mask=1.0-smoothstep(0.28,1.0,length(m));mask*=mask;',
+' mask*=smoothstep(0.0,uFade.x,p.x-uClip.x)*smoothstep(0.0,uFade.x,uClip.z-p.x)*smoothstep(0.0,uFade.y,p.y-uClip.y)*smoothstep(0.0,uFade.y,uClip.w-p.y);',
+' if(mask<0.003){gl_FragColor=vec4(0.0);return;}',
+/* hauteur et pente : somme de paquets d ondes circulaires (interférences), pente analytique */
+' float h=0.0;vec2 gr=vec2(0.0);',
+' for(int i=0;i<12;i++){vec4 dr=uDrops[i];if(dr.w<=0.0)continue;',
+'  vec2 v=p-dr.xy;float d=length(v)+0.001;float age=dr.z;',
+'  float x=d-50.0*age;float s=62.0+12.0*age;float k=6.2831853/(46.0+2.5*age);',
+'  float env=exp(-x*x/(s*s));',
+'  float a=dr.w*exp(-0.11*age)*smoothstep(0.0,0.9,age)*(420.0/(420.0+d));',
+'  float sn=sin(k*x),cs=cos(k*x);h+=a*env*sn;gr+=a*env*(k*cs-2.0*x/(s*s)*sn)*v/d;}',
+' h*=uGain;vec3 n=normalize(vec3(-gr*11.0*uGain,1.0));vec3 L=normalize(vec3(-0.42,-0.72,0.78));',
+' float diff=dot(n,L)-L.z;vec3 H=normalize(L+vec3(0.0,0.0,1.0));',
+' float spec=max(pow(max(dot(n,H),0.0),60.0)-pow(H.z,60.0),0.0);',
+' vec4 col=vec4(0.0);',
+' if(uMode<0.5){',
+'  col=over(col,vec3(0.62,0.80,0.78),clamp(-h*0.9,0.0,1.0)*0.20);',          /* creux : aqua doux, plus saturé que le fond */
+'  col=over(col,vec3(0.55,0.76,0.74),clamp(-diff*2.6,0.0,1.0)*0.28);',       /* pentes à l ombre : aqua */
+'  col=over(col,vec3(0.118,0.353,0.341),clamp(-diff*2.6,0.0,1.0)*0.05);',    /* soupçon d eucalyptus #1E5A57 */
+'  col=over(col,vec3(0.953,0.890,0.784),clamp(diff*3.0,0.0,1.0)*0.40);',      /* pentes éclairées : champagne #F3E3C8 */
+'  col=over(col,vec3(1.0,0.988,0.962),clamp(diff*2.4-0.15,0.0,1.0)*0.8);',   /* puis plus clair, #FFFCF5 */
+'  col=over(col,vec3(1.0,0.996,0.984),clamp(spec*1.6,0.0,1.0)*0.9);',        /* reflet nacré */
+' }else if(uMode<1.5){',
+'  float t=uTime*0.16;vec2 uv=(p+gr*26.0)/170.0;',
+'  uv+=0.22*vec2(sin(uv.y*1.7+t*1.3),sin(uv.x*1.5-t*1.1));',
+'  float e1=cells(uv,t*2.0),e2=cells(uv*1.18+vec2(4.3,1.9),t*2.0+1.7);',
+'  float l1=exp(-e1*e1*38.0),l2=exp(-e2*e2*38.0);float c=clamp(0.62*l1+0.62*l2,0.0,1.4);',
+'  float floor0=0.5+0.5*sin(uv.x*0.9+t)*sin(uv.y*0.8-t*0.7);',
+'  col=over(col,vec3(0.60,0.80,0.77),(0.24+0.10*floor0)*(1.0-0.8*min(c,1.0)));',  /* fond d eau aqua */
+'  col=over(col,vec3(0.984,0.937,0.851),smoothstep(0.1,0.9,c)*0.30);',               /* halo champagne clair */
+'  col=over(col,vec3(1.0,0.996,0.984),smoothstep(0.35,1.2,c)*0.95);',                  /* lignes nacrées */
+'  col=over(col,vec3(1.0,0.996,0.984),clamp(spec*1.6,0.0,1.0)*0.6);',
+' }else{',
+/* reflet : p.y = profondeur sous l horizon. Houle lente (déplacement horizontal qui grandit avec la profondeur),
+   plus la pente des gouttes ; l image miroir s efface avec la profondeur (uRefl.x) ; amplitudes très retenues. */
+'  float t=uTime;float dep=p.y;',
+'  float sw=sin(dep*0.07-t*0.6+sin(p.x*0.006+t*0.2)*1.4)*(0.2+dep*0.012)+sin(dep*0.19+t*0.8)*(0.05+dep*0.004);',
+'  vec2 q=vec2(p.x+sw+gr.x*12.0,dep+gr.y*12.0);',
+'  float fade=exp(-dep/uRefl.x);',
+'  float bl=0.6+dep*0.018;float na=0.0;',
+'  for(int k=-2;k<=2;k++){float y=(q.y+float(k)*bl)/uRefl.y;na+=(y>0.0&&y<1.0)?texture2D(uTex,vec2(q.x/uRes.x,y)).a:0.0;}',
+'  na*=0.2;',
+'  float lines=0.9+0.1*sin(dep*0.5-t*0.3+sin(p.x*0.005+t*0.1)*2.5);',
+'  float dd=length(q-uDisc.xy);',
+'  float disc=1.0-smoothstep(uDisc.z-2.5,uDisc.z+2.5,dd);',
+'  float ring=1.0-smoothstep(0.4,2.2,abs(dd-uDisc.w));',
+'  col=over(col,vec3(0.902,0.847,0.741),disc*0.6*lines*fade*uRefl.w);',
+'  col=over(col,vec3(0.60,0.49,0.38),ring*0.16*fade*uRefl.w);',
+'  col=over(col,vec3(0.19,0.38,0.37),na*0.24*lines*fade*uRefl.z);',
+'  col=over(col,vec3(0.55,0.70,0.68),clamp(-diff*2.6,0.0,1.0)*0.10);',         /* gouttes : ombre aqua */
+'  col=over(col,vec3(0.953,0.890,0.784),clamp(diff*3.0,0.0,1.0)*0.22);',       /* gouttes : crête champagne */
+'  col=over(col,vec3(1.0,0.992,0.972),clamp(diff*2.4-0.15,0.0,1.0)*0.4);',
+'  col=over(col,vec3(1.0,0.996,0.984),clamp(spec*1.6,0.0,1.0)*0.45);',
+' }',
+' gl_FragColor=col*mask;}'
+  ].join('\n');
+
+  /* o : wrap (contient la toile), host (reçoit le pointeur), mode (initial), layout(cr, small) → {mask, clip, fade, gain,
+     origins}, seed(add, origins), pick(n, origins) → {p, a, bounce, b, wait}, pokeOk(x, y, W, H), ptr [souris, toucher],
+     init(gl, U), before(gl, U, rect), onCss() ; renvoie {set(mode), refresh()} */
+  function makeWater(o){
+    var wrap=o.wrap, cv=wrap.querySelector('canvas'), host=o.host||wrap, animate=!(reduce||still), gl=null;
+    var W=0,H=0,scale=.6,origins=[[0,0]],t=0,drops=[],dropBuf=new Float32Array(48),nextAt=0,turn=0,mode=o.mode,seeded=false;
+    var running=false,onScreen=true,raf=0,last=0,lastPtr={t:-9,x:-999,y:-999},U={};
+    var api={set:function(m){mode=m;if(!gl)return;if(m!=='0')show();sync();},refresh:function(){if(gl&&mode!=='0'&&measure())draw();}};
+    function toCss(){running=false;cancelAnimationFrame(raf);gl=null;wrap.classList.add('is-css');if(o.onCss)o.onCss();return api;}
+    if(q.get('gl')==='0')return toCss();
+    var opts={alpha:true,premultipliedAlpha:true,antialias:false,depth:false,stencil:false,powerPreference:'low-power'};
+    try{gl=cv.getContext('webgl',opts)||cv.getContext('experimental-webgl',opts);}catch(e){gl=null;}
+    if(!gl)return toCss();
+    function sh(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+      if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){if(window.console)console.warn(gl.getShaderInfoLog(s));return null;}return s;}
+    var vs=sh(gl.VERTEX_SHADER,WATER_VS), fs=sh(gl.FRAGMENT_SHADER,WATER_FS), pr=gl.createProgram();
+    if(!vs||!fs)return toCss();
+    gl.attachShader(pr,vs);gl.attachShader(pr,fs);gl.linkProgram(pr);
+    if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return toCss();
+    gl.useProgram(pr);
+    var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    var aLoc=gl.getAttribLocation(pr,'a');gl.enableVertexAttribArray(aLoc);gl.vertexAttribPointer(aLoc,2,gl.FLOAT,false,0,0);
+    ['uRes','uScale','uTime','uMode','uDrops','uMask','uClip','uFade','uGain','uTex','uDisc','uRefl'].forEach(function(n){U[n]=gl.getUniformLocation(pr,n);});
+    if(o.init)o.init(gl,U);
+    function measure(){
+      var cr=wrap.getBoundingClientRect();W=cr.width;H=cr.height;if(!W||!H)return false;
+      var small=innerWidth<640, dpr=window.devicePixelRatio||1;
+      scale=small?.55:(dpr>=1.5?.75:.6);
+      var bw=Math.max(1,Math.round(W*scale)), bh=Math.max(1,Math.round(H*scale));
+      if(cv.width!==bw||cv.height!==bh){cv.width=bw;cv.height=bh;}
+      scale=bw/W;
+      gl.viewport(0,0,bw,bh);
+      var L=o.layout(cr,small);origins=L.origins;
+      gl.uniform2f(U.uRes,W,H);gl.uniform1f(U.uScale,scale);
+      gl.uniform4f(U.uMask,L.mask[0],L.mask[1],L.mask[2],L.mask[3]);
+      gl.uniform4f(U.uClip,L.clip[0],L.clip[1],L.clip[2],L.clip[3]);
+      gl.uniform2f(U.uFade,L.fade[0],L.fade[1]);gl.uniform1f(U.uGain,L.gain);
+      return true;
+    }
+    function addDrop(p,a,age){drops.push({x:p[0],y:p[1],t0:t-(age||0),a:a});if(drops.length>12)drops.shift();}
+    function step(){
+      if(t>=nextAt){var d=o.pick(turn++,origins);addDrop(d.p,d.a);
+        /* rebond de la goutte (comme le lait) : petit anneau qui suit */
+        if(Math.random()<d.bounce)setTimeout(function(){addDrop(d.p,d.b);},420);
+        nextAt=t+d.wait;}
+      drops=drops.filter(function(d){return t-d.t0<17;});
+    }
+    function draw(){
+      dropBuf.fill(0);
+      var cau=mode==='caustiques';
+      for(var i=0;i<drops.length;i++){var d=drops[i];if(cau&&!d.p)continue;dropBuf[i*4]=d.x;dropBuf[i*4+1]=d.y;dropBuf[i*4+2]=Math.max(0,t-d.t0);dropBuf[i*4+3]=d.a;}
+      gl.uniform4fv(U.uDrops,dropBuf);gl.uniform1f(U.uTime,t);gl.uniform1f(U.uMode,mode==='caustiques'?1:mode==='reflet'?2:0);
+      if(o.before)o.before(gl,U,wrap.getBoundingClientRect());
+      gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    }
+    function frame(now){
+      raf=requestAnimationFrame(frame);
+      if(last&&now-last<31)return;            /* 30 i/s au plus */
+      t+=last?Math.min((now-last)/1000,.1):1/30;last=now;
+      step();draw();
+    }
+    function sync(){
+      var go=animate&&mode!=='0'&&onScreen&&!document.hidden&&!!gl;
+      if(go&&!running){running=true;last=0;raf=requestAnimationFrame(frame);}
+      else if(!go&&running){running=false;cancelAnimationFrame(raf);}
+    }
+    function show(){if(mode==='0'||!measure())return false;if(!seeded){drops=[];o.seed(addDrop,origins);nextAt=t+2.2;turn=1;seeded=true;}draw();return true;}
+    if(!show()&&mode!=='0')return toCss();
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){onScreen=es[0].isIntersecting;sync();},{rootMargin:'80px'}).observe(wrap);
+    document.addEventListener('visibilitychange',sync);
+    var rt=0;function onResize(){clearTimeout(rt);rt=setTimeout(function(){if(!gl)return;var p=origins[0].slice();if(mode!=='0'&&seeded&&measure()){
+      var dx=origins[0][0]-p[0],dy=origins[0][1]-p[1];drops.forEach(function(d){d.x+=dx;d.y+=dy;});if(!running)draw();}},120);}
+    addEventListener('resize',onResize);
+    setTimeout(onResize,1500);                 /* après l'apparition des titres et le chargement des polices */
+    cv.addEventListener('webglcontextlost',function(e){e.preventDefault();toCss();});
+    /* pointeur : petite goutte au passage (souris) ou au toucher ; écouteurs passifs, le défilement n'est jamais bloqué */
+    if(animate){
+      host.addEventListener('pointermove',function(e){if(e.pointerType==='mouse'||e.pointerType==='pen')poke(e,o.ptr[0]);},{passive:true});
+      host.addEventListener('pointerdown',function(e){if(e.pointerType==='touch')poke(e,o.ptr[1],true);},{passive:true});
+    }
+    function poke(e,a,force){
+      if(!running)return;
+      var r=wrap.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
+      if(o.pokeOk&&!o.pokeOk(x,y,W,H))return;
+      if(t-lastPtr.t<(force?.15:.28))return;
+      if(!force&&Math.hypot(x-lastPtr.x,y-lastPtr.y)<40)return;
+      lastPtr={t:t,x:x,y:y};addDrop([x,y],a);drops[drops.length-1].p=1;
+    }
+    sync();
+    return api;
+  }
+
+  /* ---- eau derrière l'arche (hero) ---- */
+  water=(function(){
+    var wrap=document.getElementById('water');
+    if(!wrap)return {set:function(){}};
+    var archEl=wrap.parentNode.querySelector('.arch-par'), heroEl=document.getElementById('hero');
+    function jitter(p,r){return [p[0]+(Math.random()-.5)*r,p[1]+(Math.random()-.5)*r];}
+    return makeWater({wrap:wrap, host:heroEl, mode:st.eau, ptr:[.34,.6],
+      /* mesures : centre et taille de l'arche, bords du hero (toile coupée par overflow:clip) */
+      layout:function(cr,small){
+        var ar=archEl.getBoundingClientRect(), hr=heroEl.getBoundingClientRect(), W=cr.width, H=cr.height;
+        var ax=ar.left-cr.left+ar.width/2, ay=ar.top-cr.top+ar.height/2, aw=ar.width, ah=ar.height, vw=document.documentElement.clientWidth;
+        return {origins:[[ax-aw*.1,ay+ah*.14],[ax+aw*.14,ay-ah*.16]],
+          /* fondu : plus large côté texte en desktop (le centre du fondu glisse vers la droite) */
+          mask:[ax+(W>=900?40:0),ay,W*(small?.62:.5),H*(small?.56:.5)],
+          clip:[Math.max(hr.left,0)-cr.left,hr.top-cr.top,Math.min(hr.right,vw)-cr.left,hr.bottom-cr.top],
+          fade:[small?14:70,small?44:90],gain:small?1.7:1};},
+      /* état de départ composé (aussi l'image fixe) : trois anneaux d'âges différents qui se croisent */
+      seed:function(add,O){add(O[0],1,8.6);add(O[1],.9,6.1);add(O[0],1,4.4);add(O[0],.42,3.9);add(O[1],.9,1.2);},
+      pick:function(n,O){return {p:jitter(O[n%2],26),a:.85+Math.random()*.25,bounce:.6,b:.38,wait:3.2+Math.random()*2};},
+      pokeOk:function(x,y,W,H){var mx=(x-W/2)/(W/2), my=(y-H/2)/(H/2);return mx*mx+my*my<=.55;}
+    });
+  })();
+
+  /* ---- scène finale « Reflet » : même moteur d'eau, mode « reflet » ----
+     Le nom est dessiné une fois, à l'envers, dans une texture (ligne y de la texture = y px au-dessus de l'horizon) ;
+     le disque et son anneau sont calculés dans le shader à partir de leur boîte réelle (elle suit la respiration CSS).
+     Les opacités d'apparition (disque, lettres du nom) sont relues à chaque image : le reflet apparaît avec eux. */
+  refl=(function(){
+    var wrapW=document.getElementById('reflet-water');
+    if(!wrapW)return null;
+    var low=document.getElementById('reflet-low'), moon=document.getElementById('moon');
+    var face=moon.querySelector('.moon-face'), disc=moon.querySelector('.moon-disc'), ring=moon.querySelector('.moon-ring'), name=moon.querySelector('.moon-name');
+    var NAME=name.textContent.trim(), tcv=document.createElement('canvas'), tctx=tcv.getContext('2d'), tex=null, glr=null, texH=1, fadeLen=200;
+    function cssFallback(){
+      if(wrapW.querySelector('.refl-css'))return;
+      var c=moon.cloneNode(true);c.removeAttribute('id');c.classList.add('refl-css');
+      [c].concat([].slice.call(c.querySelectorAll('*'))).forEach(function(e){e.removeAttribute('data-reveal');e.removeAttribute('data-split');e.classList.remove('is-in');});
+      var a=face.getAnimations?face.getAnimations()[0]:null, f2=c.querySelector('.moon-face');
+      if(a&&a.currentTime!=null)f2.style.animationDelay=(-a.currentTime)+'ms';   /* respiration en phase */
+      wrapW.appendChild(c);
+    }
+    function drawName(cr){
+      var cs=getComputedStyle(name), fs=parseFloat(cs.fontSize), r=name.getBoundingClientRect();
+      var s=Math.min(window.devicePixelRatio||1,1.5)*.75;
+      texH=Math.max(1,cr.top-r.top+fs*.25);
+      fadeLen=Math.max(80,(cr.top-moon.getBoundingClientRect().top)*.8);
+      tcv.width=Math.max(1,Math.round(cr.width*s));tcv.height=Math.max(1,Math.round(texH*s));
+      tctx.setTransform(1,0,0,1,0,0);tctx.clearRect(0,0,tcv.width,tcv.height);
+      tctx.font=cs.fontStyle+' '+cs.fontWeight+' '+fs+'px '+cs.fontFamily;
+      if('letterSpacing' in tctx)tctx.letterSpacing=cs.letterSpacing==='normal'?'0px':cs.letterSpacing;
+      var m=tctx.measureText(NAME), asc=m.fontBoundingBoxAscent||fs*.9, desc=m.fontBoundingBoxDescent||fs*.25;
+      var base=r.top+(fs-asc-desc)/2+asc;                 /* ligne de base dans une boîte line-height:1 */
+      tctx.setTransform(s,0,0,-s,0,0);                    /* miroir : y dessiné = -(hauteur au-dessus de l'horizon) */
+      tctx.textAlign='center';tctx.textBaseline='alphabetic';tctx.fillStyle='#000';
+      tctx.fillText(NAME,r.left+r.width/2-cr.left,-(cr.top-base));
+      if(glr&&tex){glr.bindTexture(glr.TEXTURE_2D,tex);glr.pixelStorei(glr.UNPACK_PREMULTIPLY_ALPHA_WEBGL,false);
+        glr.texImage2D(glr.TEXTURE_2D,0,glr.RGBA,glr.RGBA,glr.UNSIGNED_BYTE,tcv);}
+    }
+    function discAt(cr){var f=face.getBoundingClientRect();return [f.left+f.width/2-cr.left,cr.top-(f.top+f.height/2),f.width/2];}
+    function op(el){return parseFloat(getComputedStyle(el).opacity);}
+    var api=makeWater({wrap:wrapW, host:low, mode:'reflet', ptr:[.2,.36], onCss:cssFallback,
+      init:function(gl,U){glr=gl;tex=gl.createTexture();gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex);
+        gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+        gl.uniform1i(U.uTex,0);},
+      layout:function(cr,small){drawName(cr);var d=discAt(cr);
+        return {origins:[[d[0],d[1]]],mask:[cr.width/2,0,1e5,1e5],clip:[-1e5,-1e5,1e5,1e5],fade:[1,1],gain:small?1.2:1};},
+      /* image fixe : deux anneaux très doux qui se croisent sous le reflet du disque */
+      seed:function(add,O){add([O[0][0]-80,O[0][1]+24],.34,5.6);add([O[0][0]+110,O[0][1]-14],.26,2.8);},
+      pick:function(n,O){var W=wrapW.clientWidth;
+        return {p:[W*(.3+.4*Math.random()),O[0][1]*(.5+.8*Math.random())],a:.2+Math.random()*.08,bounce:.3,b:.1,wait:6+Math.random()*4};},
+      before:function(gl,U,cr){
+        var d=discAt(cr), rr=ring.getBoundingClientRect(), cc=name.querySelectorAll('.c');
+        var nameA=op(name)*(cc.length?op(cc[cc.length>>1]):1);
+        gl.uniform4f(U.uDisc,d[0],d[1],d[2],rr.width/2-.5);
+        gl.uniform4f(U.uRefl,fadeLen,texH,nameA,op(disc)*op(ring)/.75);}
+    });
+    /* police du nom chargée (ou changée au panneau DA) : on redessine la texture */
+    if(document.fonts&&document.fonts.load)document.fonts.load('italic 400 64px '+getComputedStyle(name).fontFamily).then(api.refresh,api.refresh);
+    return api;
+  })();
+
+  if(reduce || still || !('IntersectionObserver' in window))return;
+
+  /* ---- titres lettre à lettre : découpage maison (pas de split-type) ----
+     Mots : span.w (inline-block, nowrap) posés une fois pour toutes, les coupures de ligne ne bougent jamais.
+     Lettres : span.c seulement pendant l'animation ; chacune reçoit une marge (em) = écart entre sa position dans le texte
+     crénelé et sa position découpée, donc rien ne bouge au découpage ni au retour en texte simple.
+     Accessibilité : copie .sr-only du titre, version découpée aria-hidden. */
+  var CPS=10, SPREAD=130, IT_DELAY=50, CHAR_DUR=440, STEP=45, CAP=270;  /* réglage « rien ne fait attendre » */
+  function splitWords(h){
+    var sr=document.createElement('span'), vis=document.createElement('span');
+    sr.className='sr-only';sr.textContent=h.textContent.replace(/[ \t\n\r\f]+/g,' ').trim();
+    vis.setAttribute('aria-hidden','true');
+    while(h.firstChild)vis.appendChild(h.firstChild);
+    (function walk(n){[].slice.call(n.childNodes).forEach(function(c){
+      if(c.nodeType===1)return walk(c);
+      if(c.nodeType!==3)return;
+      var f=document.createDocumentFragment();
+      c.nodeValue.split(/([ \t\n\r\f]+)/).forEach(function(t){       /* \s exclurait pas l'espace insécable : liste explicite */
+        if(!t)return;
+        if(/^[ \t\n\r\f]+$/.test(t)){f.appendChild(document.createTextNode(t));return;}
+        var w=document.createElement('span');w.className='w';w.textContent=t;f.appendChild(w);});
+      n.replaceChild(f,c);});})(vis);
+    h.appendChild(sr);h.appendChild(vis);
+    h._w=[].slice.call(vis.querySelectorAll('.w'));h._it=!!vis.querySelector('.it');h.classList.add('is-split');
+  }
+  function wrapChars(h){
+    if(h._c)return;
+    var r=document.createRange(), data=h._w.map(function(w){    /* 1. positions crénelées (texte simple) */
+      var tn=w.firstChild, b=w.getBoundingClientRect(), xs=[], o=0;
+      var ch=Array.from(tn.nodeValue);
+      ch.forEach(function(c){r.setStart(tn,o);r.setEnd(tn,o+c.length);xs.push(r.getBoundingClientRect().left-b.left);o+=c.length;});
+      return {w:w,ch:ch,xs:xs,wd:b.width,fs:parseFloat(getComputedStyle(w).fontSize)};});
+    var ci=0;
+    data.forEach(function(d){                                       /* 2. découpe */
+      d.w.textContent='';
+      d.cs=d.ch.map(function(c){var s=document.createElement('span');s.className='c';s.textContent=c;s.style.setProperty('--ci',ci++);d.w.appendChild(s);return s;});});
+    data.forEach(function(d){                                       /* 3. positions découpées */
+      var b=d.w.getBoundingClientRect();d.ys=d.cs.map(function(s){return s.getBoundingClientRect().left-b.left;});d.yw=b.width;});
+    data.forEach(function(d){                                       /* 4. marges de crénage */
+      d.cs.forEach(function(s,k){var last=k===d.cs.length-1;
+        var m=((last?d.wd:d.xs[k+1])-d.xs[k])-((last?d.yw:d.ys[k+1])-d.ys[k]);
+        if(Math.abs(m)>.01)s.style.marginRight=(m/d.fs).toFixed(4)+'em';});});
+    h._c=ci;
+    /* pas par lettre : 10 ms, resserré pour que l'étalement ne dépasse jamais 130 ms (titre entier en ~600 ms) */
+    h._cs=Math.min(CPS,SPREAD/Math.max(1,ci-1));h.style.setProperty('--cs',h._cs.toFixed(2)+'ms');
+  }
+  function unwrapChars(h){if(!h._c)return;h._w.forEach(function(w){w.textContent=w.textContent;});h._c=0;}
+
+  /* ---- apparitions rejouées ----
+     Entrée en avance : la zone d'entrée déborde de 8 % au-dessus et de 15 % au-dessous de l'écran, l'animation est donc
+     presque finie quand l'élément devient visible. Sortie : seulement hors d'une zone encore plus large (25 % / 30 %),
+     donc jamais à l'écran ; l'écart entre les deux zones (≥ 15 % de l'écran) empêche tout aller-retour.
+     Retards : groupe [data-stagger] ; --i vaut d'abord l'ordre dans le groupe, puis il est recalé à l'entrée sur le
+     dernier départ du groupe (+45 ms), plafonné à 270 ms. */
+  var revs=[].slice.call(document.querySelectorAll('[data-reveal]'));
+  [].forEach.call(document.querySelectorAll('[data-stagger]'),function(g){
+    [].forEach.call(g.querySelectorAll('[data-reveal]'),function(el,i){el.style.setProperty('--i',i);});});
+  function reveal(el){
+    if(el.classList.contains('is-in'))return;
+    var g=el.closest('[data-stagger]')||el, now=performance.now(), start=Math.max(now,(g._slot||0)+STEP);
+    if(start-now>CAP)start=now+CAP;g._slot=start;
+    var delay=start-now;el.style.setProperty('--i',(delay/STEP).toFixed(3));
+    if(el._w){wrapChars(el);void el.offsetWidth;clearTimeout(el._t);
+      el._t=setTimeout(function(){unwrapChars(el);},delay+(el._c-1)*el._cs+(el._it?IT_DELAY:0)+CHAR_DUR+80);}
+    el.classList.add('is-in');
+  }
+  function conceal(el){
+    if(!el.classList.contains('is-in'))return;
+    el.classList.remove('is-in');
+    if(el._w){clearTimeout(el._t);wrapChars(el);}
+  }
+  function byDom(a,b){return a.compareDocumentPosition(b)&4?-1:1;}
+  /* Chrome tient compte du clip-path de la cible elle-même : une photo masquée (rideau fermé) serait vue « hors écran ».
+     On observe donc son parent, jamais rogné, et la classe reste posée sur la photo. */
+  function rv(t){return t._rv||t;}
+  var inIO=new IntersectionObserver(function(es){
+    es.filter(function(e){return e.isIntersecting;}).map(function(e){return rv(e.target);}).sort(byDom).forEach(reveal);
+  },{rootMargin:'8% 0px 15% 0px',threshold:0});
+  var outIO=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)conceal(rv(e.target));});},{rootMargin:'25% 0px 30% 0px',threshold:0});
+  function watch(el){var t=el;
+    if(el.getAttribute('data-reveal')==='photo'){t=el.parentElement;t._rv=el;}
+    outIO.observe(t);inIO.observe(t);}
+  /* re-mesure des titres découpés au repos (police chargée tard, changement de typo au panneau) */
+  function remeasure(){revs.forEach(function(h){if(h._w&&h._c&&!h.classList.contains('is-in')){unwrapChars(h);wrapChars(h);}});}
+  onTypo=function(){if(document.fonts)document.fonts.ready.then(remeasure);};
+  /* départ : tout sauf les titres tout de suite ; les titres dès que leurs polices sont là (500 ms au plus) */
+  var titles=revs.filter(function(el){return el.hasAttribute('data-split');}), started=false;
+  revs.forEach(function(el){if(!el.hasAttribute('data-split'))watch(el);});
+  root.classList.add('rv-ok');
+  function go(){if(started)return;started=true;
+    titles.forEach(function(h){splitWords(h);wrapChars(h);watch(h);});
+    if(document.fonts&&document.fonts.addEventListener)document.fonts.addEventListener('loadingdone',remeasure);}
+  if(document.fonts&&document.fonts.load){
+    var fonts={};titles.forEach(function(h){[h].concat([].slice.call(h.querySelectorAll('.it'))).forEach(function(e){var cs=getComputedStyle(e);
+      fonts[cs.fontStyle+' '+cs.fontWeight+' 32px '+cs.fontFamily]=1;});});
+    Promise.all(Object.keys(fonts).map(function(f){return document.fonts.load(f).catch(function(){});})).then(go,go);
+    setTimeout(go,500);
+  } else go();
+
+  /* ---- texte défilant : en pause hors écran ---- */
+  var mq=document.getElementById('marquee');
+  new IntersectionObserver(function(es){es.forEach(function(e){mq.classList.toggle('is-paused',!e.isIntersecting);});}).observe(mq);
+
+  /* ---- parallaxe léger (transform seul, rAF, uniquement à l'écran) ----
+     On mesure le parent (non transformé) pour éviter tout effet de boucle. */
+  var pars=[].slice.call(document.querySelectorAll('[data-par]')), navies=[].slice.call(document.querySelectorAll('.on-navy')), ticking=false;
+  function update(){
+    ticking=false;
+    var vh=window.innerHeight;
+    for(var i=0;i<pars.length;i++){
+      var el=pars[i], r=el.parentElement.getBoundingClientRect();
+      if(r.bottom<-120||r.top>vh+120)continue;
+      var d=(r.top+r.height/2)-vh/2;
+      var y=Math.max(-32,Math.min(32,-d*parseFloat(el.dataset.par)));
+      el.style.transform='translate3d(0,'+y.toFixed(1)+'px,0)';
+    }
+    /* reflet satiné des bandes bleu nuit : position du reflet liée au défilement (-1 → 1) */
+    for(var k=0;k<navies.length;k++){
+      var n=navies[k], b=n.getBoundingClientRect();
+      if(b.bottom<0||b.top>vh)continue;
+      var p=Math.max(-1,Math.min(1,((b.top+b.height/2)-vh/2)/vh));
+      n.style.setProperty('--sx',(-p).toFixed(3));
+    }
+  }
+  function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(update);}}
+  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);
+  update();
+})();
+</script>
+</body>
+</html>
