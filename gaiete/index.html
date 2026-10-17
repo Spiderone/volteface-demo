@@ -508,8 +508,9 @@ body{padding-bottom:80px}
    « translate » plutôt que « transform » : il se compose avec les rotations des stickers, polaroïds et pastilles.
    Sortie instantanée (l'élément est déjà hors de l'écran), entrée en 900 ms. */
 /* intensité ramenée à 70 % puis −15 % le 17/10 (distances, écart de graisse), flou de départ 2,5 px, puis 20 % plus rapide, à la demande de Corentin.
-   Effet « rêve éveillé » : chaque élément arrive surexposé et un peu voilé (brightness ↑, contrast ↓), puis se pose. */
-html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:760ms;--rv-glow:brightness(1.6) contrast(.52)}
+   Effet « rêve éveillé » : chaque élément arrive surexposé, comme dans la lumière, puis se pose. Ordre important : contrast() AVANT brightness(),
+   sinon le contraste ramène les blancs vers le gris (effet terne). Ici les noirs partent d'un gris clair et les teintes pâles d'un quasi-blanc. */
+html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:760ms;--rv-glow:contrast(.55) brightness(1.5)}
 [data-reveal]{--rv-d:min(calc(var(--i, 0) * 60ms), 400ms)}
 .js-reveal [data-reveal]:not([data-split]){opacity:0;translate:0 var(--rv-y)}
 .js-reveal [data-reveal].is-in:not([data-split]){opacity:1;translate:none;
