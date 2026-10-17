@@ -299,8 +299,10 @@ body.no-ribbon .ribbon, html.ribbon-closed .ribbon{display:none}
 .step .dur{display:inline-block;margin:0 0 18px;background:color-mix(in srgb, var(--n) 36%, #fff);color:#000}
 .step p:not(.dur){margin-top:12px;color:var(--ink-soft);line-height:1.55}
 .step p:not(.dur)::first-letter{text-transform:uppercase}
-.recap{margin-top:clamp(52px, 6.5vw, 88px);display:grid;gap:20px;justify-items:start;align-items:center;
-  background:var(--pr1);border-radius:var(--radius);padding:clamp(22px, 2.6vw, 30px) clamp(22px, 3vw, 36px)}
+/* Bandeau récap : padding égal sur les 4 côtés en mobile ; en bureau, le bouton est inséré à égale distance du haut,
+   du bas et de la droite (rayon concentrique : rayon du bouton + marge), le texte rogné au ras des capitales est centré. */
+.recap{--rp:22px;margin-top:clamp(52px, 6.5vw, 88px);display:grid;gap:20px;justify-items:start;align-items:center;
+  background:var(--pr1);border-radius:var(--radius);padding:var(--rp)}
 .recap p{display:flex;align-items:flex-start;gap:14px;font-family:var(--font-display);font-stretch:100%;font-weight:500;font-size:1.25rem;line-height:1.35;letter-spacing:var(--tr-xs)}
 .recap p svg{width:28px;height:28px;flex:none;fill:var(--s3);margin-top:calc(.3515em - 14px)}   /* centré sur les capitales de la 1re ligne */
 .recap strong{font-weight:600}
@@ -578,7 +580,11 @@ html{--rv-ease:cubic-bezier(.2,.7,.2,1);--rv-y:11px;--rv-dur:760ms;--rv-glow:con
   .foot-meta{flex-direction:column;align-items:flex-end;text-align:right;border-top:0;padding-top:0;gap:0}
   .scene{--hb:240px;--hm:170px;--hf:110px;--sun:clamp(280px, 25vw, 380px);--sun-y:222px;--sig:clamp(5.4rem, 9.4vw, 9rem);--sig-b:132px;--gap:clamp(330px, 44vh, 420px);--fpad:44px}
 }
-@media (min-width:980px){ .recap{grid-template-columns:minmax(0,1fr) auto;gap:40px} }
+@media (min-width:980px){
+  .recap{--rp:14px;grid-template-columns:minmax(0,1fr) auto;gap:40px;padding-left:30px;border-radius:calc(var(--ui-l) / 2 + var(--rp))}
+  .recap p{align-items:center}
+  .recap p svg{margin-top:0}
+}
 @media (min-width:1200px){ .steps{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:56px} }
 @media (min-width:980px) and (max-width:1359px){ .header-tel{width:44px;padding:0;font-size:0;gap:0} .header-tel svg{width:18px;height:18px} .nav a{padding:0 9px} }
 @media (max-width:639px){
@@ -790,7 +796,7 @@ body.clean .da{display:none}
         </li>
       </ol>
       <div class="recap" data-reveal>
-        <p><svg aria-hidden="true"><use href="#sh-star8"/></svg><span><strong>Première séance</strong> · 1&nbsp;h&nbsp;15 · 85&nbsp;€ · au cabinet ou en visio</span></p>
+        <p><svg aria-hidden="true"><use href="#sh-star8"/></svg><span class="tx"><strong>Première séance</strong> · 1&nbsp;h&nbsp;15 · 85&nbsp;€ · au cabinet ou en visio</span></p>
         <a class="btn btn-hero" href="https://www.resalib.fr/" target="_blank" rel="noopener"><span class="tx">Prendre rendez-vous</span></a>
       </div>
     </div>
