@@ -315,10 +315,12 @@ html[data-photos="0"] .ph > img{display:none}
 .hero-sub{font-size:1.0625rem;color:var(--ink-soft);max-width:31em}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:10px 12px;margin-top:26px}
 .proofs{list-style:none;margin:34px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
-.proofs li{padding:22px 14px 22px 0;font-size:.875rem;line-height:1.35;color:var(--ink-soft);border-bottom:1px solid var(--line)}
+/* preuves : chiffre en serif italique au-dessus, libellé lisible en dessous (15 px, encre douce 7:1) */
+.proofs li{padding:20px 14px 20px 0;display:flex;flex-direction:column;gap:13px;border-bottom:1px solid var(--line)}
 .proofs li:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
-.proofs .fig{white-space:nowrap;font-size:calc(1.85rem * var(--serif-scale));color:var(--ink);vertical-align:-.08em;margin-right:.08em}
-.proofs .star{color:var(--bronze);font-size:.95rem;margin-right:2px}
+.proofs .fig{white-space:nowrap;font-size:calc(1.6rem * var(--serif-scale));line-height:1;color:var(--ink)}
+.proofs .lbl{font-size:.9375rem;line-height:1.3;color:var(--ink-soft)}
+.proofs .star{color:var(--bronze);font-size:.6em;margin-right:5px;vertical-align:.32em;font-style:normal}
 
 /* portrait en arche (quasi droite) + anneau décalé de ~2,5° + carte cabinet qui chevauche le coin bas gauche */
 .hero-visual{position:relative;display:flex;justify-content:center;padding:22px 0 34px}
@@ -588,7 +590,7 @@ html[data-palette="multi"] .reflet-cta .it, html[data-palette="multi"] .moon-nam
    le centrage flex / padding centre ce que l'œil voit (les capitales) et non l'interligne. Ne marche que sur un
    conteneur bloc : les libellés des boutons et des questions sont donc dans un <span class="l"> / <span class="q">.
    Boîtes à hauteur fixe : --h (bouton 48/44 via min-height, nav 44, pastille M 19). */
-.l, .q, .metro, .nav a, .map-foot > span, .brand-name, .brand-role, .ribbon-text, .proofs li{text-box:trim-both cap alphabetic}
+.l, .q, .metro, .nav a, .map-foot > span, .brand-name, .brand-role, .ribbon-text, .proofs .fig, .proofs .lbl{text-box:trim-both cap alphabetic}
 .metro, .nav a{padding-block:calc((var(--h) - 1cap) / 2)}
 /* capitales espacées : on retire l'espacement de fin de mot pour centrer l'encre horizontalement */
 .btn .l{margin-right:calc(-1 * var(--ls, 0em))}
@@ -603,7 +605,7 @@ html.no-tb .l, html.no-tb .q, html.no-tb .map-foot > span{position:relative;top:
 html.no-tb .metro, html.no-tb .nav a{line-height:1;padding-block:calc((var(--h) - 1em) / 2 - var(--cap-nudge)) calc((var(--h) - 1em) / 2 + var(--cap-nudge))}
 html.no-tb .brand-role{margin-top:5px}
 html.no-tb .ribbon{padding-top:9px;padding-bottom:9px}
-html.no-tb .proofs li{text-box:none;padding-top:16px;padding-bottom:14px}
+html.no-tb .proofs li{padding-top:16px;padding-bottom:14px}
 
 /* ================= MOUVEMENT ================= */
 /* Apparitions rejouées (itération 7). Propriété translate (indépendante des rotate / transform du parallaxe).
@@ -718,7 +720,7 @@ html.static .marquee-track{animation:none}
 }
 @media (max-width:639px){
   .on-navy .orbits{display:none}
-  .proofs .fig{font-size:calc(1.5rem * var(--serif-scale))}
+  .proofs .fig{font-size:calc(1.4rem * var(--serif-scale))}
   .stat{flex-direction:column;align-items:flex-start;gap:4px}
   .stat .dot{display:none}
   .pillar{padding:22px 20px}
@@ -807,10 +809,10 @@ body.clean .da{display:none}
           <a class="btn btn-line" href="#approche"><span class="l">Découvrir l'approche</span></a>
         </div>
         <ul class="proofs">
-          <li data-reveal><span class="star" aria-hidden="true">★</span><span class="sr-only">Note : </span><span class="fig">4,9</span> · 37 avis Google</li>
-          <li data-reveal>Séance de <span class="fig">60 min</span> · <span class="fig">70 €</span></li>
-          <li data-reveal>Premier appel de <span class="fig">15 min</span> offert</li>
-          <li data-reveal>Métro Voltaire <span class="fig">(9)</span></li>
+          <li data-reveal><span class="fig"><span class="star" aria-hidden="true">★</span><span class="sr-only">Note : </span>4,9</span><span class="lbl">37 avis Google</span></li>
+          <li data-reveal><span class="fig">60 min · 70 €</span><span class="lbl">La séance</span></li>
+          <li data-reveal><span class="fig">15 min</span><span class="lbl">Premier appel offert</span></li>
+          <li data-reveal><span class="fig">Voltaire</span><span class="lbl">Métro, ligne 9</span></li>
         </ul>
       </div>
 
